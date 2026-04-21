@@ -21,6 +21,7 @@ The experiment is intentionally frozen around a small number of public artifacts
 - `uv run python scripts/export_gpt54_requests.py ...` prepares cached GPT-5.4 baseline requests.
 - `uv run python scripts/export_annotator_packets.py ...` writes one packet file per annotator from the combined MAUD pilot packet.
 - `uv run python scripts/evaluate_annotation_pilot.py ...` computes agreement metrics and a Markdown report from completed annotation files.
+- `uv run python scripts/export_disagreement_packet.py ...` exports disagreement rows for adjudication after agreement evaluation.
 
 Credential-aware scripts load repo-local `.env` automatically for `HF_TOKEN`, `MODAL_TOKEN_ID`, and `MODAL_TOKEN_SECRET`, while keeping secret values out of artifacts and terminal summaries.
 

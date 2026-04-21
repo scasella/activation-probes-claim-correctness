@@ -4,7 +4,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-from ..io import read_jsonl
+from ..io import read_csv, read_jsonl
 
 VALID_CORRECTNESS = {"true", "false", "partially_true"}
 VALID_LOAD_BEARING = {"yes", "no"}
@@ -55,7 +55,11 @@ def validate_annotation_row(row: dict[str, Any]) -> dict[str, Any]:
 def load_annotation_rows(paths: list[Path]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for path in paths:
-        rows.extend(validate_annotation_row(row) for row in read_jsonl(path))
+        if path.suffix.lower() == ".csv":
+            source_rows = read_csv(path)
+        else:
+            source_rows = read_jsonl(path)
+        rows.extend(validate_annotation_row(row) for row in source_rows)
     return rows
 
 

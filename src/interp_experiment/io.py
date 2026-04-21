@@ -46,6 +46,13 @@ def read_json(path: Path) -> Any:
         return json.load(handle)
 
 
+def read_csv(path: Path) -> Iterator[dict[str, Any]]:
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            yield dict(row)
+
+
 def write_csv(path: Path, rows: Iterable[dict[str, Any]]) -> None:
     rows = list(rows)
     ensure_parent(path)

@@ -1,8 +1,10 @@
 from interp_experiment.data.annotation import (
     compute_annotation_agreement,
     is_completed_annotation_row,
+    load_annotation_rows,
     validate_annotation_row,
 )
+from interp_experiment.io import write_csv
 
 
 def _row(annotator_id: str, claim_id: str, *, correctness: str = "", load: str = "", flip: str = "") -> dict[str, str]:
@@ -69,3 +71,15 @@ def test_compute_annotation_agreement_extracts_disagreements() -> None:
     assert payload["gate"]["status"] == "fail_revise_once"
     assert payload["disagreements"]
     assert payload["disagreements"][0]["claim_id"] == "claim-1"
+
+
+def test_load_annotation_rows_supports_csv(tmp_path) -> None:
+    rows = [
+        _row("a1", "claim-1", correctness="true", load="yes", flip="Clause X"),
+        _row("a2", "claim-1", correctness="true", load="yes", flip="Clause X"),
+    ]
+    path = tmp_path / "annotations.csv"
+    write_csv(path, rows)
+    loaded = load_annotation_rows([path])
+    assert len(loaded) == 2
+    assert loaded[0]["annotator_id"] == "a1"
