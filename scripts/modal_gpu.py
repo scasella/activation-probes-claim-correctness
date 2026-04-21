@@ -4,6 +4,8 @@ import argparse
 import sys
 from pathlib import Path
 
+from interp_experiment.env import load_repo_env
+
 
 def _load_modal():
     try:
@@ -25,6 +27,7 @@ def main() -> None:
     if not command:
         raise SystemExit("Usage: python scripts/modal_gpu.py --gpu=A100-80GB -- python -m pytest")
 
+    load_repo_env()
     modal = _load_modal()
     root = Path(__file__).resolve().parents[1]
     image = (

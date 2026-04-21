@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from interp_experiment.activations.extractors import build_extractor
+from interp_experiment.env import load_repo_env
 from interp_experiment.io import read_jsonl, write_jsonl
 from interp_experiment.schemas import ExampleRow
 
@@ -26,6 +27,7 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=0)
     args = parser.parse_args()
 
+    load_repo_env()
     extractor = build_extractor(args.model_name, layer_index=args.layer_index, device=args.device)
     examples = [ExampleRow.from_dict(row) for row in read_jsonl(args.input_jsonl)]
     updated: list[dict[str, object]] = []

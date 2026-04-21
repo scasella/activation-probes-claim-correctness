@@ -20,6 +20,8 @@ The experiment is intentionally frozen around a small number of public artifacts
 - `uv run python scripts/phase0_smoke.py --help` shows the phase-0 smoke interface.
 - `uv run python scripts/export_gpt54_requests.py ...` prepares cached GPT-5.4 baseline requests.
 
+Credential-aware scripts load repo-local `.env` automatically for `HF_TOKEN`, `MODAL_TOKEN_ID`, and `MODAL_TOKEN_SECRET`, while keeping secret values out of artifacts and terminal summaries.
+
 The GPT-5.4 baseline is treated as a cached artifact workflow. Modal reproducibility starts from committed prompt packets plus cached raw/parsed baseline outputs; it does not try to regenerate GPT-5.4 calls inside Modal.
 
 ## Layout

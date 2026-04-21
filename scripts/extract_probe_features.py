@@ -7,6 +7,7 @@ from pathlib import Path
 from interp_experiment.activations.claim_pooling import mean_pool_claim_features
 from interp_experiment.activations.extractors import build_extractor
 from interp_experiment.activations.sae_features import encode_with_sae, load_sae
+from interp_experiment.env import load_repo_env
 from interp_experiment.io import read_jsonl, write_jsonl
 from interp_experiment.schemas import ClaimFeatureRow, ClaimRow, ExampleRow
 
@@ -32,6 +33,7 @@ def main() -> None:
     parser.add_argument("--sae-id", default="llama3.1-8b-it/19-resid-post-gf")
     args = parser.parse_args()
 
+    load_repo_env()
     extractor = build_extractor(args.model_name, layer_index=args.layer_index, device=args.device)
     examples = {row.example_id: row for row in (ExampleRow.from_dict(item) for item in read_jsonl(args.examples_jsonl))}
     claims_by_example: dict[str, list[ClaimRow]] = defaultdict(list)
