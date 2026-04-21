@@ -40,6 +40,8 @@ Outputs:
 - Parsed predictions: `data/cached_baselines/gpt54/parsed/maud_pilot/`
 - Summary: `artifacts/runs/maud_gpt54_summary.json`
 
+This path now uses Codex App Server for the GPT-5.4 calls.
+
 ## One-shot command
 
 To run both materializers in sequence:

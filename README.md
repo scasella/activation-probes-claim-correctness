@@ -20,7 +20,9 @@ The experiment is intentionally frozen around a small number of public artifacts
 - `uv run python scripts/phase0_smoke.py --help` shows the phase-0 smoke interface.
 - `uv run python scripts/export_gpt54_requests.py ...` prepares cached GPT-5.4 baseline requests.
 - `uv run python scripts/materialize_llama_self_report.py ...` materializes local Llama self-report baseline artifacts.
-- `uv run python scripts/materialize_gpt54_baseline.py ...` materializes GPT-5.4 cached baseline artifacts through the local Codex CLI.
+- `uv run python scripts/materialize_gpt54_baseline.py ...` materializes GPT-5.4 cached baseline artifacts through Codex App Server.
+- `uv run python scripts/materialize_judge_annotations.py ...` materializes proxy labels through Codex App Server when using a judge LLM in place of human annotation.
+- `uv run python scripts/evaluate_baselines_against_labels.py ...` scores precomputed baselines against a label file such as judge-proxy annotations.
 - `uv run python scripts/precompute_maud_baselines.py` runs the MAUD baseline precompute lane end to end.
 - `uv run python scripts/export_annotator_packets.py ...` writes one packet file per annotator from the combined MAUD pilot packet.
 - `uv run python scripts/evaluate_annotation_pilot.py ...` computes agreement metrics and a Markdown report from completed annotation files.
