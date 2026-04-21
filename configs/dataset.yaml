@@ -1,5 +1,6 @@
 dataset_version: v1
 target_examples: 300
+pilot_size: 30
 split:
   train: 0.70
   validation: 0.15
@@ -14,8 +15,10 @@ sources:
     adapter: maud
     hf_dataset: theatticusproject/maud
     target_examples: 150
+    task_family: generative_qa
     contract_group: merger_agreement
     cross_dist_group: maud_merger
+    max_rows_per_contract: 2
     question_field: question
     answer_field: answer
     excerpt_field: text
@@ -25,8 +28,10 @@ sources:
     adapter: cuad_qa
     hf_dataset: chenghao/cuad_qa
     target_examples: 150
+    task_family: field_extraction
     contract_group: commercial_contract
     cross_dist_group: cuad_non_merger
+    max_rows_per_contract: 2
     question_field: question
     answer_field: answers
     excerpt_field: context

@@ -6,6 +6,7 @@ def _make_example(example_id: str, contract_id: str, cross_group: str) -> Exampl
     return ExampleRow(
         example_id=example_id,
         source_corpus="maud" if cross_group == "maud_merger" else "cuad",
+        task_family="generative_qa" if cross_group == "maud_merger" else "field_extraction",
         contract_id=contract_id,
         contract_group="merger_agreement" if cross_group == "maud_merger" else "commercial_contract",
         excerpt_text="Excerpt",

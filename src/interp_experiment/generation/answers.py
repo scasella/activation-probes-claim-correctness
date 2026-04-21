@@ -25,6 +25,12 @@ CUAD_LABEL_GUIDANCE = {
 }
 
 
+def fallback_answer_text(task_family: str) -> str:
+    if task_family == "field_extraction":
+        return "Not stated in the excerpt."
+    return "The excerpt does not provide enough information to answer."
+
+
 def build_deterministic_answer_prompt(example: ExampleRow) -> str:
     system_message = (
         "You are a careful legal contract analyst. "
@@ -32,7 +38,7 @@ def build_deterministic_answer_prompt(example: ExampleRow) -> str:
         "Do not invent facts. "
         "Do not use headings, bullets, or numbered lists."
     )
-    if example.source_corpus == "cuad":
+    if example.task_family == "field_extraction":
         guidance = CUAD_LABEL_GUIDANCE.get(example.question_text, "the contract concept named by the label")
         user_instruction = (
             f"The question names a CUAD contract field label meaning: {guidance}. "
@@ -81,3 +87,8 @@ def clean_deterministic_answer(answer_text: str, max_sentences: int = 3) -> str:
 
     cleaned = " ".join(deduped)
     return cleaned if cleaned else text
+
+
+def ensure_non_empty_answer(task_family: str, answer_text: str) -> str:
+    cleaned = normalize_whitespace(answer_text)
+    return cleaned if cleaned else fallback_answer_text(task_family)

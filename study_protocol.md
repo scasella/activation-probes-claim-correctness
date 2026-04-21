@@ -26,7 +26,8 @@ Implementation note: the legacy `theatticusproject/cuad-qa` dataset script is no
 ## Splits and holdouts
 
 - Freeze splits at the contract level before probe tuning.
-- Default split ratios are `70/15/15` for train/validation/test.
+- Reserve a dedicated `pilot` partition before the final train/validation/test split.
+- Default split ratios are `70/15/15` over the non-pilot remainder.
 - The test split is not inspected until Phase 4.
 - Cross-distribution evaluation is source-family shift:
   - primary: train on CUAD-derived, test on MAUD-derived
@@ -34,17 +35,28 @@ Implementation note: the legacy `theatticusproject/cuad-qa` dataset script is no
 
 ## Claim labeling defaults
 
-Canonical claim rows contain:
+Generated claim rows contain:
 
 - `claim_id`
 - `example_id`
 - `claim_text`
 - `token_start`
 - `token_end`
-- `correctness_label`
-- `load_bearing_label`
-- `flip_evidence_text`
 - `annotation_version`
+
+Generated claims are unlabeled. Annotation labels live in downstream annotation artifacts only.
+
+Answer-run bundles are persisted separately and contain:
+
+- `example_id`
+- `source_corpus`
+- `task_family`
+- `prompt_text`
+- `answer_text`
+- `model_name`
+- `extractor_name`
+- `token_ids`
+- `token_offsets`
 
 Primary correctness evaluation is binary with `partially-true -> incorrect`.
 
@@ -78,6 +90,7 @@ Implementation note: the current SAELens release `goodfire-llama-3.1-8b-instruct
 - Direct correctness logistic probe: ablation only
 
 Claim features are mean-pooled over exact-answer-token spans.
+The probe path must consume the exact persisted answer run that produced the canonical claim spans; it must never regenerate a different answer at feature-extraction time.
 
 ## Reliability gate
 
@@ -104,6 +117,7 @@ Phase 1 uses a `30`-example pilot with `2` annotators.
 ### Phase 1
 
 - Build the source pool
+- Run the pilot readiness gate on a non-test pilot before annotation
 - Run annotation pilot and repilot policy if needed
 - Stop here only if the entire study becomes non-viable; otherwise fallback to correctness-only
 

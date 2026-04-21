@@ -22,6 +22,8 @@ def main() -> None:
         raise SystemExit("At least one annotator id is required")
 
     examples = [ExampleRow.from_dict(row) for row in read_jsonl(args.examples_jsonl)]
+    if any(row.split == "test" for row in examples):
+        raise SystemExit("Annotation packet inputs must not include test rows")
     claims = [ClaimRow.from_dict(row) for row in read_jsonl(args.claims_jsonl)]
     packet = build_claim_annotation_packet(
         examples=examples,

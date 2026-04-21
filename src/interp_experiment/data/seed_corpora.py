@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import random
 from collections.abc import Iterable
 from typing import Any
 
@@ -59,6 +60,7 @@ def _maud_row_to_example(row: dict[str, Any], source_cfg: dict[str, Any]) -> Exa
     return ExampleRow(
         example_id=f"maud-{example_id}",
         source_corpus="maud",
+        task_family=source_cfg["task_family"],
         contract_id=contract_id,
         contract_group=source_cfg["contract_group"],
         excerpt_text=excerpt,
@@ -92,6 +94,7 @@ def _cuad_row_to_example(row: dict[str, Any], source_cfg: dict[str, Any]) -> Exa
     return ExampleRow(
         example_id=f"cuad-{example_id}",
         source_corpus="cuad",
+        task_family=source_cfg["task_family"],
         contract_id=contract_id,
         contract_group=source_cfg["contract_group"],
         excerpt_text=excerpt,
@@ -109,24 +112,73 @@ ADAPTERS = {
 }
 
 
-def build_hybrid_source_pool(dataset_config_path: str | None = None) -> list[ExampleRow]:
+def _sample_contract_diverse_rows(
+    rows: list[ExampleRow],
+    target_examples: int,
+    max_rows_per_contract: int,
+    seed: int,
+) -> list[ExampleRow]:
+    rng = random.Random(seed)
+    by_contract: dict[str, list[ExampleRow]] = {}
+    for row in rows:
+        by_contract.setdefault(row.contract_id, []).append(row)
+    contract_ids = list(by_contract)
+    rng.shuffle(contract_ids)
+    for contract_id in contract_ids:
+        rng.shuffle(by_contract[contract_id])
+
+    selected: list[ExampleRow] = []
+    round_index = 0
+    while len(selected) < target_examples:
+        added_this_round = False
+        for contract_id in contract_ids:
+            contract_rows = by_contract[contract_id]
+            if round_index < min(len(contract_rows), max_rows_per_contract):
+                selected.append(contract_rows[round_index])
+                added_this_round = True
+                if len(selected) >= target_examples:
+                    break
+        if not added_this_round:
+            break
+        round_index += 1
+    if len(selected) < target_examples:
+        raise ValueError(
+            f"Unable to sample {target_examples} contract-diverse rows with max_rows_per_contract={max_rows_per_contract}; "
+            f"only found {len(selected)}"
+        )
+    return selected
+
+
+def build_hybrid_source_pool(
+    dataset_config_path: str | None = None,
+    *,
+    seed: int = 7,
+    target_overrides: dict[str, int] | None = None,
+) -> list[ExampleRow]:
     dataset_cfg = load_config("dataset.yaml") if dataset_config_path is None else load_config(dataset_config_path)
     load_dataset = _load_datasets_module()
     source_rows: list[ExampleRow] = []
     seen_ids: set[str] = set()
 
-    for source_name, source_cfg in dataset_cfg["sources"].items():
+    for source_index, (source_name, source_cfg) in enumerate(dataset_cfg["sources"].items()):
         adapter_name = source_cfg["adapter"]
         adapter = ADAPTERS[adapter_name]
         dataset_obj = load_dataset(source_cfg["hf_dataset"])
-        target_examples = int(source_cfg["target_examples"])
+        target_examples = int((target_overrides or {}).get(source_name, source_cfg["target_examples"]))
+        max_rows_per_contract = int(source_cfg.get("max_rows_per_contract", 1))
+        raw_rows: list[ExampleRow] = []
         for row in _iter_all_splits(dataset_obj):
             example = adapter(row, source_cfg)
             if example is None or example.example_id in seen_ids:
                 continue
             seen_ids.add(example.example_id)
-            source_rows.append(example)
-            if sum(item.source_corpus == source_name for item in source_rows) >= target_examples:
-                break
+            raw_rows.append(example)
+        sampled_rows = _sample_contract_diverse_rows(
+            raw_rows,
+            target_examples=target_examples,
+            max_rows_per_contract=max_rows_per_contract,
+            seed=seed + source_index,
+        )
+        source_rows.extend(sampled_rows)
 
     return source_rows

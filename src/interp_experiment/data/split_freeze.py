@@ -43,6 +43,7 @@ def freeze_contract_splits(
                     ExampleRow(
                         example_id=row.example_id,
                         source_corpus=row.source_corpus,
+                        task_family=row.task_family,
                         contract_id=row.contract_id,
                         contract_group=row.contract_group,
                         excerpt_text=row.excerpt_text,

@@ -11,14 +11,21 @@ def sample_pilot_examples(
     pilot_size: int = 30,
     stratify_field: str = "source_corpus",
     seed: int = 11,
+    excluded_splits: tuple[str, ...] = ("test",),
+    max_rows_per_contract: int = 1,
 ) -> list[ExampleRow]:
     if pilot_size <= 0:
         raise ValueError("pilot_size must be positive")
-    if pilot_size > len(examples):
-        raise ValueError("pilot_size cannot exceed the number of available examples")
+    eligible_examples = [
+        example
+        for example in examples
+        if not excluded_splits or example.split not in set(excluded_splits)
+    ]
+    if pilot_size > len(eligible_examples):
+        raise ValueError("pilot_size cannot exceed the number of eligible examples")
 
     groups: dict[str, list[ExampleRow]] = defaultdict(list)
-    for example in examples:
+    for example in eligible_examples:
         groups[str(getattr(example, stratify_field))].append(example)
     if not groups:
         raise ValueError("No groups available for pilot sampling")
@@ -37,9 +44,23 @@ def sample_pilot_examples(
     sampled: list[ExampleRow] = []
     for group_name in ordered_groups:
         target = allocation[group_name]
-        if target > len(groups[group_name]):
-            raise ValueError(f"Not enough examples in group {group_name} for target {target}")
-        sampled.extend(groups[group_name][:target])
+        by_contract: dict[str, list[ExampleRow]] = defaultdict(list)
+        for example in groups[group_name]:
+            by_contract[example.contract_id].append(example)
+        contract_ids = list(by_contract)
+        rng.shuffle(contract_ids)
+        selected_for_group: list[ExampleRow] = []
+        for contract_id in contract_ids:
+            contract_rows = by_contract[contract_id][:max_rows_per_contract]
+            selected_for_group.extend(contract_rows)
+            if len(selected_for_group) >= target:
+                break
+        if len(selected_for_group) < target:
+            raise ValueError(f"Not enough contract-diverse examples in group {group_name} for target {target}")
+        sampled.extend(selected_for_group[:target])
+
+    if any(example.split == "test" for example in sampled):
+        raise ValueError("Pilot sample must not include test rows")
     return sampled
 
 
@@ -60,6 +81,7 @@ def build_claim_annotation_packet(
                     "annotation_version": annotation_version,
                     "example_id": example.example_id,
                     "source_corpus": example.source_corpus,
+                    "task_family": example.task_family,
                     "contract_id": example.contract_id,
                     "question_text": example.question_text,
                     "excerpt_text": example.excerpt_text,

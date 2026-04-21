@@ -24,6 +24,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run remote pilot answer generation and write local artifacts.")
     parser.add_argument("--input-jsonl", type=Path, default=Path("data/annotations/pilot_examples.jsonl"))
     parser.add_argument("--output-examples-jsonl", type=Path, default=Path("data/annotations/pilot_examples_with_answers.jsonl"))
+    parser.add_argument("--output-answer-runs-jsonl", type=Path, default=Path("data/annotations/pilot_answer_runs.jsonl"))
     parser.add_argument("--output-claims-jsonl", type=Path, default=Path("data/annotations/pilot_claims.jsonl"))
     parser.add_argument("--summary-json", type=Path, default=Path("data/annotations/pilot_generation_summary.json"))
     parser.add_argument("--log-path", type=Path, default=Path("artifacts/runs/pilot_generation_remote.log"))
@@ -68,14 +69,18 @@ def main() -> None:
 
     summary = json.loads(_extract_section(result.stdout, "SUMMARY_JSON"))
     examples_jsonl = _extract_section(result.stdout, "EXAMPLES_JSONL")
+    answer_runs_jsonl = _extract_section(result.stdout, "ANSWER_RUNS_JSONL")
     claims_jsonl = _extract_section(result.stdout, "CLAIMS_JSONL")
 
     ensure_parent(args.output_examples_jsonl)
     args.output_examples_jsonl.write_text(examples_jsonl + "\n", encoding="utf-8")
+    ensure_parent(args.output_answer_runs_jsonl)
+    args.output_answer_runs_jsonl.write_text(answer_runs_jsonl + "\n", encoding="utf-8")
     ensure_parent(args.output_claims_jsonl)
     args.output_claims_jsonl.write_text(claims_jsonl + "\n", encoding="utf-8")
     write_json(args.summary_json, summary)
     print(f"Wrote pilot answers to {args.output_examples_jsonl}")
+    print(f"Wrote pilot answer runs to {args.output_answer_runs_jsonl}")
     print(f"Wrote pilot claims to {args.output_claims_jsonl}")
     print(f"Wrote pilot summary to {args.summary_json}")
 

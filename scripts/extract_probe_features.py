@@ -9,20 +9,12 @@ from interp_experiment.activations.extractors import build_extractor
 from interp_experiment.activations.sae_features import encode_with_sae, load_sae
 from interp_experiment.env import load_repo_env
 from interp_experiment.io import read_jsonl, write_jsonl
-from interp_experiment.schemas import ClaimFeatureRow, ClaimRow, ExampleRow
-
-
-def build_prompt(example: ExampleRow) -> str:
-    return (
-        "Read the contract excerpt and answer the legal question.\n\n"
-        f"Contract excerpt:\n{example.excerpt_text}\n\n"
-        f"Question:\n{example.question_text}\n"
-    )
+from interp_experiment.schemas import AnswerRunRow, ClaimFeatureRow, ClaimRow
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Extract pooled claim features from residual or SAE activations.")
-    parser.add_argument("--examples-jsonl", type=Path, required=True)
+    parser.add_argument("--answer-runs-jsonl", type=Path, required=True)
     parser.add_argument("--claims-jsonl", type=Path, required=True)
     parser.add_argument("--output-jsonl", type=Path, required=True)
     parser.add_argument("--model-name", default="meta-llama/Llama-3.1-8B-Instruct")
@@ -35,7 +27,10 @@ def main() -> None:
 
     load_repo_env()
     extractor = build_extractor(args.model_name, layer_index=args.layer_index, device=args.device)
-    examples = {row.example_id: row for row in (ExampleRow.from_dict(item) for item in read_jsonl(args.examples_jsonl))}
+    answer_runs = {
+        row.example_id: row
+        for row in (AnswerRunRow.from_dict(item) for item in read_jsonl(args.answer_runs_jsonl))
+    }
     claims_by_example: dict[str, list[ClaimRow]] = defaultdict(list)
     for claim in (ClaimRow.from_dict(item) for item in read_jsonl(args.claims_jsonl)):
         claims_by_example[claim.example_id].append(claim)
@@ -46,8 +41,16 @@ def main() -> None:
 
     rows: list[dict[str, object]] = []
     for example_id, example_claims in claims_by_example.items():
-        generated = extractor.generate_with_activations(build_prompt(examples[example_id]))
-        feature_tensor = generated.residual_stream
+        if example_id not in answer_runs:
+            raise SystemExit(f"Missing answer run for example_id={example_id}")
+        answer_run = answer_runs[example_id]
+        encoded = extractor.encode_answer_with_activations(
+            prompt_text=answer_run.prompt_text,
+            answer_text=answer_run.answer_text,
+        )
+        if encoded.token_ids != answer_run.token_ids:
+            raise SystemExit(f"Token-id mismatch for example_id={example_id}; answer run is stale or inconsistent")
+        feature_tensor = encoded.residual_stream
         if sae is not None:
             feature_tensor = encode_with_sae(sae, feature_tensor)
         for claim in example_claims:

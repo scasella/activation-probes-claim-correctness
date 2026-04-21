@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import math
 from dataclasses import asdict, dataclass
 from typing import Any, Literal
 
 LabelCorrectness = Literal["true", "false", "partially_true"]
 LabelLoadBearing = Literal["yes", "no"]
+TaskFamily = Literal["generative_qa", "field_extraction"]
 
 
 class ValidationError(ValueError):
@@ -30,6 +32,7 @@ def _require_probability(value: Any, field_name: str) -> float:
 class ExampleRow:
     example_id: str
     source_corpus: str
+    task_family: TaskFamily | str
     contract_id: str
     contract_group: str
     excerpt_text: str
@@ -42,6 +45,8 @@ class ExampleRow:
     def validate(self) -> "ExampleRow":
         self.example_id = _require_non_empty(self.example_id, "example_id")
         self.source_corpus = _require_non_empty(self.source_corpus, "source_corpus")
+        if self.task_family not in {"generative_qa", "field_extraction"}:
+            raise ValidationError("task_family must be generative_qa or field_extraction")
         self.contract_id = _require_non_empty(self.contract_id, "contract_id")
         self.contract_group = _require_non_empty(self.contract_group, "contract_group")
         self.excerpt_text = _require_non_empty(self.excerpt_text, "excerpt_text")
@@ -63,15 +68,56 @@ class ExampleRow:
 
 
 @dataclass(slots=True)
+class AnswerRunRow:
+    example_id: str
+    source_corpus: str
+    task_family: TaskFamily | str
+    prompt_text: str
+    answer_text: str
+    model_name: str
+    extractor_name: str
+    token_ids: list[int]
+    token_offsets: list[tuple[int, int]]
+
+    def validate(self) -> "AnswerRunRow":
+        self.example_id = _require_non_empty(self.example_id, "example_id")
+        self.source_corpus = _require_non_empty(self.source_corpus, "source_corpus")
+        if self.task_family not in {"generative_qa", "field_extraction"}:
+            raise ValidationError("task_family must be generative_qa or field_extraction")
+        self.prompt_text = _require_non_empty(self.prompt_text, "prompt_text")
+        self.answer_text = _require_non_empty(self.answer_text, "answer_text")
+        self.model_name = _require_non_empty(self.model_name, "model_name")
+        self.extractor_name = _require_non_empty(self.extractor_name, "extractor_name")
+        if not isinstance(self.token_ids, list) or not self.token_ids or not all(isinstance(item, int) for item in self.token_ids):
+            raise ValidationError("token_ids must be a non-empty int list")
+        if not isinstance(self.token_offsets, list) or len(self.token_offsets) != len(self.token_ids):
+            raise ValidationError("token_offsets must align with token_ids")
+        normalized_offsets: list[tuple[int, int]] = []
+        for offset in self.token_offsets:
+            if not isinstance(offset, (list, tuple)) or len(offset) != 2:
+                raise ValidationError("each token_offset must be a pair")
+            start, end = offset
+            if not isinstance(start, int) or not isinstance(end, int) or start < 0 or end < start:
+                raise ValidationError("token_offsets must contain non-negative ordered int pairs")
+            normalized_offsets.append((start, end))
+        self.token_offsets = normalized_offsets
+        return self
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "AnswerRunRow":
+        return cls(**payload).validate()
+
+    def as_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
 class ClaimRow:
     claim_id: str
     example_id: str
     claim_text: str
     token_start: int
     token_end: int
-    correctness_label: LabelCorrectness | str
-    load_bearing_label: LabelLoadBearing | str
-    flip_evidence_text: str
     annotation_version: str
 
     def validate(self) -> "ClaimRow":
@@ -82,12 +128,6 @@ class ClaimRow:
             raise ValidationError("token_start must be a non-negative int")
         if not isinstance(self.token_end, int) or self.token_end < self.token_start:
             raise ValidationError("token_end must be >= token_start")
-        if self.correctness_label not in {"true", "false", "partially_true"}:
-            raise ValidationError("correctness_label must be true/false/partially_true")
-        if self.load_bearing_label not in {"yes", "no"}:
-            raise ValidationError("load_bearing_label must be yes/no")
-        if not isinstance(self.flip_evidence_text, str):
-            raise ValidationError("flip_evidence_text must be a string")
         self.annotation_version = _require_non_empty(self.annotation_version, "annotation_version")
         return self
 
@@ -152,6 +192,8 @@ class ClaimFeatureRow:
         if not isinstance(self.vector, list) or not self.vector or not all(isinstance(x, (float, int)) for x in self.vector):
             raise ValidationError("vector must be a non-empty numeric list")
         self.vector = [float(x) for x in self.vector]
+        if not all(math.isfinite(value) for value in self.vector):
+            raise ValidationError("vector entries must be finite")
         for field_name in ("load_bearing_target", "stability_target"):
             value = getattr(self, field_name)
             if value is not None and value not in {0, 1}:

@@ -45,6 +45,7 @@ def _default_example() -> ExampleRow:
     return ExampleRow(
         example_id="phase0-live-smoke",
         source_corpus="phase0_smoke",
+        task_family="generative_qa",
         contract_id="phase0-contract",
         contract_group="merger_agreement",
         excerpt_text=DEFAULT_EXCERPT,
@@ -98,17 +99,25 @@ def main() -> None:
 
     example = _default_example()
     build_info = build_extractor_with_info(args.model_name, layer_index=args.layer_index, device=args.device)
-    generated = build_info.extractor.generate_with_activations(_example_prompt(example))
+    prompt_text = _example_prompt(example)
+    generated = build_info.extractor.generate_answer_run(
+        example_id=example.example_id,
+        source_corpus=example.source_corpus,
+        task_family=example.task_family,
+        prompt_text=prompt_text,
+        max_new_tokens=256,
+    )
     example.llama_answer_text = generated.answer_text
     example.validate()
 
-    claims = build_canonical_claims(example)
-    residual_array = _to_numpy(generated.residual_stream)
+    claims = build_canonical_claims(generated)
+    encoded = build_info.extractor.encode_answer_with_activations(prompt_text, generated.answer_text)
+    residual_array = _to_numpy(encoded.residual_stream)
     residual_path = output_dir / "raw_residual.npz"
     np.savez_compressed(residual_path, residual=residual_array)
 
     sae, cfg_dict, sparsity = load_sae(args.sae_release, args.sae_id, device=args.device)
-    sae_encoded = encode_with_sae(sae, generated.residual_stream)
+    sae_encoded = encode_with_sae(sae, encoded.residual_stream)
     sae_array = _to_numpy(sae_encoded)
     np.savez_compressed(output_dir / "sae_encoded.npz", sae=sae_array)
 
@@ -144,8 +153,8 @@ def main() -> None:
 
     summary = {
         "repo_root": str(ROOT),
-        "model_name": generated.model_name,
-        "extractor_name": generated.extractor_name,
+        "model_name": encoded.model_name,
+        "extractor_name": encoded.extractor_name,
         "transformer_lens_primary_succeeded": build_info.primary_succeeded,
         "transformer_lens_primary_error": build_info.primary_error,
         "answer_text": generated.answer_text,

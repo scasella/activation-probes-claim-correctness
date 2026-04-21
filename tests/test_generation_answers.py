@@ -1,4 +1,8 @@
-from interp_experiment.generation.answers import build_deterministic_answer_prompt, clean_deterministic_answer
+from interp_experiment.generation.answers import (
+    build_deterministic_answer_prompt,
+    clean_deterministic_answer,
+    ensure_non_empty_answer,
+)
 from interp_experiment.schemas import ExampleRow
 
 
@@ -12,6 +16,7 @@ def test_build_deterministic_answer_prompt_contains_question_and_excerpt() -> No
     example = ExampleRow(
         example_id="ex-1",
         source_corpus="maud",
+        task_family="generative_qa",
         contract_id="c-1",
         contract_group="merger_agreement",
         excerpt_text="Clause text",
@@ -24,3 +29,7 @@ def test_build_deterministic_answer_prompt_contains_question_and_excerpt() -> No
     prompt = build_deterministic_answer_prompt(example)
     assert "Clause text" in prompt
     assert "Can buyer terminate?" in prompt
+
+
+def test_ensure_non_empty_answer_falls_back_for_empty_text() -> None:
+    assert ensure_non_empty_answer("field_extraction", "") == "Not stated in the excerpt."

@@ -6,6 +6,7 @@ def _example(example_id: str, source: str) -> ExampleRow:
     return ExampleRow(
         example_id=example_id,
         source_corpus=source,
+        task_family="generative_qa" if source == "maud" else "field_extraction",
         contract_id=f"{source}-{example_id}",
         contract_group="group",
         excerpt_text="Excerpt",
@@ -24,6 +25,14 @@ def test_sample_pilot_examples_balances_two_sources() -> None:
     for item in sampled:
         counts[item.source_corpus] = counts.get(item.source_corpus, 0) + 1
     assert counts == {"cuad": 5, "maud": 5}
+    assert len({item.contract_id for item in sampled}) == len(sampled)
+
+
+def test_sample_pilot_examples_excludes_test_rows() -> None:
+    examples = [_example(f"m{i}", "maud") for i in range(6)] + [_example(f"c{i}", "cuad") for i in range(6)]
+    examples[0].split = "test"
+    sampled = sample_pilot_examples(examples, pilot_size=6, stratify_field="source_corpus", seed=3)
+    assert all(item.split != "test" for item in sampled)
 
 
 def test_build_claim_annotation_packet_multiplies_by_annotators() -> None:
@@ -35,12 +44,10 @@ def test_build_claim_annotation_packet_multiplies_by_annotators() -> None:
             claim_text="Claim text",
             token_start=0,
             token_end=1,
-            correctness_label="false",
-            load_bearing_label="no",
-            flip_evidence_text="",
             annotation_version="v1",
         ).validate()
     ]
     packet = build_claim_annotation_packet(examples, claims, annotator_ids=["a1", "a2"])
     assert len(packet) == 2
     assert {row["annotator_id"] for row in packet} == {"a1", "a2"}
+    assert packet[0]["task_family"] == "generative_qa"
