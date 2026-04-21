@@ -1,0 +1,46 @@
+dataset_version: v1
+target_examples: 300
+split:
+  train: 0.70
+  validation: 0.15
+  test: 0.15
+freeze_contract_level: true
+cross_distribution:
+  primary_train_group: cuad_non_merger
+  primary_test_group: maud_merger
+  appendix_reverse: true
+sources:
+  maud:
+    adapter: maud
+    hf_dataset: theatticusproject/maud
+    target_examples: 150
+    contract_group: merger_agreement
+    cross_dist_group: maud_merger
+    question_field: question
+    answer_field: answer
+    excerpt_field: text
+    contract_id_field: contract_name
+    category_field: category
+  cuad:
+    adapter: cuad_qa
+    hf_dataset: theatticusproject/cuad-qa
+    target_examples: 150
+    contract_group: commercial_contract
+    cross_dist_group: cuad_non_merger
+    question_field: question
+    answer_field: answers
+    excerpt_field: context
+    contract_id_field: title
+    category_field: category
+labels:
+  correctness_values:
+    - true
+    - false
+    - partially_true
+  primary_binarization:
+    true: 1
+    false: 0
+    partially_true: 0
+  sensitivity_modes:
+    - partial_excluded
+    - partial_as_true

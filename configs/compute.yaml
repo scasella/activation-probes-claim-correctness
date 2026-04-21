@@ -1,0 +1,25 @@
+phase_budgets:
+  phase_0:
+    gpu_hours_min: 4
+    gpu_hours_max: 6
+  phase_1:
+    gpu_hours_min: 6
+    gpu_hours_max: 8
+  phase_2:
+    gpu_hours_min: 6
+    gpu_hours_max: 10
+  phase_3:
+    gpu_hours_min: 35
+    gpu_hours_max: 50
+  phase_4:
+    gpu_hours_min: 8
+    gpu_hours_max: 12
+modal_defaults:
+  default_gpu: A100-80GB
+  overflow_gpu: H100
+pricing_reference_usd_per_hour:
+  A100-80GB: 2.50
+  H100: 3.95
+notes:
+  - Prefer A100-80GB unless activation caching throughput or memory forces H100.
+  - Record estimated and actual GPU hours for every phase run.

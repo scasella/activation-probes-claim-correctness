@@ -1,0 +1,67 @@
+prompt_version: v1
+llama_generation:
+  temperature: 0.0
+  top_p: 1.0
+  max_new_tokens: 768
+  do_sample: false
+llama_entropy_sampling:
+  n_samples: 8
+  temperature: 0.8
+  top_p: 0.95
+  max_new_tokens: 768
+paraphrase_sampling:
+  n_paraphrases: 3
+self_report_system: |
+  You are analyzing a contract excerpt. Answer the user's legal question, then score a fixed list of canonical claims about your answer.
+self_report_user_template: |
+  Contract excerpt:
+  {excerpt_text}
+
+  Question:
+  {question_text}
+
+  Your deterministic answer:
+  {llama_answer_text}
+
+  Canonical claims to score:
+  {canonical_claims_block}
+
+  Return strict JSON with this shape:
+  {{
+    "claims": [
+      {{
+        "claim_id": "string",
+        "correctness_confidence": 0.0,
+        "load_bearing_label": "yes|no",
+        "load_bearing_confidence": 0.0,
+        "flip_evidence_text": "string"
+      }}
+    ]
+  }}
+gpt54_system: |
+  You are auditing a legal QA model's answer. Do not change the canonical claim list. Score each claim against the provided excerpt and question.
+gpt54_user_template: |
+  Contract excerpt:
+  {excerpt_text}
+
+  Question:
+  {question_text}
+
+  Llama answer:
+  {llama_answer_text}
+
+  Canonical claims:
+  {canonical_claims_block}
+
+  Return strict JSON with this shape:
+  {{
+    "claims": [
+      {{
+        "claim_id": "string",
+        "correctness_confidence": 0.0,
+        "load_bearing_label": "yes|no",
+        "load_bearing_confidence": 0.0,
+        "flip_evidence_text": "string"
+      }}
+    ]
+  }}

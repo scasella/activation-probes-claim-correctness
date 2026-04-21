@@ -1,0 +1,11 @@
+report_version: v1
+bootstrap_resamples: 1000
+representative_examples: 10
+sections:
+  - Dataset construction methodology and reliability
+  - Experimental design and hyperparameters
+  - Main results with confidence intervals
+  - Representative examples
+  - Threats to validity
+  - What this experiment does and does not tell us
+  - Phase 4 decision memo

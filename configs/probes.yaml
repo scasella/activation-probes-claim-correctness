@@ -1,0 +1,26 @@
+probe_version: v1
+sae:
+  primary_release: goodfire-llama-3.1-8b-instruct
+  primary_id: llama3.1-8b-it/19-resid-post-gf
+  robustness_releases:
+    - release: llama-3.1-8b
+      sae_ids:
+        - llama_scope_lxr_8x
+raw_residual_baseline: true
+pooling:
+  method: mean
+  use_exact_answer_tokens: true
+correctness_probe:
+  model_type: ridge
+  alpha_grid: [0.1, 1.0, 10.0]
+  target: claim_resampling_entropy
+  direct_correctness_ablation: true
+load_bearing_probe:
+  model_type: logistic_regression_l2
+  c_grid: [0.1, 1.0, 10.0]
+stability_probe:
+  model_type: logistic_regression_l2
+  c_grid: [0.1, 1.0, 10.0]
+semantic_matcher:
+  method: token_jaccard
+  threshold: 0.55
