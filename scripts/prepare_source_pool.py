@@ -7,6 +7,7 @@ from interp_experiment.config import load_config
 from interp_experiment.data.contracts import write_source_pool
 from interp_experiment.data.seed_corpora import build_hybrid_source_pool
 from interp_experiment.data.split_freeze import freeze_contract_splits
+from interp_experiment.env import load_repo_env
 
 
 def main() -> None:
@@ -16,6 +17,7 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=7)
     args = parser.parse_args()
 
+    load_repo_env()
     cfg = load_config("dataset.yaml")
     examples = build_hybrid_source_pool()
     frozen = freeze_contract_splits(

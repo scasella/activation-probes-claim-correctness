@@ -40,21 +40,28 @@ def split_answer_into_claims(answer_text: str) -> list[str]:
 def locate_claim_span(answer_text: str, claim_text: str, tokenized: TokenizedText | None = None) -> tuple[int, int]:
     tokenized = tokenized or whitespace_tokenize(answer_text)
     start_char = answer_text.find(claim_text)
-    if start_char < 0:
-        raise ValueError(f"Could not locate claim span in answer: {claim_text!r}")
-    end_char = start_char + len(claim_text)
-    start_token = None
-    end_token = None
-    for idx, (token_start, token_end) in enumerate(tokenized.offsets):
-        if start_token is None and token_end > start_char:
-            start_token = idx
-        if token_start < end_char:
-            end_token = idx
-        if token_start >= end_char:
-            break
-    if start_token is None or end_token is None:
-        raise ValueError(f"Could not translate claim span to token span: {claim_text!r}")
-    return start_token, end_token
+    if start_char >= 0:
+        end_char = start_char + len(claim_text)
+        start_token = None
+        end_token = None
+        for idx, (token_start, token_end) in enumerate(tokenized.offsets):
+            if start_token is None and token_end > start_char:
+                start_token = idx
+            if token_start < end_char:
+                end_token = idx
+            if token_start >= end_char:
+                break
+        if start_token is not None and end_token is not None:
+            return start_token, end_token
+
+    claim_tokens = whitespace_tokenize(claim_text).tokens
+    if not claim_tokens:
+        raise ValueError(f"Could not locate empty claim span in answer: {claim_text!r}")
+    for start_idx in range(0, len(tokenized.tokens) - len(claim_tokens) + 1):
+        window = tokenized.tokens[start_idx : start_idx + len(claim_tokens)]
+        if window == claim_tokens:
+            return start_idx, start_idx + len(claim_tokens) - 1
+    raise ValueError(f"Could not locate claim span in answer: {claim_text!r}")
 
 
 def build_canonical_claims(

@@ -1,7 +1,7 @@
 probe_version: v1
 sae:
   primary_release: goodfire-llama-3.1-8b-instruct
-  primary_id: llama3.1-8b-it/19-resid-post-gf
+  primary_id: layer_19
   robustness_releases:
     - release: llama-3.1-8b
       sae_ids:

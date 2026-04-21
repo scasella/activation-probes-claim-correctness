@@ -20,6 +20,18 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run a command inside a Modal GPU sandbox.")
     parser.add_argument("--gpu", default="A100-80GB")
     parser.add_argument("--timeout", type=int, default=30, help="Timeout in minutes.")
+    parser.add_argument(
+        "--sync-extra",
+        action="append",
+        default=[],
+        help="Optional pyproject extra to install into the sandbox image before running the command.",
+    )
+    parser.add_argument(
+        "--sync-group",
+        action="append",
+        default=[],
+        help="Optional dependency group to install into the sandbox image before running the command.",
+    )
     parser.add_argument("command", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     command = args.command
@@ -36,11 +48,39 @@ def main() -> None:
         for key in ("HF_TOKEN", "OPENAI_API_KEY", "PRIME_API_KEY", "TINKER_API_KEY")
         if os.environ.get(key)
     }
-    image = (
-        modal.Image.debian_slim(python_version="3.11")
-        .pip_install("uv")
-        .add_local_dir(str(root), remote_path="/app")
-    )
+    forwarded_env["PYTHONPATH"] = "/app/src"
+    image = modal.Image.debian_slim(python_version="3.11").pip_install("uv")
+    if args.sync_extra or args.sync_group:
+        extra_set = set(args.sync_extra)
+        if extra_set and extra_set.issubset({"inference", "interp"}) and not args.sync_group:
+            image = image.uv_pip_install(
+                "torch==2.6.0",
+                extra_index_url="https://download.pytorch.org/whl/cu124",
+            )
+            runtime_packages = [
+                "numpy>=1.26",
+                "PyYAML>=6.0",
+                "scipy>=1.13",
+                "scikit-learn>=1.5",
+                "accelerate>=1.2",
+                "transformers>=4.48",
+            ]
+            if "interp" in extra_set:
+                runtime_packages.extend(
+                    [
+                        "sae-lens>=6.0",
+                        "transformer-lens>=2.11",
+                    ]
+                )
+            image = image.uv_pip_install(*runtime_packages)
+        else:
+            image = image.uv_sync(
+                uv_project_dir=str(root),
+                extras=args.sync_extra or None,
+                groups=args.sync_group or None,
+                frozen=False,
+            )
+    image = image.add_local_dir(str(root), remote_path="/app")
     app = modal.App.lookup("interp-experiment", create_if_missing=True)
     sandbox = modal.Sandbox.create(
         *command,
@@ -54,6 +94,8 @@ def main() -> None:
     for line in sandbox.stdout:
         sys.stdout.write(line)
     sandbox.wait(raise_on_termination=False)
+    for line in sandbox.stderr:
+        sys.stderr.write(line)
     if sandbox.returncode not in (0, None):
         raise SystemExit(sandbox.returncode)
 

@@ -30,7 +30,7 @@ def main() -> None:
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--feature-source", choices=["residual", "sae"], default="residual")
     parser.add_argument("--sae-release", default="goodfire-llama-3.1-8b-instruct")
-    parser.add_argument("--sae-id", default="llama3.1-8b-it/19-resid-post-gf")
+    parser.add_argument("--sae-id", default="layer_19")
     args = parser.parse_args()
 
     load_repo_env()

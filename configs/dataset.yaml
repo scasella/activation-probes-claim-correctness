@@ -23,7 +23,7 @@ sources:
     category_field: category
   cuad:
     adapter: cuad_qa
-    hf_dataset: theatticusproject/cuad-qa
+    hf_dataset: chenghao/cuad_qa
     target_examples: 150
     contract_group: commercial_contract
     cross_dist_group: cuad_non_merger

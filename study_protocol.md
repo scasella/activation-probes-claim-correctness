@@ -21,6 +21,8 @@ The main source pool is `300` examples:
 
 Public answers are seeds only. Expert annotators remain the source of truth for claim correctness, load-bearingness, and flip evidence.
 
+Implementation note: the legacy `theatticusproject/cuad-qa` dataset script is not supported by the current `datasets` runtime. The current repo default uses the public QA derivative `chenghao/cuad_qa` as the CUAD-side source pool.
+
 ## Splits and holdouts
 
 - Freeze splits at the contract level before probe tuning.
@@ -65,6 +67,8 @@ Both self-report methods emit one record per canonical claim with:
 - `model_name`
 
 GPT-5.4 outputs are cached artifacts. The repo stores prompt packets, raw outputs, and parsed outputs. Modal reproducibility starts from those cached artifacts.
+
+Implementation note: the current SAELens release `goodfire-llama-3.1-8b-instruct` exposes the Goodfire checkpoint under SAE id `layer_19`.
 
 ## Probe targets
 
