@@ -23,6 +23,10 @@ data/cached_baselines/gpt54/raw/**
 !data/cached_baselines/gpt54/raw/.gitkeep
 data/cached_baselines/gpt54/parsed/**
 !data/cached_baselines/gpt54/parsed/.gitkeep
+data/cached_baselines/gpt54/requests/**
+!data/cached_baselines/gpt54/requests/.gitkeep
 data/cached_baselines/llama_self_report/raw/**
 !data/cached_baselines/llama_self_report/raw/.gitkeep
+data/cached_baselines/llama_self_report/parsed/**
+!data/cached_baselines/llama_self_report/parsed/.gitkeep
 uv.lock
