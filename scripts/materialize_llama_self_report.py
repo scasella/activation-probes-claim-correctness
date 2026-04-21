@@ -31,6 +31,8 @@ def main() -> None:
     parser.add_argument("--gpu", default="A100-80GB")
     parser.add_argument("--timeout", type=int, default=60)
     parser.add_argument("--max-new-tokens", type=int, default=384)
+    parser.add_argument("--skip-existing", action="store_true")
+    parser.add_argument("--max-examples", type=int, default=0)
     args = parser.parse_args()
 
     load_repo_env()
@@ -56,6 +58,11 @@ def main() -> None:
         "--max-new-tokens",
         str(args.max_new_tokens),
     ]
+    if args.skip_existing and args.raw_dir.exists():
+        existing = sorted(args.raw_dir.glob("*.txt"))
+        if args.max_examples and len(existing) >= args.max_examples:
+            print(f"Existing raw self-report files already cover requested chunk: {len(existing)}")
+            return
     result = subprocess.run(cmd, capture_output=True, text=True, check=False)
     args.log_path.write_text(
         result.stdout + ("\n--- STDERR ---\n" + result.stderr if result.stderr else ""),

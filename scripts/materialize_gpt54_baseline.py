@@ -28,6 +28,8 @@ def main() -> None:
     parser.add_argument("--summary-json", type=Path, default=Path("artifacts/runs/maud_gpt54_summary.json"))
     parser.add_argument("--log-dir", type=Path, default=Path("artifacts/runs/maud_gpt54_logs"))
     parser.add_argument("--model", default="gpt-5.4")
+    parser.add_argument("--skip-existing", action="store_true")
+    parser.add_argument("--max-examples", type=int, default=0)
     args = parser.parse_args()
 
     examples = {row.example_id: row for row in (ExampleRow.from_dict(item) for item in read_jsonl(args.examples_jsonl))}
@@ -42,21 +44,27 @@ def main() -> None:
 
     failures: list[dict[str, object]] = []
     parsed_total = 0
+    processed = 0
     with CodexAppServerClient(cwd=Path.cwd(), model=args.model) as client:
         for example_id, example in examples.items():
+            if args.max_examples and processed >= args.max_examples:
+                break
             claims = claims_by_example[example_id]
             packet_path = args.requests_dir / f"{example_id}.json"
             packet = export_gpt54_request_packet(example, claims, packet_path)
             expected_claim_ids = [claim.claim_id for claim in claims]
             prompt_text = packet["messages"][0]["content"] + "\n\n" + packet["messages"][1]["content"]
+            raw_path = args.raw_dir / f"{example_id}.json"
             try:
-                raw_text = client.run_prompt(
-                    prompt_text,
-                    output_schema=build_baseline_output_schema(expected_claim_ids),
-                )
-                payload = json.loads(raw_text)
-                raw_path = args.raw_dir / f"{example_id}.json"
-                raw_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+                if args.skip_existing and raw_path.exists():
+                    payload = json.loads(raw_path.read_text(encoding="utf-8"))
+                else:
+                    raw_text = client.run_prompt(
+                        prompt_text,
+                        output_schema=build_baseline_output_schema(expected_claim_ids),
+                    )
+                    payload = json.loads(raw_text)
+                    raw_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
                 predictions = parse_baseline_claims(
                     payload,
                     prompt_version=packet["prompt_version"],
@@ -69,6 +77,7 @@ def main() -> None:
                 continue
             write_jsonl(args.parsed_dir / f"{example_id}.jsonl", [row.as_dict() for row in predictions])
             parsed_total += len(predictions)
+            processed += 1
             print(f"MATERIALIZED_GPT54 {example_id} claims={len(predictions)}")
         if client.stderr_text:
             (args.log_dir / "app_server.stderr.log").write_text(client.stderr_text, encoding="utf-8")
@@ -78,6 +87,7 @@ def main() -> None:
         "n_examples_succeeded": len(examples) - len(failures),
         "n_examples_failed": len(failures),
         "n_predictions": parsed_total,
+        "n_examples_processed_this_run": processed,
         "model": args.model,
         "failures": failures,
     }
