@@ -5,16 +5,13 @@ from pathlib import Path
 
 from interp_experiment.activations.extractors import build_extractor
 from interp_experiment.env import load_repo_env
+from interp_experiment.generation.answers import build_deterministic_answer_prompt, clean_deterministic_answer
 from interp_experiment.io import read_jsonl, write_jsonl
 from interp_experiment.schemas import ExampleRow
 
 
 def build_prompt(example: ExampleRow) -> str:
-    return (
-        "Read the contract excerpt and answer the legal question.\n\n"
-        f"Contract excerpt:\n{example.excerpt_text}\n\n"
-        f"Question:\n{example.question_text}\n"
-    )
+    return build_deterministic_answer_prompt(example)
 
 
 def main() -> None:
@@ -25,6 +22,7 @@ def main() -> None:
     parser.add_argument("--layer-index", type=int, default=19)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument("--max-new-tokens", type=int, default=96)
     args = parser.parse_args()
 
     load_repo_env()
@@ -35,10 +33,10 @@ def main() -> None:
         if args.limit and index >= args.limit:
             updated.append(example.as_dict())
             continue
-        generated = extractor.generate_with_activations(build_prompt(example))
-        example.llama_answer_text = generated.answer_text
+        raw_answer = extractor.generate_text(build_prompt(example), max_new_tokens=args.max_new_tokens)
+        example.llama_answer_text = clean_deterministic_answer(raw_answer)
         updated.append(example.validate().as_dict())
-        print(f"Generated answer for {example.example_id} using {generated.extractor_name}")
+        print(f"Generated answer for {example.example_id}")
     write_jsonl(args.output_jsonl, updated)
 
 

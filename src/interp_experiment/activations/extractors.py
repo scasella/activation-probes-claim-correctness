@@ -23,6 +23,15 @@ class ExtractorBuildInfo:
 
 
 class ActivationExtractor:
+    def generate_text(
+        self,
+        prompt_text: str,
+        max_new_tokens: int = 256,
+        temperature: float = 0.0,
+        do_sample: bool = False,
+    ) -> str:  # pragma: no cover - interface
+        raise NotImplementedError
+
     def generate_with_activations(self, prompt_text: str) -> GenerationWithActivations:  # pragma: no cover - interface
         raise NotImplementedError
 
@@ -42,6 +51,24 @@ class TransformerLensActivationExtractor(ActivationExtractor):
             ) from exc
         self._torch = torch
         self._model = HookedTransformer.from_pretrained(model_name, device=device)
+
+    def generate_text(
+        self,
+        prompt_text: str,
+        max_new_tokens: int = 256,
+        temperature: float = 0.0,
+        do_sample: bool = False,
+    ) -> str:
+        prompt_tokens = self._model.to_tokens(prompt_text, prepend_bos=True)
+        generated = self._model.generate(
+            prompt_tokens,
+            max_new_tokens=max_new_tokens,
+            temperature=temperature,
+            do_sample=do_sample,
+        )
+        prompt_len = prompt_tokens.shape[-1]
+        answer_sequence = generated[0][prompt_len:]
+        return self._model.to_string(answer_sequence)
 
     def generate_with_activations(self, prompt_text: str) -> GenerationWithActivations:
         prompt_tokens = self._model.to_tokens(prompt_text, prepend_bos=True)
@@ -86,6 +113,25 @@ class HuggingFaceActivationExtractor(ActivationExtractor):
         self._tokenizer = AutoTokenizer.from_pretrained(model_name)
         self._model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16)
         self._model.to(device)
+
+    def generate_text(
+        self,
+        prompt_text: str,
+        max_new_tokens: int = 256,
+        temperature: float = 0.0,
+        do_sample: bool = False,
+    ) -> str:
+        batch = self._tokenizer(prompt_text, return_tensors="pt")
+        input_ids = batch["input_ids"].to(self.device)
+        sequences = self._model.generate(
+            input_ids,
+            max_new_tokens=max_new_tokens,
+            temperature=temperature,
+            do_sample=do_sample,
+        )[0]
+        prompt_len = int(input_ids.shape[1])
+        answer_ids = sequences[prompt_len:]
+        return self._tokenizer.decode(answer_ids, skip_special_tokens=True)
 
     def generate_with_activations(self, prompt_text: str) -> GenerationWithActivations:
         batch = self._tokenizer(prompt_text, return_tensors="pt")
