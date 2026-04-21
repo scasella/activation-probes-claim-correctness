@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -30,6 +31,11 @@ def main() -> None:
     load_repo_env()
     modal = _load_modal()
     root = Path(__file__).resolve().parents[1]
+    forwarded_env = {
+        key: os.environ[key]
+        for key in ("HF_TOKEN", "OPENAI_API_KEY", "PRIME_API_KEY", "TINKER_API_KEY")
+        if os.environ.get(key)
+    }
     image = (
         modal.Image.debian_slim(python_version="3.11")
         .pip_install("uv")
@@ -39,6 +45,7 @@ def main() -> None:
     sandbox = modal.Sandbox.create(
         *command,
         image=image,
+        env=forwarded_env,
         gpu=args.gpu,
         timeout=args.timeout * 60,
         workdir="/app",
