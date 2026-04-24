@@ -1,0 +1,200 @@
+{
+  "bootstrap": {
+    "confidence_level": 0.95,
+    "method": "paired claim-level bootstrap, percentile interval",
+    "n_resamples": 1000,
+    "seed": 240424
+  },
+  "contexts": {
+    "judge1_gpt54": {
+      "aurocs": {
+        "gpt54_cached": {
+          "auroc": 0.9435483870967742,
+          "ci_high": 0.983142037302726,
+          "ci_low": 0.9091078413112311,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "llama_self_report": {
+          "auroc": 0.5113636363636364,
+          "ci_high": 0.59861339171684,
+          "ci_low": 0.4159259259259259,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "residual_probe": {
+          "auroc": 0.7708944281524927,
+          "ci_high": 0.8412698412698413,
+          "ci_low": 0.6922238372093024,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "sae_probe": {
+          "auroc": 0.6765029325513197,
+          "ci_high": 0.7620187879904218,
+          "ci_low": 0.5837191358024691,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        }
+      },
+      "n_claims": 150,
+      "name": "judge1_gpt54",
+      "paired_deltas": {
+        "gpt54_minus_residual": {
+          "ci_excludes_zero": true,
+          "ci_high": 0.2559751870096697,
+          "ci_low": 0.10753461607624526,
+          "delta_auroc": 0.1726539589442816,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "residual_minus_sae": {
+          "ci_excludes_zero": true,
+          "ci_high": 0.18364686161296329,
+          "ci_low": 0.007683658170914542,
+          "delta_auroc": 0.09439149560117299,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "residual_minus_self_report": {
+          "ci_excludes_zero": true,
+          "ci_high": 0.3951612903225806,
+          "ci_low": 0.15235611845781338,
+          "delta_auroc": 0.2595307917888563,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        }
+      }
+    },
+    "judge2_kimi": {
+      "aurocs": {
+        "gpt54_cached": {
+          "auroc": 0.8724426258672834,
+          "ci_high": 0.9228571428571428,
+          "ci_low": 0.8060444444444445,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "llama_self_report": {
+          "auroc": 0.4662871375200142,
+          "ci_high": 0.6002844950213371,
+          "ci_low": 0.4200320227717488,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "residual_probe": {
+          "auroc": 0.7071695427859811,
+          "ci_high": 0.7836538461538461,
+          "ci_low": 0.6260668563300142,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "sae_probe": {
+          "auroc": 0.6521971179505426,
+          "ci_high": 0.7364285714285714,
+          "ci_low": 0.5548433048433048,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        }
+      },
+      "n_claims": 150,
+      "name": "judge2_kimi",
+      "paired_deltas": {
+        "gpt54_minus_residual": {
+          "ci_excludes_zero": true,
+          "ci_high": 0.2483974358974359,
+          "ci_low": 0.06614369762881078,
+          "delta_auroc": 0.16527308308130229,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "residual_minus_sae": {
+          "ci_excludes_zero": false,
+          "ci_high": 0.14527027027027029,
+          "ci_low": -0.04761904761904756,
+          "delta_auroc": 0.054972424835438516,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        },
+        "residual_minus_self_report": {
+          "ci_excludes_zero": true,
+          "ci_high": 0.3267555555555555,
+          "ci_low": 0.06606125356125359,
+          "delta_auroc": 0.24088240526596688,
+          "n_claims": 150,
+          "n_valid_resamples": 1000
+        }
+      }
+    },
+    "judge_agreement_set": {
+      "aurocs": {
+        "gpt54_cached": {
+          "auroc": 0.9814814814814815,
+          "ci_high": 1.0,
+          "ci_low": 0.9323333333333333,
+          "n_claims": 110,
+          "n_valid_resamples": 1000
+        },
+        "llama_self_report": {
+          "auroc": 0.4861111111111111,
+          "ci_high": 0.6091269841269841,
+          "ci_low": 0.3846673421141506,
+          "n_claims": 110,
+          "n_valid_resamples": 1000
+        },
+        "residual_probe": {
+          "auroc": 0.792989417989418,
+          "ci_high": 0.8683862433862434,
+          "ci_low": 0.7001652892561984,
+          "n_claims": 110,
+          "n_valid_resamples": 1000
+        },
+        "sae_probe": {
+          "auroc": 0.7119708994708994,
+          "ci_high": 0.8102479338842975,
+          "ci_low": 0.610501827849784,
+          "n_claims": 110,
+          "n_valid_resamples": 1000
+        }
+      },
+      "n_claims": 110,
+      "name": "judge_agreement_set",
+      "paired_deltas": {
+        "gpt54_minus_residual": {
+          "ci_excludes_zero": true,
+          "ci_high": 0.27347883597883593,
+          "ci_low": 0.0936775902019199,
+          "delta_auroc": 0.1884920634920635,
+          "n_claims": 110,
+          "n_valid_resamples": 1000
+        },
+        "residual_minus_sae": {
+          "ci_excludes_zero": false,
+          "ci_high": 0.18633333333333324,
+          "ci_low": -0.020073603211776536,
+          "delta_auroc": 0.0810185185185186,
+          "n_claims": 110,
+          "n_valid_resamples": 1000
+        },
+        "residual_minus_self_report": {
+          "ci_excludes_zero": true,
+          "ci_high": 0.4296590532936114,
+          "ci_low": 0.16425619834710736,
+          "delta_auroc": 0.3068783068783069,
+          "n_claims": 110,
+          "n_valid_resamples": 1000
+        }
+      }
+    }
+  },
+  "human_audit_subset": {
+    "n_valid_human_labels": 0,
+    "status": "pending_human_labels"
+  },
+  "method_labels": {
+    "gpt54_cached": "GPT-5.4 external scorer",
+    "llama_self_report": "Llama self-report",
+    "residual_probe": "Residual activation probe",
+    "sae_probe": "SAE feature probe"
+  }
+}
