@@ -1,0 +1,189 @@
+{
+  "annotation_version": "proxy_v2",
+  "annotator_id": "judge_kimi_k2_6",
+  "attempt": 1,
+  "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-395deaa87892\",\n      \"correctness_label\": \"true\",\n      \"load_bearing_label\": \"yes\",\n      \"flip_evidence_text\": \"is reasonably likely to have a material adverse effect\",\n      \"notes\": \"The MAE definition explicitly includes the forward-looking standard \\\"is reasonably likely to have,\\\" supporting the \\\"Yes\\\" answer.\"\n    }\n  ]\n}",
+  "elapsed_sec": 20.902534008026123,
+  "example_id": "maud-659c5aed0647",
+  "model": "moonshotai/kimi-k2.6",
+  "ok": true,
+  "parsed": {
+    "claims": [
+      {
+        "claim_id": "claim-395deaa87892",
+        "correctness_label": "true",
+        "flip_evidence_text": "is reasonably likely to have a material adverse effect",
+        "load_bearing_label": "yes",
+        "notes": "The MAE definition explicitly includes the forward-looking standard \"is reasonably likely to have,\" supporting the \"Yes\" answer."
+      }
+    ]
+  },
+  "prompt": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cCompany Material Adverse Effect\u201d shall mean any fact, circumstance, occurrence, event, change or effect (each, an \u201cEffect\u201d) that, individually or when taken together with all other Effects, has had or is reasonably likely to have a material adverse effect on (i) the business, operations, assets (including intangible assets), financial condition or results of operations of the Acquired Corporation, taken as a whole, or (ii) the ability of the Company to fulfill its obligations hereunder or to consummate the Transactions on the terms set forth herein; provided, however, that, none of the following Effects, by itself or when aggregated with any one or more other Effects, shall be deemed to be or constitute a Company Material Adverse Effect and none of the following Effects, by itself or when aggregated with any one or more other Effects, shall be taken into account when determining whether a Company Material Adverse Effect has occurred or is reasonably likely to occur for purposes of clause (i) above: Effects arising out of or resulting from (A) (1) general market, economic or political conditions in the United States or other locations in which the Acquired Corporations have operations worldwide, including any actual government shutdown, or (2) conditions (or any changes therein) in the industries in which any Acquired Corporation conducts business, in each case, including any acts of terrorism, war or epidemics or pandemics (including the COVID-19 pandemic, and any evolutions or mutations thereof or related or associated epidemics, pandemics or disease outbreaks (collectively, \u201cCOVID-19\u201d)), weather conditions or other force majeure events, in the case of each of clauses (1) and (2), solely to the extent that such Effects do not have and are not reasonably likely to have a disproportionate impact on the Acquired Corporations, taken as a whole, relative to other companies operating in the same industries in which the Acquired Corporations conduct business; (B) the announcement of the execution of this Agreement or the pendency of the Transactions (other than for purposes of any representation or warranty contained in Section 3 that expressly addresses the consequences resulting from the execution and delivery of the Agreement, or the announcement or pendency of the Transactions, but subject to disclosures in the applicable sections of the Company Disclosure Letter); (C) changes in GAAP or other accounting standards (or the interpretation thereof by a third party), solely to the extent that such changes do not have a disproportionate impact on the Acquired Corporations, taken as a whole, relative to other companies operating in the same industries in which the Acquired Corporations conduct business; (D) changes in applicable Law or regulatory conditions (or the interpretation thereof by a third party), solely to the extent that such changes do not have a disproportionate impact on the Acquired Corporations, taken as a whole, relative to other companies operating in the same industries in which the Acquired Corporations conduct business; (E) changes in the trading price or trading volume of the Company Shares, in and of themselves (it being understood that any underlying cause of any such change may, subject to the other terms of this definition, be taken into consideration when determining whether a Company Material Adverse Effect has occurred or is reasonably likely to occur); (F) any failure by any of the Acquired Corporations to meet any public estimates or expectations of the Company\u2019s bookings, revenue, earnings per share or other financial performance or results of operations for any period, or any failure by any of the Acquired Corporations to meet any internal budgets, plans or forecasts of its bookings, revenues, earnings, earnings per share or other financial performance or results of operations (it being understood that any underlying cause of any such failure may, subject to the other terms of this definition, be taken into consideration when determining whether a A-4 Company Material Adverse Effect has occurred or is reasonably likely to occur); (G) fluctuations in the value of any currency; (H) any action taken by any Acquired Corporation at the written direction of Parent or any action specifically required to be taken by any Acquired Corporation, or the failure of any Acquired Corporation to take any action that such Acquired Corporation is specifically prohibited by the terms of this Agreement from taking to the extent Parent fails to give its consent thereto after a written request therefor pursuant to Section 5.2; (I) Parent\u2019s or Purchaser\u2019s breach of this Agreement; (J) any regulatory or clinical changes, events or developments relating to any Product or any product or product candidate of any competitor of the Acquired Corporations (including with respect to any pre-clinical or clinical studies, tests, or results or announcements thereof (including any requirement to conduct further clinical studies or tests or any delayed or accelerated launch of any such Product or product or product candidate) or any increased incidence or severity of any previously identified side effects, adverse effects, adverse events or safety observations or reports of any new side effects, adverse events or safety observations) except for any changes, events or developments after the Agreement Date that would be reasonably likely to result in the withdrawal of Uplizna\u00ae from the market or the clinical hold or termination of any Company-sponsored clinical trial relating to any Product candidate, which shall not be disregarded in determining whether a Company Material Adverse Effect has occurred); or (K) any recommendations, statements or other pronouncements made, published or proposed by professional medical organizations, or any Governmental Entity, or any panel or advisory body empowered or appointed thereby, relating to any Product or any product or product candidate of any competitor of the Acquired Corporations after the Agreement Date. (Pages 86-87)\n\nQuestion:\nMAE Forward looking standard (Y/N)\n\nLlama answer:\nYes.\n\nCanonical claims:\n- claim-395deaa87892: Yes.\n",
+  "request": {
+    "messages": [
+      {
+        "content": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cCompany Material Adverse Effect\u201d shall mean any fact, circumstance, occurrence, event, change or effect (each, an \u201cEffect\u201d) that, individually or when taken together with all other Effects, has had or is reasonably likely to have a material adverse effect on (i) the business, operations, assets (including intangible assets), financial condition or results of operations of the Acquired Corporation, taken as a whole, or (ii) the ability of the Company to fulfill its obligations hereunder or to consummate the Transactions on the terms set forth herein; provided, however, that, none of the following Effects, by itself or when aggregated with any one or more other Effects, shall be deemed to be or constitute a Company Material Adverse Effect and none of the following Effects, by itself or when aggregated with any one or more other Effects, shall be taken into account when determining whether a Company Material Adverse Effect has occurred or is reasonably likely to occur for purposes of clause (i) above: Effects arising out of or resulting from (A) (1) general market, economic or political conditions in the United States or other locations in which the Acquired Corporations have operations worldwide, including any actual government shutdown, or (2) conditions (or any changes therein) in the industries in which any Acquired Corporation conducts business, in each case, including any acts of terrorism, war or epidemics or pandemics (including the COVID-19 pandemic, and any evolutions or mutations thereof or related or associated epidemics, pandemics or disease outbreaks (collectively, \u201cCOVID-19\u201d)), weather conditions or other force majeure events, in the case of each of clauses (1) and (2), solely to the extent that such Effects do not have and are not reasonably likely to have a disproportionate impact on the Acquired Corporations, taken as a whole, relative to other companies operating in the same industries in which the Acquired Corporations conduct business; (B) the announcement of the execution of this Agreement or the pendency of the Transactions (other than for purposes of any representation or warranty contained in Section 3 that expressly addresses the consequences resulting from the execution and delivery of the Agreement, or the announcement or pendency of the Transactions, but subject to disclosures in the applicable sections of the Company Disclosure Letter); (C) changes in GAAP or other accounting standards (or the interpretation thereof by a third party), solely to the extent that such changes do not have a disproportionate impact on the Acquired Corporations, taken as a whole, relative to other companies operating in the same industries in which the Acquired Corporations conduct business; (D) changes in applicable Law or regulatory conditions (or the interpretation thereof by a third party), solely to the extent that such changes do not have a disproportionate impact on the Acquired Corporations, taken as a whole, relative to other companies operating in the same industries in which the Acquired Corporations conduct business; (E) changes in the trading price or trading volume of the Company Shares, in and of themselves (it being understood that any underlying cause of any such change may, subject to the other terms of this definition, be taken into consideration when determining whether a Company Material Adverse Effect has occurred or is reasonably likely to occur); (F) any failure by any of the Acquired Corporations to meet any public estimates or expectations of the Company\u2019s bookings, revenue, earnings per share or other financial performance or results of operations for any period, or any failure by any of the Acquired Corporations to meet any internal budgets, plans or forecasts of its bookings, revenues, earnings, earnings per share or other financial performance or results of operations (it being understood that any underlying cause of any such failure may, subject to the other terms of this definition, be taken into consideration when determining whether a A-4 Company Material Adverse Effect has occurred or is reasonably likely to occur); (G) fluctuations in the value of any currency; (H) any action taken by any Acquired Corporation at the written direction of Parent or any action specifically required to be taken by any Acquired Corporation, or the failure of any Acquired Corporation to take any action that such Acquired Corporation is specifically prohibited by the terms of this Agreement from taking to the extent Parent fails to give its consent thereto after a written request therefor pursuant to Section 5.2; (I) Parent\u2019s or Purchaser\u2019s breach of this Agreement; (J) any regulatory or clinical changes, events or developments relating to any Product or any product or product candidate of any competitor of the Acquired Corporations (including with respect to any pre-clinical or clinical studies, tests, or results or announcements thereof (including any requirement to conduct further clinical studies or tests or any delayed or accelerated launch of any such Product or product or product candidate) or any increased incidence or severity of any previously identified side effects, adverse effects, adverse events or safety observations or reports of any new side effects, adverse events or safety observations) except for any changes, events or developments after the Agreement Date that would be reasonably likely to result in the withdrawal of Uplizna\u00ae from the market or the clinical hold or termination of any Company-sponsored clinical trial relating to any Product candidate, which shall not be disregarded in determining whether a Company Material Adverse Effect has occurred); or (K) any recommendations, statements or other pronouncements made, published or proposed by professional medical organizations, or any Governmental Entity, or any panel or advisory body empowered or appointed thereby, relating to any Product or any product or product candidate of any competitor of the Acquired Corporations after the Agreement Date. (Pages 86-87)\n\nQuestion:\nMAE Forward looking standard (Y/N)\n\nLlama answer:\nYes.\n\nCanonical claims:\n- claim-395deaa87892: Yes.\n",
+        "role": "user"
+      }
+    ],
+    "model": "moonshotai/kimi-k2.6",
+    "response_format": {
+      "json_schema": {
+        "name": "judge_annotations",
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "additionalProperties": false,
+          "properties": {
+            "claims": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "enum": [
+                      "claim-395deaa87892"
+                    ],
+                    "type": "string"
+                  },
+                  "correctness_label": {
+                    "enum": [
+                      "true",
+                      "false",
+                      "partially_true"
+                    ],
+                    "type": "string"
+                  },
+                  "flip_evidence_text": {
+                    "type": "string"
+                  },
+                  "load_bearing_label": {
+                    "enum": [
+                      "yes",
+                      "no"
+                    ],
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "correctness_label",
+                  "load_bearing_label",
+                  "flip_evidence_text",
+                  "notes"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "claims"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "type": "json_schema"
+    },
+    "temperature": 0,
+    "usage": {
+      "include": true
+    }
+  },
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-395deaa87892\",\n      \"correctness_label\": \"true\",\n      \"load_bearing_label\": \"yes\",\n      \"flip_evidence_text\": \"is reasonably likely to have a material adverse effect\",\n      \"notes\": \"The MAE definition explicitly includes the forward-looking standard \\\"is reasonably likely to have,\\\" supporting the \\\"Yes\\\" answer.\"\n    }\n  ]\n}",
+          "reasoning": "The user wants me to act as a proxy legal annotator. I need to evaluate the single claim against the provided contract excerpt, question, and model answer (Llama answer).\n\n Inputs:\n - Contract excerpt: Definition of \"Company Material Adverse Effect\" (MAE). It uses the standard \"has had or is reasonably likely to have a material adverse effect\". The question is \"MAE Forward looking standard (Y/N)\".\n - Llama answer: Yes.\n - Canonical claims: claim-395deaa87892: Yes.\n\n I need to determine:\n 1. correctness_label: true, false, or partially_true\n 2. load_bearing_label: yes or no\n 3. flip_evidence_text: required if load_bearing_label=yes, else empty string\n 4. notes: optional short note\n\n Analysis:\n The question asks whether the MAE definition includes a forward-looking standard.\n The contract text says: \"has had or is reasonably likely to have a material adverse effect\"\n The phrase \"is reasonably likely to have\" is forward-looking. It covers not just effects that have already occurred, but those that are likely to occur in the future.\n So the answer \"Yes\" is correct.\n\n correctness_label: true\n\n load_bearing_label: Is there specific text in the contract that supports/flips this? Yes, the phrase \"is reasonably likely to have\" is the load-bearing evidence. If this phrase were absent or different, the answer might change.\n So load_bearing_label: yes\n flip_evidence_text: The phrase \"is reasonably likely to have\" (or the full snippet containing it). I should provide the relevant excerpt.\n\n Let's check the exact wording in the contract:\n \"has had or is reasonably likely to have a material adverse effect on (i) the business...\"\n\n So flip_evidence_text could be: \"is reasonably likely to have a material adverse effect\"\n\n Wait, the instruction says \"flip_evidence_text: required if load_bearing_label=yes, else empty string\". This text is presumably the evidence that would flip the claim if it were different. It's the load-bearing text.\n\n notes: The definition explicitly includes the forward-looking language \"is reasonably likely to have\".\n\n Let me structure the output. It should be for each claim. The claim ID is claim-395deaa87892.\n\n Output format seems to be a list/dict for each claim. I'll provide it in a clear structured format.\n\n correctness_label: true\n load_bearing_label: yes\n flip_evidence_text: \"is reasonably likely to have a material adverse effect\"\n notes: The MAE definition explicitly includes the forward-looking standard \"is reasonably likely to have\" in addition to \"has had.\"\n\n Let me double-check if there's any nuance. The question is \"MAE Forward looking standard (Y/N)\". The Llama answer is \"Yes.\" The claim is \"Yes.\"\n The contract clearly states \"is reasonably likely to have\". This is a classic forward-looking MAE standard (as opposed to purely backward-looking \"has had\"). So yes, true.\n\n The flip evidence text should be the specific contractual language that bears the load of the answer. So I will quote the key phrase.\n\n Final check of required fields:\n - correctness_label: true\n - load_bearing_label: yes\n - flip_evidence_text: is reasonably likely to have a material adverse effect\n - notes: Optional.\n\n I'll provide a concise response.",
+          "reasoning_details": [
+            {
+              "format": "unknown",
+              "index": 0,
+              "text": "The user wants me to act as a proxy legal annotator. I need to evaluate the single claim against the provided contract excerpt, question, and model answer (Llama answer).\n\n Inputs:\n - Contract excerpt: Definition of \"Company Material Adverse Effect\" (MAE). It uses the standard \"has had or is reasonably likely to have a material adverse effect\". The question is \"MAE Forward looking standard (Y/N)\".\n - Llama answer: Yes.\n - Canonical claims: claim-395deaa87892: Yes.\n\n I need to determine:\n 1. correctness_label: true, false, or partially_true\n 2. load_bearing_label: yes or no\n 3. flip_evidence_text: required if load_bearing_label=yes, else empty string\n 4. notes: optional short note\n\n Analysis:\n The question asks whether the MAE definition includes a forward-looking standard.\n The contract text says: \"has had or is reasonably likely to have a material adverse effect\"\n The phrase \"is reasonably likely to have\" is forward-looking. It covers not just effects that have already occurred, but those that are likely to occur in the future.\n So the answer \"Yes\" is correct.\n\n correctness_label: true\n\n load_bearing_label: Is there specific text in the contract that supports/flips this? Yes, the phrase \"is reasonably likely to have\" is the load-bearing evidence. If this phrase were absent or different, the answer might change.\n So load_bearing_label: yes\n flip_evidence_text: The phrase \"is reasonably likely to have\" (or the full snippet containing it). I should provide the relevant excerpt.\n\n Let's check the exact wording in the contract:\n \"has had or is reasonably likely to have a material adverse effect on (i) the business...\"\n\n So flip_evidence_text could be: \"is reasonably likely to have a material adverse effect\"\n\n Wait, the instruction says \"flip_evidence_text: required if load_bearing_label=yes, else empty string\". This text is presumably the evidence that would flip the claim if it were different. It's the load-bearing text.\n\n notes: The definition explicitly includes the forward-looking language \"is reasonably likely to have\".\n\n Let me structure the output. It should be for each claim. The claim ID is claim-395deaa87892.\n\n Output format seems to be a list/dict for each claim. I'll provide it in a clear structured format.\n\n correctness_label: true\n load_bearing_label: yes\n flip_evidence_text: \"is reasonably likely to have a material adverse effect\"\n notes: The MAE definition explicitly includes the forward-looking standard \"is reasonably likely to have\" in addition to \"has had.\"\n\n Let me double-check if there's any nuance. The question is \"MAE Forward looking standard (Y/N)\". The Llama answer is \"Yes.\" The claim is \"Yes.\"\n The contract clearly states \"is reasonably likely to have\". This is a classic forward-looking MAE standard (as opposed to purely backward-looking \"has had\"). So yes, true.\n\n The flip evidence text should be the specific contractual language that bears the load of the answer. So I will quote the key phrase.\n\n Final check of required fields:\n - correctness_label: true\n - load_bearing_label: yes\n - flip_evidence_text: is reasonably likely to have a material adverse effect\n - notes: Optional.\n\n I'll provide a concise response.",
+              "type": "reasoning.text"
+            }
+          ],
+          "refusal": null,
+          "role": "assistant"
+        },
+        "native_finish_reason": "stop"
+      }
+    ],
+    "created": 1777050053,
+    "id": "9f16aaafa999826f-IAD",
+    "model": "moonshotai/kimi-k2.6",
+    "object": "chat.completion",
+    "system_fingerprint": "fpv0_fdcd1966",
+    "usage": {
+      "completion_tokens": 791,
+      "cost": 0.0044,
+      "input_tokens": 1284,
+      "output_tokens": 791,
+      "prompt_tokens": 1284,
+      "total_tokens": 2075
+    }
+  },
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "claims": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "claim_id": {
+              "enum": [
+                "claim-395deaa87892"
+              ],
+              "type": "string"
+            },
+            "correctness_label": {
+              "enum": [
+                "true",
+                "false",
+                "partially_true"
+              ],
+              "type": "string"
+            },
+            "flip_evidence_text": {
+              "type": "string"
+            },
+            "load_bearing_label": {
+              "enum": [
+                "yes",
+                "no"
+              ],
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "claim_id",
+            "correctness_label",
+            "load_bearing_label",
+            "flip_evidence_text",
+            "notes"
+          ],
+          "type": "object"
+        },
+        "maxItems": 1,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "claims"
+    ],
+    "type": "object"
+  }
+}

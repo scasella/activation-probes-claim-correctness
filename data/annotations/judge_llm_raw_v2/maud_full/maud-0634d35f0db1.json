@@ -1,0 +1,189 @@
+{
+  "annotation_version": "proxy_v2",
+  "annotator_id": "judge_kimi_k2_6",
+  "attempt": 1,
+  "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-5cc4b9ca8ebe\",\n      \"correctness_label\": \"false\",\n      \"flip_evidence_text\": \"provided that no such event, condition, change, occurrence or development of a state of facts shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1) changes or proposed changes in any applicable Law or GAAP ... (2) changes generally affecting the economy or financial or securities markets ... (4) acts of terrorism, war, armed hostilities, natural disasters ... or (7) the announcement, pendency, or consummation of the Transactions\",\n      \"load_bearing_label\": \"yes\",\n      \"notes\": \"The carveouts are explicitly limited to clause (i); clause (ii) regarding ability to consummate is not subject to them.\"\n    }\n  ]\n}",
+  "elapsed_sec": 20.065765857696533,
+  "example_id": "maud-0634d35f0db1",
+  "model": "moonshotai/kimi-k2.6",
+  "ok": true,
+  "parsed": {
+    "claims": [
+      {
+        "claim_id": "claim-5cc4b9ca8ebe",
+        "correctness_label": "false",
+        "flip_evidence_text": "provided that no such event, condition, change, occurrence or development of a state of facts shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1) changes or proposed changes in any applicable Law or GAAP ... (2) changes generally affecting the economy or financial or securities markets ... (4) acts of terrorism, war, armed hostilities, natural disasters ... or (7) the announcement, pendency, or consummation of the Transactions",
+        "load_bearing_label": "yes",
+        "notes": "The carveouts are explicitly limited to clause (i); clause (ii) regarding ability to consummate is not subject to them."
+      }
+    ]
+  },
+  "prompt": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cCompany Material Adverse Effect\u201d means any event, condition, change, occurrence or development of a state of facts, individually or in the aggregate with all other events, conditions, changes, occurrences or developments of a state of facts, that has had, or would reasonably be expected to have, a material adverse effect on (i) the business, operations, assets, properties, liabilities (contingent or otherwise), condition (financial or otherwise) or results of operations of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions on or before the Outside Date; provided that no such event, condition, change, occurrence or development of a state of facts shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1) changes or proposed changes in any applicable Law or GAAP or interpretation thereof occurring after the date hereof, (2) changes generally affecting the economy or financial or securities markets (including changes in interest rates and exchange rates), (3) general conditions in the biopharmaceutical industry, (4) 3 acts of terrorism, war, armed hostilities, natural disasters, weather-related event or fire, epidemic, pandemic or disease outbreak (including COVID-19 or any COVID-19 Measures), or any escalation or general worsening of any of the foregoing, (5) changes in the market price or trading volume of the shares of Company Common Stock (it being understood and agreed that the facts and circumstances giving rise to such changes may be taken into account in determining whether there has been a Company Material Adverse Effect), (6) any failure, in and of itself, by the Company to meet any internal or published industry analyst projections or forecasts or estimates of revenues or earnings for any period ending on or after the date hereof (it being understood and agreed that the facts and circumstances giving rise to such failure may be taken into account in determining whether there has been a Company Material Adverse Effect) or (7) the announcement, pendency, or consummation of the Transactions (including any loss of or adverse change in the relationship of the Company and the Company Subsidiaries with their respective employees, contractors, customers, partners or suppliers) (it being understood and agreed that this clause (7) shall not apply with respect to any representation or warranty the purpose of which is to address the consequences of the execution and delivery of this Agreement, the consummation of the Transactions or the performance of obligations hereunder), in each case with respect to clauses (1), (2), (3), and (4), only if Company and the Company Subsidiaries, taken as a whole, are not disproportionately affected by such changes or events relative to other companies in the biopharmaceutical industry, and then only to the extent of such disproportionate impact. (Pages 7-8)\n\nQuestion:\n\"Ability to consummate\" concept is subject to MAE carveouts\n\nLlama answer:\nThe \"ability to consummate\" concept in clause (ii) of the definition of \"Company Material Adverse Effect\" is subject to certain carveouts, including changes in applicable Law or GAAP, general economic or market conditions, acts of terrorism or natural disasters, and the announcement or consummation of the Transactions.\n\nCanonical claims:\n- claim-5cc4b9ca8ebe: The \"ability to consummate\" concept in clause (ii) of the definition of \"Company Material Adverse Effect\" is subject to certain carveouts, including changes in applicable Law or GAAP, general economic or market conditions, acts of terrorism or natural disasters, and the announcement or consummation of the Transactions.\n",
+  "request": {
+    "messages": [
+      {
+        "content": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cCompany Material Adverse Effect\u201d means any event, condition, change, occurrence or development of a state of facts, individually or in the aggregate with all other events, conditions, changes, occurrences or developments of a state of facts, that has had, or would reasonably be expected to have, a material adverse effect on (i) the business, operations, assets, properties, liabilities (contingent or otherwise), condition (financial or otherwise) or results of operations of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions on or before the Outside Date; provided that no such event, condition, change, occurrence or development of a state of facts shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1) changes or proposed changes in any applicable Law or GAAP or interpretation thereof occurring after the date hereof, (2) changes generally affecting the economy or financial or securities markets (including changes in interest rates and exchange rates), (3) general conditions in the biopharmaceutical industry, (4) 3 acts of terrorism, war, armed hostilities, natural disasters, weather-related event or fire, epidemic, pandemic or disease outbreak (including COVID-19 or any COVID-19 Measures), or any escalation or general worsening of any of the foregoing, (5) changes in the market price or trading volume of the shares of Company Common Stock (it being understood and agreed that the facts and circumstances giving rise to such changes may be taken into account in determining whether there has been a Company Material Adverse Effect), (6) any failure, in and of itself, by the Company to meet any internal or published industry analyst projections or forecasts or estimates of revenues or earnings for any period ending on or after the date hereof (it being understood and agreed that the facts and circumstances giving rise to such failure may be taken into account in determining whether there has been a Company Material Adverse Effect) or (7) the announcement, pendency, or consummation of the Transactions (including any loss of or adverse change in the relationship of the Company and the Company Subsidiaries with their respective employees, contractors, customers, partners or suppliers) (it being understood and agreed that this clause (7) shall not apply with respect to any representation or warranty the purpose of which is to address the consequences of the execution and delivery of this Agreement, the consummation of the Transactions or the performance of obligations hereunder), in each case with respect to clauses (1), (2), (3), and (4), only if Company and the Company Subsidiaries, taken as a whole, are not disproportionately affected by such changes or events relative to other companies in the biopharmaceutical industry, and then only to the extent of such disproportionate impact. (Pages 7-8)\n\nQuestion:\n\"Ability to consummate\" concept is subject to MAE carveouts\n\nLlama answer:\nThe \"ability to consummate\" concept in clause (ii) of the definition of \"Company Material Adverse Effect\" is subject to certain carveouts, including changes in applicable Law or GAAP, general economic or market conditions, acts of terrorism or natural disasters, and the announcement or consummation of the Transactions.\n\nCanonical claims:\n- claim-5cc4b9ca8ebe: The \"ability to consummate\" concept in clause (ii) of the definition of \"Company Material Adverse Effect\" is subject to certain carveouts, including changes in applicable Law or GAAP, general economic or market conditions, acts of terrorism or natural disasters, and the announcement or consummation of the Transactions.\n",
+        "role": "user"
+      }
+    ],
+    "model": "moonshotai/kimi-k2.6",
+    "response_format": {
+      "json_schema": {
+        "name": "judge_annotations",
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "additionalProperties": false,
+          "properties": {
+            "claims": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "enum": [
+                      "claim-5cc4b9ca8ebe"
+                    ],
+                    "type": "string"
+                  },
+                  "correctness_label": {
+                    "enum": [
+                      "true",
+                      "false",
+                      "partially_true"
+                    ],
+                    "type": "string"
+                  },
+                  "flip_evidence_text": {
+                    "type": "string"
+                  },
+                  "load_bearing_label": {
+                    "enum": [
+                      "yes",
+                      "no"
+                    ],
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "correctness_label",
+                  "load_bearing_label",
+                  "flip_evidence_text",
+                  "notes"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "claims"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "type": "json_schema"
+    },
+    "temperature": 0,
+    "usage": {
+      "include": true
+    }
+  },
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-5cc4b9ca8ebe\",\n      \"correctness_label\": \"false\",\n      \"flip_evidence_text\": \"provided that no such event, condition, change, occurrence or development of a state of facts shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1) changes or proposed changes in any applicable Law or GAAP ... (2) changes generally affecting the economy or financial or securities markets ... (4) acts of terrorism, war, armed hostilities, natural disasters ... or (7) the announcement, pendency, or consummation of the Transactions\",\n      \"load_bearing_label\": \"yes\",\n      \"notes\": \"The carveouts are explicitly limited to clause (i); clause (ii) regarding ability to consummate is not subject to them.\"\n    }\n  ]\n}",
+          "reasoning": "The user wants me to act as a proxy legal annotator. I need to evaluate the claim against the contract excerpt, question, and model answer (Llama answer).\n\nFirst, let's understand the contract excerpt:\n- \"Company Material Adverse Effect\" has two clauses:\n  - (i) business, operations, assets, etc. of Company and Subsidiaries taken as a whole\n  - (ii) ability of Company to consummate Transactions on or before Outside Date\n- Then there are carveouts (1)-(7) that apply to clause (i): \"provided that no such event... shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1)...\"\n- The carveouts explicitly say \"for purposes of clause (i) above\"\n- Then there's a disproportionality clause at the end: \"in each case with respect to clauses (1), (2), (3), and (4), only if Company... are not disproportionately affected...\"\n\nSo the carveouts (1)-(7) explicitly only apply to clause (i), NOT clause (ii).\n\nThe claim states: \"The 'ability to consummate' concept in clause (ii) of the definition of 'Company Material Adverse Effect' is subject to certain carveouts, including changes in applicable Law or GAAP, general economic or market conditions, acts of terrorism or natural disasters, and the announcement or consummation of the Transactions.\"\n\nThis is FALSE. The carveouts are explicitly limited to clause (i). The \"ability to consummate\" in clause (ii) is NOT subject to these carveouts.\n\nWait, let me double-check. The text says: \"provided that no such event... shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1)...\"\n\nYes, \"for purposes of clause (i) above\". So the carveouts do not apply to clause (ii).\n\nTherefore, the claim is false.\n\nNow, is it load-bearing? The claim is about whether the carveouts apply to clause (ii). If we flip the evidence text to show that the carveouts only apply to clause (i), that would be load-bearing. The key evidence is the phrase \"for purposes of clause (i) above\".\n\nSo:\n- correctness_label: false\n- load_bearing_label: yes\n- flip_evidence_text: The phrase \"for purposes of clause (i) above\" explicitly limits the carveouts (including changes in Law/GAAP, general economic conditions, terrorism/natural disasters, and announcement of Transactions) to clause (i), meaning they do not apply to the \"ability to consummate\" concept in clause (ii).\n- notes: empty or brief note\n\nWait, I need to check if there's any nuance. The claim says the ability to consummate is subject to certain carveouts. The text explicitly says the carveouts are for clause (i). So the claim is definitely false.\n\nIs it load-bearing? Yes, because the contract text explicitly states the limitation to clause (i), which directly contradicts the claim.\n\nLet me format the flip_evidence_text carefully. It should be the text from the contract that shows the opposite.\n\nThe relevant text: \"provided that no such event, condition, change, occurrence or development of a state of facts shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1)...\"\n\nSo the flip evidence should quote or reference this.\n\nLet me construct the JSON-like output. The user wants for each claim:\n- correctness_label\n- load_bearing_label\n- flip_evidence_text\n- notes\n\nThe claim ID is claim-5cc4b9ca8ebe.\n\nOutput format should probably be a list or just the fields. I'll provide it clearly.\n\nWait, I should also consider: is the Llama answer the model answer? The user says \"model answer\" - but actually in the prompt it says \"Llama answer\" and then \"Canonical claims\". The canonical claim is identical to the Llama answer. So the claim IS the Llama answer. I need to evaluate the canonical claim.\n\nYes, the canonical claim matches the Llama answer. I need to determine if that claim is correct.\n\nClaim: The \"ability to consummate\" concept in clause (ii)... is subject to certain carveouts...\n\nContract: carveouts are explicitly \"for purposes of clause (i) above\".\n\nTherefore: false.\n\nLoad bearing: yes, because the contract explicitly limits carveouts to clause (i).\n\nFlip evidence: \"provided that no such event... shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above\"\n\nNotes: The carveouts explicitly apply only to clause (i), not clause (ii).\n\nLet me make sure I'm not missing anything. Could clause (ii) be implicitly subject to some carveouts? The text says \"for purposes of clause (i) above\". It doesn't say \"for purposes of clause (ii)\". The \"ability to consummate\" is a separate concept. In many MAE definitions, the \"ability to consummate\" prong is indeed not subject to the carveouts. This is a common negotiation point. So the claim is definitely false.\n\nOne more check: the claim mentions \"including changes in applicable Law or GAAP, general economic or market conditions, acts of terrorism or natural disasters, and the announcement or consummation of the Transactions.\" These correspond to carveouts (1), (2), (4), and (7). The text says these are only for clause (i). So yes, false.\n\nFinal check on load_bearing: The definition of load_bearing is whether the evidence in the contract is sufficient to determine the correctness label. Since the contract explicitly says \"for purposes of clause (i) above\", this is direct evidence that the claim is false. So yes, load-bearing.\n\nI'll format the output.",
+          "reasoning_details": [
+            {
+              "format": "unknown",
+              "index": 0,
+              "text": "The user wants me to act as a proxy legal annotator. I need to evaluate the claim against the contract excerpt, question, and model answer (Llama answer).\n\nFirst, let's understand the contract excerpt:\n- \"Company Material Adverse Effect\" has two clauses:\n  - (i) business, operations, assets, etc. of Company and Subsidiaries taken as a whole\n  - (ii) ability of Company to consummate Transactions on or before Outside Date\n- Then there are carveouts (1)-(7) that apply to clause (i): \"provided that no such event... shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1)...\"\n- The carveouts explicitly say \"for purposes of clause (i) above\"\n- Then there's a disproportionality clause at the end: \"in each case with respect to clauses (1), (2), (3), and (4), only if Company... are not disproportionately affected...\"\n\nSo the carveouts (1)-(7) explicitly only apply to clause (i), NOT clause (ii).\n\nThe claim states: \"The 'ability to consummate' concept in clause (ii) of the definition of 'Company Material Adverse Effect' is subject to certain carveouts, including changes in applicable Law or GAAP, general economic or market conditions, acts of terrorism or natural disasters, and the announcement or consummation of the Transactions.\"\n\nThis is FALSE. The carveouts are explicitly limited to clause (i). The \"ability to consummate\" in clause (ii) is NOT subject to these carveouts.\n\nWait, let me double-check. The text says: \"provided that no such event... shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1)...\"\n\nYes, \"for purposes of clause (i) above\". So the carveouts do not apply to clause (ii).\n\nTherefore, the claim is false.\n\nNow, is it load-bearing? The claim is about whether the carveouts apply to clause (ii). If we flip the evidence text to show that the carveouts only apply to clause (i), that would be load-bearing. The key evidence is the phrase \"for purposes of clause (i) above\".\n\nSo:\n- correctness_label: false\n- load_bearing_label: yes\n- flip_evidence_text: The phrase \"for purposes of clause (i) above\" explicitly limits the carveouts (including changes in Law/GAAP, general economic conditions, terrorism/natural disasters, and announcement of Transactions) to clause (i), meaning they do not apply to the \"ability to consummate\" concept in clause (ii).\n- notes: empty or brief note\n\nWait, I need to check if there's any nuance. The claim says the ability to consummate is subject to certain carveouts. The text explicitly says the carveouts are for clause (i). So the claim is definitely false.\n\nIs it load-bearing? Yes, because the contract text explicitly states the limitation to clause (i), which directly contradicts the claim.\n\nLet me format the flip_evidence_text carefully. It should be the text from the contract that shows the opposite.\n\nThe relevant text: \"provided that no such event, condition, change, occurrence or development of a state of facts shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above to the extent that it results from (1)...\"\n\nSo the flip evidence should quote or reference this.\n\nLet me construct the JSON-like output. The user wants for each claim:\n- correctness_label\n- load_bearing_label\n- flip_evidence_text\n- notes\n\nThe claim ID is claim-5cc4b9ca8ebe.\n\nOutput format should probably be a list or just the fields. I'll provide it clearly.\n\nWait, I should also consider: is the Llama answer the model answer? The user says \"model answer\" - but actually in the prompt it says \"Llama answer\" and then \"Canonical claims\". The canonical claim is identical to the Llama answer. So the claim IS the Llama answer. I need to evaluate the canonical claim.\n\nYes, the canonical claim matches the Llama answer. I need to determine if that claim is correct.\n\nClaim: The \"ability to consummate\" concept in clause (ii)... is subject to certain carveouts...\n\nContract: carveouts are explicitly \"for purposes of clause (i) above\".\n\nTherefore: false.\n\nLoad bearing: yes, because the contract explicitly limits carveouts to clause (i).\n\nFlip evidence: \"provided that no such event... shall be considered in determining whether a Company Material Adverse Effect has occurred for purposes of clause (i) above\"\n\nNotes: The carveouts explicitly apply only to clause (i), not clause (ii).\n\nLet me make sure I'm not missing anything. Could clause (ii) be implicitly subject to some carveouts? The text says \"for purposes of clause (i) above\". It doesn't say \"for purposes of clause (ii)\". The \"ability to consummate\" is a separate concept. In many MAE definitions, the \"ability to consummate\" prong is indeed not subject to the carveouts. This is a common negotiation point. So the claim is definitely false.\n\nOne more check: the claim mentions \"including changes in applicable Law or GAAP, general economic or market conditions, acts of terrorism or natural disasters, and the announcement or consummation of the Transactions.\" These correspond to carveouts (1), (2), (4), and (7). The text says these are only for clause (i). So yes, false.\n\nFinal check on load_bearing: The definition of load_bearing is whether the evidence in the contract is sufficient to determine the correctness label. Since the contract explicitly says \"for purposes of clause (i) above\", this is direct evidence that the claim is false. So yes, load-bearing.\n\nI'll format the output.",
+              "type": "reasoning.text"
+            }
+          ],
+          "refusal": null,
+          "role": "assistant"
+        },
+        "native_finish_reason": "stop"
+      }
+    ],
+    "created": 1777050074,
+    "id": "9f16ab323915d638-IAD",
+    "model": "moonshotai/kimi-k2.6",
+    "object": "chat.completion",
+    "system_fingerprint": null,
+    "usage": {
+      "completion_tokens": 1453,
+      "cost": 0.0066,
+      "input_tokens": 870,
+      "output_tokens": 1453,
+      "prompt_tokens": 870,
+      "total_tokens": 2323
+    }
+  },
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "claims": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "claim_id": {
+              "enum": [
+                "claim-5cc4b9ca8ebe"
+              ],
+              "type": "string"
+            },
+            "correctness_label": {
+              "enum": [
+                "true",
+                "false",
+                "partially_true"
+              ],
+              "type": "string"
+            },
+            "flip_evidence_text": {
+              "type": "string"
+            },
+            "load_bearing_label": {
+              "enum": [
+                "yes",
+                "no"
+              ],
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "claim_id",
+            "correctness_label",
+            "load_bearing_label",
+            "flip_evidence_text",
+            "notes"
+          ],
+          "type": "object"
+        },
+        "maxItems": 1,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "claims"
+    ],
+    "type": "object"
+  }
+}

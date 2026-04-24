@@ -1,0 +1,189 @@
+{
+  "annotation_version": "proxy_v2",
+  "annotator_id": "judge_kimi_k2_6",
+  "attempt": 1,
+  "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-34de3e99dc49\",\n      \"correctness_label\": \"true\",\n      \"flip_evidence_text\": \"\\\"Company Material Adverse Effect\\\" shall mean any event, condition, change, occurrence or development, circumstance or effect that, individually or in the aggregate, has had or would be reasonably expected to have a material adverse effect on (i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions\",\n      \"load_bearing_label\": \"yes\",\n      \"notes\": \"The definition enumerates specific items (business, operations, assets, liabilities, financial condition, ability to consummate) but does not mention \\\"prospects\\\".\"\n    }\n  ]\n}",
+  "elapsed_sec": 29.49146795272827,
+  "example_id": "maud-d0ecf37882d8",
+  "model": "moonshotai/kimi-k2.6",
+  "ok": true,
+  "parsed": {
+    "claims": [
+      {
+        "claim_id": "claim-34de3e99dc49",
+        "correctness_label": "true",
+        "flip_evidence_text": "\"Company Material Adverse Effect\" shall mean any event, condition, change, occurrence or development, circumstance or effect that, individually or in the aggregate, has had or would be reasonably expected to have a material adverse effect on (i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions",
+        "load_bearing_label": "yes",
+        "notes": "The definition enumerates specific items (business, operations, assets, liabilities, financial condition, ability to consummate) but does not mention \"prospects\"."
+      }
+    ]
+  },
+  "prompt": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cCompany Material Adverse Effect\u201d shall mean any event, condition, change, occurrence or development, circumstance or effect that, individually or in the aggregate, has had or would be reasonably expected to have a material adverse effect on (i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions; provided, however, that, for purposes of clause (i) above, none of the following shall be deemed in and of themselves, either alone or in combination, to constitute, and none of the following shall be taken into account in determining whether there is, or would reasonably expected to be, a Company Material Adverse Effect: (A) general political, economic or market conditions or general changes or developments in the industry in which the Company and the Company Subsidiaries operate, except to the extent the Company and the Company Subsidiaries are adversely affected disproportionately relative to other participants in such industry, (B) any event, circumstance, change or effect arising directly or indirectly from or otherwise relating to any act of terrorism, war (whether declared or not), cyberattack, national or international calamity, natural disaster, pandemic, epidemic or disease A-4 outbreak (including COVID-19) or any other similar event, except to the extent the Company and the Company Subsidiaries are adversely affected disproportionately relative to other participants in the industry in which the Company and the Company Subsidiaries operate, (C) from the Transactions or the announcement or pendency thereof (other than for purposes of any representation or warranty contained in Section 3.3), including to the extent so resulting in any reduction in billings or revenue or any loss of employees of the Company or the Company Subsidiaries or disruption in (or loss of) customer, supplier, distributor, landlord, partner or similar relationships attributable to the announcement or pendency of the Transaction, (D) any event, condition, change, occurrence or development, circumstance or effect arising directly or indirectly from or otherwise relating to a change in, or action taken required to comply with any change in any Law (including COVID-19 Measures) or accounting regulations, except to the extent the Company and the Company Subsidiaries are adversely affected disproportionately relative to other participants in the industry in which the Company and the Company Subsidiaries operate, (E) changes in the price or trading volume of the Company\u2019s stock (provided that the underlying cause of such change in price or trading volume may be taken into account in determining whether there is, or would reasonably be expected to be, a Company Material Adverse Effect), (F) any failure by the Company to meet public or internal revenue, earnings or other financial projections (provided that the underlying cause of such failure may be taken into account in determining whether there is, or would reasonably be expected to be, a Company Material Adverse Effect), (G) any change resulting or arising from the identity of, or any facts or circumstances relating to, Parent, Purchaser or any of their respective Affiliates, (H) any event, circumstance, change or effect arising directly or indirectly from or otherwise relating to fluctuations in the value of any currency, except to the extent the Company and the Company Subsidiaries are adversely affected disproportionately relative to other participants in the industry in which the Company and the Company Subsidiaries operate, or (I) the taking of any action expressly required by this Agreement (including, without limitation, any actions taken in compliance with this Agreement to obtain any approval or authorization under applicable Antitrust Laws for the consummation of the Offer or the Merger) or expressly approved of in writing by Parent, or the failure to take any action expressly prohibited by this Agreement (if the Company has timely requested a waiver from Parent) or (J) any litigation with respect to the application of any Law to this Agreement or the Transaction. (Pages 70-71)\n\nQuestion:\nMAE definition includes reference to Target \"prospects\" (Y/N)\n\nLlama answer:\nNo, the MAE definition does not include reference to the Target's \"prospects\".\n\nCanonical claims:\n- claim-34de3e99dc49: No, the MAE definition does not include reference to the Target's \"prospects\".\n",
+  "request": {
+    "messages": [
+      {
+        "content": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cCompany Material Adverse Effect\u201d shall mean any event, condition, change, occurrence or development, circumstance or effect that, individually or in the aggregate, has had or would be reasonably expected to have a material adverse effect on (i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions; provided, however, that, for purposes of clause (i) above, none of the following shall be deemed in and of themselves, either alone or in combination, to constitute, and none of the following shall be taken into account in determining whether there is, or would reasonably expected to be, a Company Material Adverse Effect: (A) general political, economic or market conditions or general changes or developments in the industry in which the Company and the Company Subsidiaries operate, except to the extent the Company and the Company Subsidiaries are adversely affected disproportionately relative to other participants in such industry, (B) any event, circumstance, change or effect arising directly or indirectly from or otherwise relating to any act of terrorism, war (whether declared or not), cyberattack, national or international calamity, natural disaster, pandemic, epidemic or disease A-4 outbreak (including COVID-19) or any other similar event, except to the extent the Company and the Company Subsidiaries are adversely affected disproportionately relative to other participants in the industry in which the Company and the Company Subsidiaries operate, (C) from the Transactions or the announcement or pendency thereof (other than for purposes of any representation or warranty contained in Section 3.3), including to the extent so resulting in any reduction in billings or revenue or any loss of employees of the Company or the Company Subsidiaries or disruption in (or loss of) customer, supplier, distributor, landlord, partner or similar relationships attributable to the announcement or pendency of the Transaction, (D) any event, condition, change, occurrence or development, circumstance or effect arising directly or indirectly from or otherwise relating to a change in, or action taken required to comply with any change in any Law (including COVID-19 Measures) or accounting regulations, except to the extent the Company and the Company Subsidiaries are adversely affected disproportionately relative to other participants in the industry in which the Company and the Company Subsidiaries operate, (E) changes in the price or trading volume of the Company\u2019s stock (provided that the underlying cause of such change in price or trading volume may be taken into account in determining whether there is, or would reasonably be expected to be, a Company Material Adverse Effect), (F) any failure by the Company to meet public or internal revenue, earnings or other financial projections (provided that the underlying cause of such failure may be taken into account in determining whether there is, or would reasonably be expected to be, a Company Material Adverse Effect), (G) any change resulting or arising from the identity of, or any facts or circumstances relating to, Parent, Purchaser or any of their respective Affiliates, (H) any event, circumstance, change or effect arising directly or indirectly from or otherwise relating to fluctuations in the value of any currency, except to the extent the Company and the Company Subsidiaries are adversely affected disproportionately relative to other participants in the industry in which the Company and the Company Subsidiaries operate, or (I) the taking of any action expressly required by this Agreement (including, without limitation, any actions taken in compliance with this Agreement to obtain any approval or authorization under applicable Antitrust Laws for the consummation of the Offer or the Merger) or expressly approved of in writing by Parent, or the failure to take any action expressly prohibited by this Agreement (if the Company has timely requested a waiver from Parent) or (J) any litigation with respect to the application of any Law to this Agreement or the Transaction. (Pages 70-71)\n\nQuestion:\nMAE definition includes reference to Target \"prospects\" (Y/N)\n\nLlama answer:\nNo, the MAE definition does not include reference to the Target's \"prospects\".\n\nCanonical claims:\n- claim-34de3e99dc49: No, the MAE definition does not include reference to the Target's \"prospects\".\n",
+        "role": "user"
+      }
+    ],
+    "model": "moonshotai/kimi-k2.6",
+    "response_format": {
+      "json_schema": {
+        "name": "judge_annotations",
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "additionalProperties": false,
+          "properties": {
+            "claims": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "enum": [
+                      "claim-34de3e99dc49"
+                    ],
+                    "type": "string"
+                  },
+                  "correctness_label": {
+                    "enum": [
+                      "true",
+                      "false",
+                      "partially_true"
+                    ],
+                    "type": "string"
+                  },
+                  "flip_evidence_text": {
+                    "type": "string"
+                  },
+                  "load_bearing_label": {
+                    "enum": [
+                      "yes",
+                      "no"
+                    ],
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "correctness_label",
+                  "load_bearing_label",
+                  "flip_evidence_text",
+                  "notes"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "claims"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "type": "json_schema"
+    },
+    "temperature": 0,
+    "usage": {
+      "include": true
+    }
+  },
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-34de3e99dc49\",\n      \"correctness_label\": \"true\",\n      \"flip_evidence_text\": \"\\\"Company Material Adverse Effect\\\" shall mean any event, condition, change, occurrence or development, circumstance or effect that, individually or in the aggregate, has had or would be reasonably expected to have a material adverse effect on (i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions\",\n      \"load_bearing_label\": \"yes\",\n      \"notes\": \"The definition enumerates specific items (business, operations, assets, liabilities, financial condition, ability to consummate) but does not mention \\\"prospects\\\".\"\n    }\n  ]\n}",
+          "reasoning": "The user wants me to act as a proxy legal annotator. I need to evaluate the canonical claim against the contract excerpt, question, and model answer.\n\nClaim: \"No, the MAE definition does not include reference to the Target's 'prospects'.\"\n\nContract excerpt analysis:\nThe definition of \"Company Material Adverse Effect\" mentions effects on:\n(i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or\n(ii) the ability of the Company to consummate the Transactions.\n\nIt does NOT mention \"prospects\" anywhere in the definition.\n\nQuestion: MAE definition includes reference to Target \"prospects\" (Y/N)\nLlama answer: No, the MAE definition does not include reference to the Target's \"prospects\".\n\nThe claim matches the Llama answer and is factually correct based on the contract excerpt. The word \"prospects\" does not appear.\n\nSo:\n- correctness_label: true\n- load_bearing_label: This is tricky. The claim is essentially the answer itself. Is it load-bearing? The claim is a direct response to the question. In these annotation tasks, usually the claim is the statement to be verified. The \"load_bearing_label\" indicates whether the claim is doing substantive work or if it's just a restatement. But looking at the instructions, I need to determine if the claim is load-bearing. Since the claim is the entire answer and directly addresses the question, I should probably mark it as load-bearing? Wait, let me think about what \"load_bearing\" means in this context.\n\nActually, in many legal NLP annotation schemes (like those from Atticus or similar), a \"load-bearing\" claim is one that is central to the answer and requires evidence from the text. Non-load-bearing might be something like a header, a transition phrase, or something purely procedural. But here the claim IS the answer. However, sometimes if the claim is just a direct negation that can be verified by absence, it might still be load-bearing because it requires checking the text.\n\nWait, looking at the output format: flip_evidence_text is required if load_bearing_label=yes. The flip_evidence_text would be the text from the contract that supports or refutes the claim. Since the claim is about the absence of the word \"prospects\", the evidence would be the actual definition text showing what IS included (and implicitly that prospects is not there). Or perhaps the flip_evidence_text is meant to be the text that \"flips\" or supports the claim? The term \"flip_evidence_text\" is unusual. It might mean the text that serves as evidence for the claim (the textual basis).\n\nLet me reconsider \"load_bearing\". In some annotation guidelines, a claim is load-bearing if it makes an assertion about the document content that needs to be verified. Since this claim does exactly that, it is load-bearing.\n\nBut wait, sometimes claims that are just \"No\" or purely conclusory without reference to document content might be considered not load-bearing? No, this claim explicitly references the MAE definition and the Target's prospects.\n\nLet me check if there's any subtlety. The contract refers to \"Company\" not \"Target\". The question uses \"Target\". The claim uses \"Target\". In M&A contracts, \"Target\" often refers to the Company being acquired. The question asks about \"Target 'prospects'\". The claim says \"No, the MAE definition does not include reference to the Target's 'prospects'.\" This is correct because the definition doesn't mention prospects at all, whether of the Company/Target or otherwise.\n\nIs there any issue with the claim using \"Target\" instead of \"Company\"? The question uses \"Target\", so the claim is answering in the context of the question. The contract uses \"Company\". They refer to the same entity. This doesn't make the claim false.\n\nSo correctness_label: true.\n\nload_bearing_label: yes (because it's a substantive factual claim about the contract content that requires verification against the text).\n\nflip_evidence_text: I need to provide the relevant text. Since the claim is about what the definition includes, I should quote the relevant part of the definition. The definition lists: \"business, operations, assets, liabilities or financial condition\" and \"ability of the Company to consummate the Transactions\". It does not list \"prospects\". So the evidence text could be the full definition or the specific enumerated clauses. I'll provide the key excerpt showing the scope of the MAE definition.\n\nActually, the term \"flip_evidence_text\" might specifically refer to evidence that would flip the label if it were different? Or it's just the evidence text. I'll provide the contract text that demonstrates the absence of \"prospects\" by showing what is actually included.\n\nLet me draft the evidence text:\n\"Company Material Adverse Effect\" shall mean any event, condition, change, occurrence or development, circumstance or effect that, individually or in the aggregate, has had or would be reasonably expected to have a material adverse effect on (i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions\"\n\nThis shows that the definition covers business, operations, assets, liabilities, financial condition, and ability to consummate transactions, but not prospects.\n\nnotes: optional. I can note that the term \"prospects\" does not appear in the definition, and the definition uses \"Company\" rather than \"Target\" but they refer to the same entity.\n\nWait, I should double-check if \"prospects\" appears anywhere else in the excerpt. Scanning... no, it doesn't. The excerpt is pages 70-71. It lists (A) through (J) exceptions. No mention of prospects.\n\nOne more thought: Is the claim partially true because the definition refers to \"financial condition\" which could be argued to encompass \"prospects\"? No, \"prospects\" is a distinct term often used in MAE definitions (e.g., \"business, financial condition, or results of operations or prospects\"). The absence of the specific word \"prospects\" is notable and the claim is specifically about whether the definition includes reference to \"prospects\". The claim is true: it does not include that word/reference.\n\nTherefore:\ncorrectness_label: true\nload_bearing_label: yes\nflip_evidence_text: [the definition text]\nnotes: empty or brief note.\n\nLet me format exactly as requested.\n\nThe user wants for each claim:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nSo:\n\nclaim-34de3e99dc49:\n  correctness_label: true\n  load_bearing_label: yes\n  flip_evidence_text: \"Company Material Adverse Effect\" shall mean any event, condition, change, occurrence or development, circumstance or effect that, individually or in the aggregate, has had or would be reasonably expected to have a material adverse effect on (i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions\n  notes: The term \"prospects\" does not appear in the definition; the definition instead covers business, operations, assets, liabilities, financial condition, and ability to consummate the Transactions.\n\nI should make sure the flip_evidence_text is exact from the contract. I'll quote the first part of the definition up to the proviso.\n\nActually, looking at the prompt again, it says \"Use only the contract excerpt, the question, the model answer, and the fixed claim list.\" So I should derive everything from those.\n\nFinal check: Is there any reason this claim would be \"partially_true\"? Some MAE definitions do include \"prospects\" but this one doesn't. The claim says it does NOT include reference to Target prospects. This is accurate. The question uses \"Target\" and the contract uses \"Company\" but in context they are the same. The claim is true.\n\nI'll output in a clear format.",
+          "reasoning_details": [
+            {
+              "format": "unknown",
+              "index": 0,
+              "text": "The user wants me to act as a proxy legal annotator. I need to evaluate the canonical claim against the contract excerpt, question, and model answer.\n\nClaim: \"No, the MAE definition does not include reference to the Target's 'prospects'.\"\n\nContract excerpt analysis:\nThe definition of \"Company Material Adverse Effect\" mentions effects on:\n(i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or\n(ii) the ability of the Company to consummate the Transactions.\n\nIt does NOT mention \"prospects\" anywhere in the definition.\n\nQuestion: MAE definition includes reference to Target \"prospects\" (Y/N)\nLlama answer: No, the MAE definition does not include reference to the Target's \"prospects\".\n\nThe claim matches the Llama answer and is factually correct based on the contract excerpt. The word \"prospects\" does not appear.\n\nSo:\n- correctness_label: true\n- load_bearing_label: This is tricky. The claim is essentially the answer itself. Is it load-bearing? The claim is a direct response to the question. In these annotation tasks, usually the claim is the statement to be verified. The \"load_bearing_label\" indicates whether the claim is doing substantive work or if it's just a restatement. But looking at the instructions, I need to determine if the claim is load-bearing. Since the claim is the entire answer and directly addresses the question, I should probably mark it as load-bearing? Wait, let me think about what \"load_bearing\" means in this context.\n\nActually, in many legal NLP annotation schemes (like those from Atticus or similar), a \"load-bearing\" claim is one that is central to the answer and requires evidence from the text. Non-load-bearing might be something like a header, a transition phrase, or something purely procedural. But here the claim IS the answer. However, sometimes if the claim is just a direct negation that can be verified by absence, it might still be load-bearing because it requires checking the text.\n\nWait, looking at the output format: flip_evidence_text is required if load_bearing_label=yes. The flip_evidence_text would be the text from the contract that supports or refutes the claim. Since the claim is about the absence of the word \"prospects\", the evidence would be the actual definition text showing what IS included (and implicitly that prospects is not there). Or perhaps the flip_evidence_text is meant to be the text that \"flips\" or supports the claim? The term \"flip_evidence_text\" is unusual. It might mean the text that serves as evidence for the claim (the textual basis).\n\nLet me reconsider \"load_bearing\". In some annotation guidelines, a claim is load-bearing if it makes an assertion about the document content that needs to be verified. Since this claim does exactly that, it is load-bearing.\n\nBut wait, sometimes claims that are just \"No\" or purely conclusory without reference to document content might be considered not load-bearing? No, this claim explicitly references the MAE definition and the Target's prospects.\n\nLet me check if there's any subtlety. The contract refers to \"Company\" not \"Target\". The question uses \"Target\". The claim uses \"Target\". In M&A contracts, \"Target\" often refers to the Company being acquired. The question asks about \"Target 'prospects'\". The claim says \"No, the MAE definition does not include reference to the Target's 'prospects'.\" This is correct because the definition doesn't mention prospects at all, whether of the Company/Target or otherwise.\n\nIs there any issue with the claim using \"Target\" instead of \"Company\"? The question uses \"Target\", so the claim is answering in the context of the question. The contract uses \"Company\". They refer to the same entity. This doesn't make the claim false.\n\nSo correctness_label: true.\n\nload_bearing_label: yes (because it's a substantive factual claim about the contract content that requires verification against the text).\n\nflip_evidence_text: I need to provide the relevant text. Since the claim is about what the definition includes, I should quote the relevant part of the definition. The definition lists: \"business, operations, assets, liabilities or financial condition\" and \"ability of the Company to consummate the Transactions\". It does not list \"prospects\". So the evidence text could be the full definition or the specific enumerated clauses. I'll provide the key excerpt showing the scope of the MAE definition.\n\nActually, the term \"flip_evidence_text\" might specifically refer to evidence that would flip the label if it were different? Or it's just the evidence text. I'll provide the contract text that demonstrates the absence of \"prospects\" by showing what is actually included.\n\nLet me draft the evidence text:\n\"Company Material Adverse Effect\" shall mean any event, condition, change, occurrence or development, circumstance or effect that, individually or in the aggregate, has had or would be reasonably expected to have a material adverse effect on (i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions\"\n\nThis shows that the definition covers business, operations, assets, liabilities, financial condition, and ability to consummate transactions, but not prospects.\n\nnotes: optional. I can note that the term \"prospects\" does not appear in the definition, and the definition uses \"Company\" rather than \"Target\" but they refer to the same entity.\n\nWait, I should double-check if \"prospects\" appears anywhere else in the excerpt. Scanning... no, it doesn't. The excerpt is pages 70-71. It lists (A) through (J) exceptions. No mention of prospects.\n\nOne more thought: Is the claim partially true because the definition refers to \"financial condition\" which could be argued to encompass \"prospects\"? No, \"prospects\" is a distinct term often used in MAE definitions (e.g., \"business, financial condition, or results of operations or prospects\"). The absence of the specific word \"prospects\" is notable and the claim is specifically about whether the definition includes reference to \"prospects\". The claim is true: it does not include that word/reference.\n\nTherefore:\ncorrectness_label: true\nload_bearing_label: yes\nflip_evidence_text: [the definition text]\nnotes: empty or brief note.\n\nLet me format exactly as requested.\n\nThe user wants for each claim:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nSo:\n\nclaim-34de3e99dc49:\n  correctness_label: true\n  load_bearing_label: yes\n  flip_evidence_text: \"Company Material Adverse Effect\" shall mean any event, condition, change, occurrence or development, circumstance or effect that, individually or in the aggregate, has had or would be reasonably expected to have a material adverse effect on (i) the business, operations, assets, liabilities or financial condition of the Company and the Company Subsidiaries, taken as a whole, or (ii) the ability of the Company to consummate the Transactions\n  notes: The term \"prospects\" does not appear in the definition; the definition instead covers business, operations, assets, liabilities, financial condition, and ability to consummate the Transactions.\n\nI should make sure the flip_evidence_text is exact from the contract. I'll quote the first part of the definition up to the proviso.\n\nActually, looking at the prompt again, it says \"Use only the contract excerpt, the question, the model answer, and the fixed claim list.\" So I should derive everything from those.\n\nFinal check: Is there any reason this claim would be \"partially_true\"? Some MAE definitions do include \"prospects\" but this one doesn't. The claim says it does NOT include reference to Target prospects. This is accurate. The question uses \"Target\" and the contract uses \"Company\" but in context they are the same. The claim is true.\n\nI'll output in a clear format.",
+              "type": "reasoning.text"
+            }
+          ],
+          "refusal": null,
+          "role": "assistant"
+        },
+        "native_finish_reason": "stop"
+      }
+    ],
+    "created": 1777049875,
+    "id": "9f16a6594a7307a8-IAD",
+    "model": "moonshotai/kimi-k2.6",
+    "object": "chat.completion",
+    "system_fingerprint": null,
+    "usage": {
+      "completion_tokens": 1913,
+      "cost": 0.0086,
+      "input_tokens": 994,
+      "output_tokens": 1913,
+      "prompt_tokens": 994,
+      "total_tokens": 2907
+    }
+  },
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "claims": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "claim_id": {
+              "enum": [
+                "claim-34de3e99dc49"
+              ],
+              "type": "string"
+            },
+            "correctness_label": {
+              "enum": [
+                "true",
+                "false",
+                "partially_true"
+              ],
+              "type": "string"
+            },
+            "flip_evidence_text": {
+              "type": "string"
+            },
+            "load_bearing_label": {
+              "enum": [
+                "yes",
+                "no"
+              ],
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "claim_id",
+            "correctness_label",
+            "load_bearing_label",
+            "flip_evidence_text",
+            "notes"
+          ],
+          "type": "object"
+        },
+        "maxItems": 1,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "claims"
+    ],
+    "type": "object"
+  }
+}

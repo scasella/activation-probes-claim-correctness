@@ -1,0 +1,189 @@
+{
+  "annotation_version": "proxy_v2",
+  "annotator_id": "judge_kimi_k2_6",
+  "attempt": 1,
+  "content": " {\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-026d5d016715\",\n      \"correctness_label\": \"true\",\n      \"load_bearing_label\": \"yes\",\n      \"flip_evidence_text\": \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\",\n      \"notes\": \"The claim accurately reflects the contractual definition, which explicitly covers acquisitions of more than 25% of voting power and thereby encompasses stock deals.\"\n    }\n  ]\n}",
+  "elapsed_sec": 115.8158712387085,
+  "example_id": "maud-cd7bb1b20b95",
+  "model": "moonshotai/kimi-k2.6",
+  "ok": true,
+  "parsed": {
+    "claims": [
+      {
+        "claim_id": "claim-026d5d016715",
+        "correctness_label": "true",
+        "flip_evidence_text": "a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank",
+        "load_bearing_label": "yes",
+        "notes": "The claim accurately reflects the contractual definition, which explicitly covers acquisitions of more than 25% of voting power and thereby encompasses stock deals."
+      }
+    ]
+  },
+  "prompt": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cAcquisition Proposal\u201d means a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank, a proposal for a merger, consolidation or other business combination involving the Company or the Bank or any other proposal or offer to acquire in any manner more than 25% of the voting power in, or more than 25% of the business, assets or deposits of, the Company or the Bank, other than the transactions contemplated hereby and other than any sale of whole loans and securitizations in the Ordinary Course of Business. <omitted> (qqq) \u201cSuperior Proposal\u201d means a bona fide written Acquisition Proposal which the Company Board concludes in good faith to be more favorable from a financial point of view to the Company shareholders than the Merger and the other transactions contemplated hereby, (i) after receiving the advice of its financial advisors (which shall be Stephens, Inc., or any nationally recognized investment banking firm), (ii) after taking into account the likelihood and timing of consummation of the proposed transaction on the terms set forth therein (as compared to, and with due regard for, the terms herein) and (iii) after taking into account all legal (with the advice of outside counsel), financial (including the financing terms of any such proposal), regulatory (including the advice of outside counsel regarding the potential for regulatory approval of any such proposal) and other aspects of such proposal and any other relevant factors permitted under applicable law. (Page 64)\n\nQuestion:\nDefinition includes stock deals-Answer\n\nLlama answer:\nThe definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\n\nCanonical claims:\n- claim-026d5d016715: The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\n",
+  "request": {
+    "messages": [
+      {
+        "content": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cAcquisition Proposal\u201d means a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank, a proposal for a merger, consolidation or other business combination involving the Company or the Bank or any other proposal or offer to acquire in any manner more than 25% of the voting power in, or more than 25% of the business, assets or deposits of, the Company or the Bank, other than the transactions contemplated hereby and other than any sale of whole loans and securitizations in the Ordinary Course of Business. <omitted> (qqq) \u201cSuperior Proposal\u201d means a bona fide written Acquisition Proposal which the Company Board concludes in good faith to be more favorable from a financial point of view to the Company shareholders than the Merger and the other transactions contemplated hereby, (i) after receiving the advice of its financial advisors (which shall be Stephens, Inc., or any nationally recognized investment banking firm), (ii) after taking into account the likelihood and timing of consummation of the proposed transaction on the terms set forth therein (as compared to, and with due regard for, the terms herein) and (iii) after taking into account all legal (with the advice of outside counsel), financial (including the financing terms of any such proposal), regulatory (including the advice of outside counsel regarding the potential for regulatory approval of any such proposal) and other aspects of such proposal and any other relevant factors permitted under applicable law. (Page 64)\n\nQuestion:\nDefinition includes stock deals-Answer\n\nLlama answer:\nThe definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\n\nCanonical claims:\n- claim-026d5d016715: The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\n",
+        "role": "user"
+      }
+    ],
+    "model": "moonshotai/kimi-k2.6",
+    "response_format": {
+      "json_schema": {
+        "name": "judge_annotations",
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "additionalProperties": false,
+          "properties": {
+            "claims": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "enum": [
+                      "claim-026d5d016715"
+                    ],
+                    "type": "string"
+                  },
+                  "correctness_label": {
+                    "enum": [
+                      "true",
+                      "false",
+                      "partially_true"
+                    ],
+                    "type": "string"
+                  },
+                  "flip_evidence_text": {
+                    "type": "string"
+                  },
+                  "load_bearing_label": {
+                    "enum": [
+                      "yes",
+                      "no"
+                    ],
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "correctness_label",
+                  "load_bearing_label",
+                  "flip_evidence_text",
+                  "notes"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "claims"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "type": "json_schema"
+    },
+    "temperature": 0,
+    "usage": {
+      "include": true
+    }
+  },
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": " {\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-026d5d016715\",\n      \"correctness_label\": \"true\",\n      \"load_bearing_label\": \"yes\",\n      \"flip_evidence_text\": \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\",\n      \"notes\": \"The claim accurately reflects the contractual definition, which explicitly covers acquisitions of more than 25% of voting power and thereby encompasses stock deals.\"\n    }\n  ]\n}",
+          "reasoning": " The user wants me to act as a proxy legal annotator. I need to evaluate the claim against the contract excerpt, question, and model answer.\n\nClaim: \"The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\"\n\nContract excerpt says: \"Acquisition Proposal\" means a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank, a proposal for a merger, consolidation or other business combination involving the Company or the Bank or any other proposal or offer to acquire in any manner more than 25% of the voting power in...\"\n\nSo yes, acquiring more than 25% of voting power is explicitly included. A stock deal (acquiring shares/voting power) would fall under this.\n\nCorrectness: true\nLoad bearing: Is this claim load-bearing? The claim essentially restates the definition and concludes it encompasses a stock deal. The evidence text that supports/flips it is the definition itself. Since the claim directly quotes/paraphrases the contract language about voting power and adds an interpretation (encompass a stock deal), the contract text about \"acquire more than 25% of the voting power\" is the load-bearing evidence. If this text were flipped/changed, it would change the truth of the claim.\n\nWait, I need to be careful about the \"flip_evidence_text\" requirement. If load_bearing_label=yes, I must provide the specific text from the contract that, if flipped/made opposite, would make the claim false.\n\nThe claim says: \"The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\"\n\nThe load-bearing text is: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank\" or \"any other proposal or offer to acquire in any manner more than 25% of the voting power in...\"\n\nIf this text were flipped to say it does NOT include such proposals, the claim would be false.\n\nSo:\n- correctness_label: true\n- load_bearing_label: yes\n- flip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\" (I should provide the relevant snippet).\n- notes: empty or brief.\n\nLet me check the exact wording to include. The claim specifically mentions \"proposal to acquire more than 25% of the voting power\". The contract says: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\".\n\nI should provide the flip evidence text as the specific contractual language that supports the claim.\n\nFormat: The user wants for each claim return the fields. Since there's only one claim, I'll return it.\n\nLet me structure the output clearly.\n\ncorrectness_label: true\nload_bearing_label: yes\nflip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\nnotes: The claim accurately reflects the definition of Acquisition Proposal, which explicitly covers acquiring more than 25% of voting power, thereby encompassing stock deals.\n\nWait, the user might want a specific format. Let me re-read: \"For each claim return: - correctness_label: ... - load_bearing_label: ... - flip_evidence_text: ... - notes: ...\"\n\nI'll provide it in a structured way, perhaps YAML-like or bullet points.\n\nAlso, I need to make sure I use only the provided materials. The Llama answer and question confirm this is about whether stock deals are included. The model answer (not explicitly provided as \"model answer\" but the \"Llama answer\" is the answer to evaluate? Wait: \"Definition includes stock deals-Answer\" is the question? No, the question is \"Definition includes stock deals-Answer\". The Llama answer is provided. The claim is derived from the Llama answer.\n\nActually, looking at the prompt: \"Use only the contract excerpt, the question, the model answer, and the fixed claim list.\" Here \"model answer\" might be the Llama answer? Or is there a separate model answer? The prompt says \"Llama answer\" and then \"Canonical claims\". I think the Llama answer is the answer being evaluated against the claim.\n\nThe claim is: \"The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\"\n\nThis is almost verbatim the Llama answer. The Llama answer says: \"The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\"\n\nSo the claim is directly supported by the text.\n\nCorrectness: true.\nLoad bearing: yes, because the claim hinges on the contract's inclusion of >25% voting power acquisition.\nFlip evidence: the text in the contract stating that an Acquisition Proposal includes offers to acquire >25% voting power.\n\nLet me refine the flip_evidence_text to be precise. It should be the exact text from the contract that if flipped would falsify the claim.\n\nContract text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank, a proposal for a merger, consolidation or other business combination involving the Company or the Bank or any other proposal or offer to acquire in any manner more than 25% of the voting power in, or more than 25% of the business, assets or deposits of, the Company or the Bank\"\n\nThe specific part about voting power is load-bearing for the \"stock deal\" conclusion.\n\nI'll provide:\nflip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\n\nI should probably include the exact string without ellipsis if possible, but it's long. The prompt allows providing the text. I'll use the exact relevant phrase.\n\nLet's go with:\nflip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\n\nActually, to be safe and precise, I'll quote the two relevant clauses:\n\"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank\" and \"any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\n\nBut the output format should be clean. I'll do:\n\n- claim-026d5d016715\n  - correctness_label: true\n  - load_bearing_label: yes\n  - flip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\n  - notes: Claim accurately tracks the contractual definition of Acquisition Proposal.\n\nWait, I should check if \"stock deal\" is explicitly in the contract. No, it's an inference. But the claim says \"which would encompass a stock deal.\" Since a stock deal is a way to acquire voting power, this is a reasonable and true inference based on the contract text. So correctness is true.\n\nIs it partially true? No, it's fully supported.\n\nLoad bearing: Yes, because if the contract excluded voting power acquisitions, the claim would be false.\n\nOne final check: The prompt says \"Use only the contract excerpt, the question, the model answer, and the fixed claim list.\" The question is \"Definition includes stock deals-Answer\". The model answer is likely the Llama answer. The fixed claim list has one claim. Everything aligns.\n\nI'll produce the output now.",
+          "reasoning_details": [
+            {
+              "format": "unknown",
+              "index": 0,
+              "text": " The user wants me to act as a proxy legal annotator. I need to evaluate the claim against the contract excerpt, question, and model answer.\n\nClaim: \"The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\"\n\nContract excerpt says: \"Acquisition Proposal\" means a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank, a proposal for a merger, consolidation or other business combination involving the Company or the Bank or any other proposal or offer to acquire in any manner more than 25% of the voting power in...\"\n\nSo yes, acquiring more than 25% of voting power is explicitly included. A stock deal (acquiring shares/voting power) would fall under this.\n\nCorrectness: true\nLoad bearing: Is this claim load-bearing? The claim essentially restates the definition and concludes it encompasses a stock deal. The evidence text that supports/flips it is the definition itself. Since the claim directly quotes/paraphrases the contract language about voting power and adds an interpretation (encompass a stock deal), the contract text about \"acquire more than 25% of the voting power\" is the load-bearing evidence. If this text were flipped/changed, it would change the truth of the claim.\n\nWait, I need to be careful about the \"flip_evidence_text\" requirement. If load_bearing_label=yes, I must provide the specific text from the contract that, if flipped/made opposite, would make the claim false.\n\nThe claim says: \"The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\"\n\nThe load-bearing text is: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank\" or \"any other proposal or offer to acquire in any manner more than 25% of the voting power in...\"\n\nIf this text were flipped to say it does NOT include such proposals, the claim would be false.\n\nSo:\n- correctness_label: true\n- load_bearing_label: yes\n- flip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\" (I should provide the relevant snippet).\n- notes: empty or brief.\n\nLet me check the exact wording to include. The claim specifically mentions \"proposal to acquire more than 25% of the voting power\". The contract says: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\".\n\nI should provide the flip evidence text as the specific contractual language that supports the claim.\n\nFormat: The user wants for each claim return the fields. Since there's only one claim, I'll return it.\n\nLet me structure the output clearly.\n\ncorrectness_label: true\nload_bearing_label: yes\nflip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\nnotes: The claim accurately reflects the definition of Acquisition Proposal, which explicitly covers acquiring more than 25% of voting power, thereby encompassing stock deals.\n\nWait, the user might want a specific format. Let me re-read: \"For each claim return: - correctness_label: ... - load_bearing_label: ... - flip_evidence_text: ... - notes: ...\"\n\nI'll provide it in a structured way, perhaps YAML-like or bullet points.\n\nAlso, I need to make sure I use only the provided materials. The Llama answer and question confirm this is about whether stock deals are included. The model answer (not explicitly provided as \"model answer\" but the \"Llama answer\" is the answer to evaluate? Wait: \"Definition includes stock deals-Answer\" is the question? No, the question is \"Definition includes stock deals-Answer\". The Llama answer is provided. The claim is derived from the Llama answer.\n\nActually, looking at the prompt: \"Use only the contract excerpt, the question, the model answer, and the fixed claim list.\" Here \"model answer\" might be the Llama answer? Or is there a separate model answer? The prompt says \"Llama answer\" and then \"Canonical claims\". I think the Llama answer is the answer being evaluated against the claim.\n\nThe claim is: \"The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\"\n\nThis is almost verbatim the Llama answer. The Llama answer says: \"The definition of Acquisition Proposal includes a proposal to acquire more than 25% of the voting power in the Company or the Bank, which would encompass a stock deal.\"\n\nSo the claim is directly supported by the text.\n\nCorrectness: true.\nLoad bearing: yes, because the claim hinges on the contract's inclusion of >25% voting power acquisition.\nFlip evidence: the text in the contract stating that an Acquisition Proposal includes offers to acquire >25% voting power.\n\nLet me refine the flip_evidence_text to be precise. It should be the exact text from the contract that if flipped would falsify the claim.\n\nContract text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank, a proposal for a merger, consolidation or other business combination involving the Company or the Bank or any other proposal or offer to acquire in any manner more than 25% of the voting power in, or more than 25% of the business, assets or deposits of, the Company or the Bank\"\n\nThe specific part about voting power is load-bearing for the \"stock deal\" conclusion.\n\nI'll provide:\nflip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\n\nI should probably include the exact string without ellipsis if possible, but it's long. The prompt allows providing the text. I'll use the exact relevant phrase.\n\nLet's go with:\nflip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\n\nActually, to be safe and precise, I'll quote the two relevant clauses:\n\"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank\" and \"any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\n\nBut the output format should be clean. I'll do:\n\n- claim-026d5d016715\n  - correctness_label: true\n  - load_bearing_label: yes\n  - flip_evidence_text: \"a tender or exchange offer to acquire more than 25% of the voting power in the Company or the Bank ... or any other proposal or offer to acquire in any manner more than 25% of the voting power in ... the Company or the Bank\"\n  - notes: Claim accurately tracks the contractual definition of Acquisition Proposal.\n\nWait, I should check if \"stock deal\" is explicitly in the contract. No, it's an inference. But the claim says \"which would encompass a stock deal.\" Since a stock deal is a way to acquire voting power, this is a reasonable and true inference based on the contract text. So correctness is true.\n\nIs it partially true? No, it's fully supported.\n\nLoad bearing: Yes, because if the contract excluded voting power acquisitions, the claim would be false.\n\nOne final check: The prompt says \"Use only the contract excerpt, the question, the model answer, and the fixed claim list.\" The question is \"Definition includes stock deals-Answer\". The model answer is likely the Llama answer. The fixed claim list has one claim. Everything aligns.\n\nI'll produce the output now.",
+              "type": "reasoning.text"
+            }
+          ],
+          "refusal": null,
+          "role": "assistant"
+        },
+        "native_finish_reason": "stop"
+      }
+    ],
+    "created": 1777051089,
+    "id": "9f16c3fdf855d6ac-IAD",
+    "model": "moonshotai/kimi-k2.6",
+    "object": "chat.completion",
+    "system_fingerprint": null,
+    "usage": {
+      "completion_tokens": 1903,
+      "cost": 0.0081,
+      "input_tokens": 492,
+      "output_tokens": 1903,
+      "prompt_tokens": 492,
+      "total_tokens": 2395
+    }
+  },
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "claims": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "claim_id": {
+              "enum": [
+                "claim-026d5d016715"
+              ],
+              "type": "string"
+            },
+            "correctness_label": {
+              "enum": [
+                "true",
+                "false",
+                "partially_true"
+              ],
+              "type": "string"
+            },
+            "flip_evidence_text": {
+              "type": "string"
+            },
+            "load_bearing_label": {
+              "enum": [
+                "yes",
+                "no"
+              ],
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "claim_id",
+            "correctness_label",
+            "load_bearing_label",
+            "flip_evidence_text",
+            "notes"
+          ],
+          "type": "object"
+        },
+        "maxItems": 1,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "claims"
+    ],
+    "type": "object"
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "annotation_version": "proxy_v2",
+  "annotator_id": "judge_kimi_k2_6",
+  "attempt": 1,
+  "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-010ef85281a4\",\n      \"correctness_label\": \"true\",\n      \"load_bearing_label\": \"yes\",\n      \"flip_evidence_text\": \"acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable\",\n      \"notes\": \"The claim directly restates clause (1) of the 'Alternative Acquisition Proposal' definition and forms the entire substance of the Llama answer.\"\n    }\n  ]\n}",
+  "elapsed_sec": 48.23235893249512,
+  "example_id": "maud-6e281440026a",
+  "model": "moonshotai/kimi-k2.6",
+  "ok": true,
+  "parsed": {
+    "claims": [
+      {
+        "claim_id": "claim-010ef85281a4",
+        "correctness_label": "true",
+        "flip_evidence_text": "acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable",
+        "load_bearing_label": "yes",
+        "notes": "The claim directly restates clause (1) of the 'Alternative Acquisition Proposal' definition and forms the entire substance of the Llama answer."
+      }
+    ]
+  },
+  "prompt": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cAlternative Acquisition Proposal\u201d means a bona fide inquiry, proposal or offer from any Person (except for Parent or one of its Representatives and other than the Merger contemplated by this Agreement) or \u201cgroup,\u201d within the meaning of Section 13(d) under the Exchange Act, for, in a single transaction or series of related transactions, any (1) acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable, (2) acquisition of 25% or more ofthe outstanding Company Common Stock, (3) tender offer or exchange offer that, if consummated, would result in any Person having Beneficial Ownership of 25% or more of the outstanding Company Common Stock or (4) merger, consolidation, share exchange, business combination, recapitalization, liquidation, dissolution or similar transaction involving the Company that would result in any Person or \u201cgroup\u201d having Beneficial Ownership of 25% or more of theoutstanding Company Common Stock or 25% or more of the voting power of the surviving entity in a merger involving the Company or the resulting direct orindirect parent of the Company or such surviving entity. <omitted> \u201cSuperior Acquisition Proposal\u201d means a bona fide Alternative Acquisition Proposal that the Company Board has determined, after consultation with its outside legal counsel and a nationally recognized financial advisor, in its good-faith judgment, taking into account all legal, regulatory and financial aspects of the proposal (including conditionality, expected timing and likelihood of consummation of the proposal), the identity of the Person making the Alternative Acquisition Proposal and any other factor the Company Board determines in good faith to be relevant, (1) is reasonably capable of being consummated under its terms and (2) if consummated, would result in a transaction more favorable to the Company Stockholders from a financial point of view than the transactions contemplated hereby; provided that, for purposes of the definition of \u201cSuperior Acquisition Proposal,\u201d the references to \u201c25%\u201d in the definition of Alternative Acquisition Proposal shall be deemed to be references to \u201c75%.\u201d (Page 24)\n\nQuestion:\nDefinition includes asset deals-Answer\n\nLlama answer:\nThe definition of \"Alternative Acquisition Proposal\" includes a transaction involving the acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\n\nCanonical claims:\n- claim-010ef85281a4: The definition of \"Alternative Acquisition Proposal\" includes a transaction involving the acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\n",
+  "request": {
+    "messages": [
+      {
+        "content": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cAlternative Acquisition Proposal\u201d means a bona fide inquiry, proposal or offer from any Person (except for Parent or one of its Representatives and other than the Merger contemplated by this Agreement) or \u201cgroup,\u201d within the meaning of Section 13(d) under the Exchange Act, for, in a single transaction or series of related transactions, any (1) acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable, (2) acquisition of 25% or more ofthe outstanding Company Common Stock, (3) tender offer or exchange offer that, if consummated, would result in any Person having Beneficial Ownership of 25% or more of the outstanding Company Common Stock or (4) merger, consolidation, share exchange, business combination, recapitalization, liquidation, dissolution or similar transaction involving the Company that would result in any Person or \u201cgroup\u201d having Beneficial Ownership of 25% or more of theoutstanding Company Common Stock or 25% or more of the voting power of the surviving entity in a merger involving the Company or the resulting direct orindirect parent of the Company or such surviving entity. <omitted> \u201cSuperior Acquisition Proposal\u201d means a bona fide Alternative Acquisition Proposal that the Company Board has determined, after consultation with its outside legal counsel and a nationally recognized financial advisor, in its good-faith judgment, taking into account all legal, regulatory and financial aspects of the proposal (including conditionality, expected timing and likelihood of consummation of the proposal), the identity of the Person making the Alternative Acquisition Proposal and any other factor the Company Board determines in good faith to be relevant, (1) is reasonably capable of being consummated under its terms and (2) if consummated, would result in a transaction more favorable to the Company Stockholders from a financial point of view than the transactions contemplated hereby; provided that, for purposes of the definition of \u201cSuperior Acquisition Proposal,\u201d the references to \u201c25%\u201d in the definition of Alternative Acquisition Proposal shall be deemed to be references to \u201c75%.\u201d (Page 24)\n\nQuestion:\nDefinition includes asset deals-Answer\n\nLlama answer:\nThe definition of \"Alternative Acquisition Proposal\" includes a transaction involving the acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\n\nCanonical claims:\n- claim-010ef85281a4: The definition of \"Alternative Acquisition Proposal\" includes a transaction involving the acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\n",
+        "role": "user"
+      }
+    ],
+    "model": "moonshotai/kimi-k2.6",
+    "response_format": {
+      "json_schema": {
+        "name": "judge_annotations",
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "additionalProperties": false,
+          "properties": {
+            "claims": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "enum": [
+                      "claim-010ef85281a4"
+                    ],
+                    "type": "string"
+                  },
+                  "correctness_label": {
+                    "enum": [
+                      "true",
+                      "false",
+                      "partially_true"
+                    ],
+                    "type": "string"
+                  },
+                  "flip_evidence_text": {
+                    "type": "string"
+                  },
+                  "load_bearing_label": {
+                    "enum": [
+                      "yes",
+                      "no"
+                    ],
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "correctness_label",
+                  "load_bearing_label",
+                  "flip_evidence_text",
+                  "notes"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "claims"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "type": "json_schema"
+    },
+    "temperature": 0,
+    "usage": {
+      "include": true
+    }
+  },
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-010ef85281a4\",\n      \"correctness_label\": \"true\",\n      \"load_bearing_label\": \"yes\",\n      \"flip_evidence_text\": \"acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable\",\n      \"notes\": \"The claim directly restates clause (1) of the 'Alternative Acquisition Proposal' definition and forms the entire substance of the Llama answer.\"\n    }\n  ]\n}",
+          "reasoning": "The user wants me to evaluate a canonical claim against a contract excerpt, a question, and a model (Llama) answer. I need to return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nLet me analyze:\n\nContract excerpt: Defines \"Alternative Acquisition Proposal\" and \"Superior Acquisition Proposal\". The first part says: \"any (1) acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable...\"\n\nClaim-010ef85281a4: \"The definition of 'Alternative Acquisition Proposal' includes a transaction involving the acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\"\n\nThis is directly supported by the contract text. It mentions exactly that in clause (1) of the Alternative Acquisition Proposal definition.\n\nWait, but the prompt says \"Use only the contract excerpt, the question, the model answer, and the fixed claim list.\" The question is \"Definition includes asset deals-Answer\" and the Llama answer is the sentence provided.\n\nI need to determine:\n1. correctness_label: Is the claim true based on the contract? Yes, clearly true.\n2. load_bearing_label: Is this claim load-bearing? A claim is load-bearing if it is central to the answer and if its truth value changes, it would flip the answer. Looking at the Llama answer, it is essentially a paraphrase of the claim. The claim is the entire substance of the Llama answer. So if this claim were false, the Llama answer would be false. Therefore, it is load-bearing.\n\nWait, let me think carefully about the definition of load-bearing in this context. Usually in these annotation tasks, a claim is \"load-bearing\" if it is a critical premise that supports the conclusion/answer. If the claim is false, would it materially change the answer?\n\nThe Llama answer states: \"The definition of 'Alternative Acquisition Proposal' includes a transaction involving the acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\"\n\nThe canonical claim is virtually identical to the Llama answer. So yes, it's load-bearing because it is the answer itself. If this claim were false, the answer would be wrong.\n\nActually, looking at standard definitions for these tasks (likely from a benchmark like ContractNLI or similar), \"load-bearing\" means the claim is essential to the answer - if the claim is false, the answer would be incorrect or significantly weakened. Since the Llama answer is essentially just this claim, it is definitely load-bearing.\n\nflip_evidence_text: This is required if load-bearing_label=yes. It should be the text from the contract that would flip/negate the claim or show it's load-bearing. Actually, I need to provide the evidence text that supports the claim? Or text that would flip it? The field name is \"flip_evidence_text\". In some annotation schemes, this is the text that, if different, would flip the claim. Or it's the evidence text for the flip? Let me reconsider.\n\nWait, \"flip_evidence_text\" - in some legal annotation tasks, if a claim is load-bearing, you need to provide the snippet of evidence that bears the load - i.e., the specific text that supports or refutes it. But the name suggests \"flip\" evidence - text that if interpreted differently would flip the claim. However, looking at the instruction: \"flip_evidence_text: required if load_bearing_label=yes, else empty string\". \n\nActually, in the context of \"load-bearing\", the flip evidence text is usually the specific contractual language that determines the truth value of the claim. It's the evidence that, if it were different (\"flipped\"), would change the label. So I should provide the exact text from the contract that supports the claim.\n\nIn this case, the relevant text is: \"acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable\"\n\nBut wait, the claim says \"equal to 25% or more of the Company's consolidated assets\". The text says \"equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable\". The claim is true based on the first part.\n\nLet me make sure: Is there any trick? The claim says \"acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\" The text says exactly that. True.\n\nIs it load-bearing? The Llama answer is exactly this claim. So if this claim were false, the Llama answer would be false. Yes, load-bearing.\n\nFor flip_evidence_text, I should provide the exact excerpt that serves as the evidence.\n\nOne more check: The question is \"Definition includes asset deals-Answer\". This seems like the question might be asking whether the definition includes asset deals, and the answer is \"yes\" represented by the Llama sentence. The claim captures this.\n\nNotes: I can add a brief note.\n\nWait, I should be careful. In some protocols, if the claim exactly restates the answer, it might not be \"load-bearing\" in the sense of being a premise, but rather the conclusion itself. But usually, the conclusion itself is considered load-bearing because the answer depends on it. However, let me think if there's any distinction.\n\nIf the claim IS the answer, then the answer's correctness directly depends on the claim. So load-bearing = yes.\n\nActually, in some annotation guidelines, load-bearing means \"the claim is a premise used in the answer.\" If the answer simply restates the claim, then the claim is not a premise but the conclusion. But without specific guidelines stating that, it's safer to mark it load-bearing because the answer's validity hinges on it.\n\nLet me reconsider the question format. The user says \"For each claim return...\". There's only one claim here: claim-010ef85281a4.\n\nThe output should probably be structured. Let me provide JSON-like or structured text.\n\nActually, looking at the prompt, it might expect a specific format. I'll provide a clear structured output.\n\ncorrectness_label: true\nload_bearing_label: yes\nflip_evidence_text: \"acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable\"\nnotes: The claim directly reflects clause (1) of the \"Alternative Acquisition Proposal\" definition in the excerpt and constitutes the full substance of the Llama answer.\n\nWait, should the flip_evidence_text be shorter? Maybe just the key phrase. I'll include the relevant phrase.\n\nActually, looking at the definition of \"Superior Acquisition Proposal\", it changes 25% to 75%, but the claim is about \"Alternative Acquisition Proposal\", so 25% is correct.\n\nOne more thing: The contract text uses \"Company Entities\" and \"Company's\" which matches the claim. Good.\n\nFinal check: Is there any nuance about \"transaction involving\"? The text says \"acquisition of assets...\". A transaction involving acquisition of assets is indeed what's described. The claim is accurate.\n\nI think I'm good.\n\nFormat: The user didn't specify exact JSON schema but listed the fields. I'll provide them clearly.\n\nLet me write it out.",
+          "reasoning_details": [
+            {
+              "format": "unknown",
+              "index": 0,
+              "text": "The user wants me to evaluate a canonical claim against a contract excerpt, a question, and a model (Llama) answer. I need to return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nLet me analyze:\n\nContract excerpt: Defines \"Alternative Acquisition Proposal\" and \"Superior Acquisition Proposal\". The first part says: \"any (1) acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable...\"\n\nClaim-010ef85281a4: \"The definition of 'Alternative Acquisition Proposal' includes a transaction involving the acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\"\n\nThis is directly supported by the contract text. It mentions exactly that in clause (1) of the Alternative Acquisition Proposal definition.\n\nWait, but the prompt says \"Use only the contract excerpt, the question, the model answer, and the fixed claim list.\" The question is \"Definition includes asset deals-Answer\" and the Llama answer is the sentence provided.\n\nI need to determine:\n1. correctness_label: Is the claim true based on the contract? Yes, clearly true.\n2. load_bearing_label: Is this claim load-bearing? A claim is load-bearing if it is central to the answer and if its truth value changes, it would flip the answer. Looking at the Llama answer, it is essentially a paraphrase of the claim. The claim is the entire substance of the Llama answer. So if this claim were false, the Llama answer would be false. Therefore, it is load-bearing.\n\nWait, let me think carefully about the definition of load-bearing in this context. Usually in these annotation tasks, a claim is \"load-bearing\" if it is a critical premise that supports the conclusion/answer. If the claim is false, would it materially change the answer?\n\nThe Llama answer states: \"The definition of 'Alternative Acquisition Proposal' includes a transaction involving the acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\"\n\nThe canonical claim is virtually identical to the Llama answer. So yes, it's load-bearing because it is the answer itself. If this claim were false, the answer would be wrong.\n\nActually, looking at standard definitions for these tasks (likely from a benchmark like ContractNLI or similar), \"load-bearing\" means the claim is essential to the answer - if the claim is false, the answer would be incorrect or significantly weakened. Since the Llama answer is essentially just this claim, it is definitely load-bearing.\n\nflip_evidence_text: This is required if load-bearing_label=yes. It should be the text from the contract that would flip/negate the claim or show it's load-bearing. Actually, I need to provide the evidence text that supports the claim? Or text that would flip it? The field name is \"flip_evidence_text\". In some annotation schemes, this is the text that, if different, would flip the claim. Or it's the evidence text for the flip? Let me reconsider.\n\nWait, \"flip_evidence_text\" - in some legal annotation tasks, if a claim is load-bearing, you need to provide the snippet of evidence that bears the load - i.e., the specific text that supports or refutes it. But the name suggests \"flip\" evidence - text that if interpreted differently would flip the claim. However, looking at the instruction: \"flip_evidence_text: required if load_bearing_label=yes, else empty string\". \n\nActually, in the context of \"load-bearing\", the flip evidence text is usually the specific contractual language that determines the truth value of the claim. It's the evidence that, if it were different (\"flipped\"), would change the label. So I should provide the exact text from the contract that supports the claim.\n\nIn this case, the relevant text is: \"acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable\"\n\nBut wait, the claim says \"equal to 25% or more of the Company's consolidated assets\". The text says \"equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable\". The claim is true based on the first part.\n\nLet me make sure: Is there any trick? The claim says \"acquisition of assets of the Company Entities equal to 25% or more of the Company's consolidated assets.\" The text says exactly that. True.\n\nIs it load-bearing? The Llama answer is exactly this claim. So if this claim were false, the Llama answer would be false. Yes, load-bearing.\n\nFor flip_evidence_text, I should provide the exact excerpt that serves as the evidence.\n\nOne more check: The question is \"Definition includes asset deals-Answer\". This seems like the question might be asking whether the definition includes asset deals, and the answer is \"yes\" represented by the Llama sentence. The claim captures this.\n\nNotes: I can add a brief note.\n\nWait, I should be careful. In some protocols, if the claim exactly restates the answer, it might not be \"load-bearing\" in the sense of being a premise, but rather the conclusion itself. But usually, the conclusion itself is considered load-bearing because the answer depends on it. However, let me think if there's any distinction.\n\nIf the claim IS the answer, then the answer's correctness directly depends on the claim. So load-bearing = yes.\n\nActually, in some annotation guidelines, load-bearing means \"the claim is a premise used in the answer.\" If the answer simply restates the claim, then the claim is not a premise but the conclusion. But without specific guidelines stating that, it's safer to mark it load-bearing because the answer's validity hinges on it.\n\nLet me reconsider the question format. The user says \"For each claim return...\". There's only one claim here: claim-010ef85281a4.\n\nThe output should probably be structured. Let me provide JSON-like or structured text.\n\nActually, looking at the prompt, it might expect a specific format. I'll provide a clear structured output.\n\ncorrectness_label: true\nload_bearing_label: yes\nflip_evidence_text: \"acquisition of assets of the Company Entities equal to 25% or more of the Company\u2019s consolidated assets or to which 25% or more of the Company\u2019s revenues or net earnings on a consolidated basis are attributable\"\nnotes: The claim directly reflects clause (1) of the \"Alternative Acquisition Proposal\" definition in the excerpt and constitutes the full substance of the Llama answer.\n\nWait, should the flip_evidence_text be shorter? Maybe just the key phrase. I'll include the relevant phrase.\n\nActually, looking at the definition of \"Superior Acquisition Proposal\", it changes 25% to 75%, but the claim is about \"Alternative Acquisition Proposal\", so 25% is correct.\n\nOne more thing: The contract text uses \"Company Entities\" and \"Company's\" which matches the claim. Good.\n\nFinal check: Is there any nuance about \"transaction involving\"? The text says \"acquisition of assets...\". A transaction involving acquisition of assets is indeed what's described. The claim is accurate.\n\nI think I'm good.\n\nFormat: The user didn't specify exact JSON schema but listed the fields. I'll provide them clearly.\n\nLet me write it out.",
+              "type": "reasoning.text"
+            }
+          ],
+          "refusal": null,
+          "role": "assistant"
+        },
+        "native_finish_reason": "stop"
+      }
+    ],
+    "created": 1777049830,
+    "id": "9f16a53c9e883920-IAD",
+    "model": "moonshotai/kimi-k2.6",
+    "object": "chat.completion",
+    "system_fingerprint": "fpv0_b5e1a00b",
+    "usage": {
+      "completion_tokens": 1724,
+      "cost": 0.0075,
+      "input_tokens": 639,
+      "output_tokens": 1724,
+      "prompt_tokens": 639,
+      "total_tokens": 2363
+    }
+  },
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "claims": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "claim_id": {
+              "enum": [
+                "claim-010ef85281a4"
+              ],
+              "type": "string"
+            },
+            "correctness_label": {
+              "enum": [
+                "true",
+                "false",
+                "partially_true"
+              ],
+              "type": "string"
+            },
+            "flip_evidence_text": {
+              "type": "string"
+            },
+            "load_bearing_label": {
+              "enum": [
+                "yes",
+                "no"
+              ],
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "claim_id",
+            "correctness_label",
+            "load_bearing_label",
+            "flip_evidence_text",
+            "notes"
+          ],
+          "type": "object"
+        },
+        "maxItems": 1,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "claims"
+    ],
+    "type": "object"
+  }
+}

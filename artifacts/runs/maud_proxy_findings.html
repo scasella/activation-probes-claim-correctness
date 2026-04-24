@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>When Llama is confident and still wrong</title>
+  <meta name="description" content="A judge-proxy study on MAUD, a merger-agreement legal question-answering benchmark, comparing Llama self-report, GPT-5.4 same-family external scoring, residual probes, and SAE probes on 150 claims." />
+  <meta property="og:title" content="When Llama is confident and still wrong" />
+  <meta property="og:description" content="A judge-proxy comparison of self-reported confidence and activation probes on merger-agreement question answering." />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-background:       #000000;
+      --color-background-100:   #0a0a0a;
+      --color-background-200:   #111111;
+      --color-muted:            #1a1a1a;
+      --color-gray-100:         #1a1a1a;
+      --color-gray-300:         #292929;
+      --color-gray-400:         #2e2e2e;
+      --color-gray-500:         #454545;
+      --color-gray-600:         #666666;
+      --color-gray-700:         #878787;
+      --color-gray-800:         #8f8f8f;
+      --color-gray-900:         #a0a0a0;
+      --color-gray-1000:        #ededed;
+      --color-border:           #2e2e2e;
+      --color-foreground:       #ededed;
+      --color-muted-foreground: #878787;
+      --color-accent:           #ffb1ee;
+      --color-accent-foreground:#ffffff;
+      --color-success:          #3dd68c;
+      --color-warning:          #F5A623;
+
+      --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "Geist Mono", "SFMono-Regular", Menlo, monospace;
+
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+
+      --tracking-tight:   -0.025em;
+      --tracking-widest:  0.1em;
+
+      --leading-tight:   1.25;
+      --leading-snug:    1.375;
+      --leading-relaxed: 1.625;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--color-background);
+      color: var(--color-foreground);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: var(--leading-relaxed);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "ss01", "cv11";
+    }
+
+    a { color: var(--color-foreground); text-decoration-color: var(--color-gray-500); text-underline-offset: 3px; }
+    a:hover { text-decoration-color: var(--color-accent); }
+
+    code, pre, kbd, samp { font-family: var(--font-mono); }
+    code {
+      font-size: 0.875em;
+      background: var(--color-background-200);
+      border: 1px solid var(--color-gray-400);
+      border-radius: var(--radius-sm);
+      padding: 0.08em 0.35em;
+      color: var(--color-gray-1000);
+    }
+    pre {
+      background: var(--color-background-200);
+      border: 1px solid var(--color-gray-400);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.1rem;
+      overflow-x: auto;
+      font-size: 0.84rem;
+      line-height: 1.6;
+      color: var(--color-gray-1000);
+      margin: 1.25rem 0 1.5rem;
+    }
+    pre code { background: transparent; border: 0; padding: 0; font-size: inherit; }
+    pre .c { color: var(--color-gray-700); font-style: italic; }
+    pre .k { color: var(--color-accent); }
+    pre .s { color: var(--color-gray-1000); }
+
+    .page {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 1.25rem 6rem;
+    }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .topbar-inner {
+      max-width: 1040px; margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.82rem;
+    }
+    .brand {
+      font-family: var(--font-mono);
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-gray-1000);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .brand .accent { color: var(--color-accent); }
+    .topbar-links { display: flex; gap: 1.1rem; color: var(--color-gray-700); }
+    .topbar-links a { color: inherit; text-decoration: none; letter-spacing: 0.04em; }
+    .topbar-links a:hover { color: var(--color-gray-1000); }
+
+    .crumbs {
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: var(--color-gray-700);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .crumbs a { color: inherit; text-decoration: none; }
+    .crumbs a:hover { color: var(--color-gray-1000); }
+    .crumbs .sep { color: var(--color-gray-500); margin: 0 0.5ch; }
+    .crumbs .cat { color: var(--color-accent); }
+
+    h1.title {
+      font-size: clamp(2rem, 4.6vw, 3.25rem);
+      line-height: 1.08;
+      letter-spacing: var(--tracking-tight);
+      font-weight: 600;
+      margin: 1rem 0 1.25rem;
+      max-width: 24ch;
+    }
+    h1.title .sub {
+      display: block;
+      font-size: clamp(1.1rem, 1.9vw, 1.4rem);
+      line-height: 1.25;
+      font-weight: 400;
+      color: var(--color-gray-800);
+      letter-spacing: -0.015em;
+      margin-top: 0.75rem;
+    }
+
+    .byline {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--color-gray-700);
+      font-size: 0.88rem;
+      margin: 1.75rem 0 0.25rem;
+      flex-wrap: wrap;
+    }
+    .byline .avatar {
+      width: 28px; height: 28px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #ffb1ee 0%, #3dd68c 100%);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: #000; font-weight: 700; font-size: 0.7rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0;
+    }
+    .byline .dot { color: var(--color-gray-500); }
+    .byline .author { color: var(--color-gray-1000); font-weight: 500; }
+
+    hr.header-rule {
+      border: 0;
+      border-top: 1px solid var(--color-border);
+      margin: 2rem 0 2.5rem;
+    }
+
+    .body-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+    }
+    @media (min-width: 960px) {
+      .body-grid {
+        grid-template-columns: 220px 1fr;
+        gap: 3.25rem;
+      }
+    }
+    .toc {
+      font-size: 0.82rem;
+      color: var(--color-gray-700);
+      line-height: 1.7;
+    }
+    @media (min-width: 960px) {
+      .toc {
+        position: sticky; top: 4.25rem;
+        align-self: start;
+        max-height: calc(100vh - 5rem);
+        overflow-y: auto;
+      }
+    }
+    .toc-label {
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-widest);
+      font-size: 0.7rem;
+      color: var(--color-gray-600);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+    .toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; }
+    .toc li { counter-increment: toc; margin: 0.22rem 0; }
+    .toc li::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--color-gray-500);
+      margin-right: 0.7rem;
+      letter-spacing: 0.05em;
+    }
+    .toc a { color: inherit; text-decoration: none; }
+    .toc a:hover { color: var(--color-accent); }
+
+    main.prose { max-width: 680px; }
+    main.prose p { margin: 0 0 1.1rem; font-size: 1rem; line-height: 1.72; color: var(--color-gray-1000); }
+    main.prose p + p { margin-top: 0.1rem; }
+    main.prose strong { color: #ffffff; font-weight: 600; }
+    main.prose em { color: var(--color-gray-1000); }
+    main.prose h2 {
+      font-size: 1.45rem;
+      line-height: 1.25;
+      letter-spacing: var(--tracking-tight);
+      font-weight: 600;
+      color: var(--color-gray-1000);
+      margin: 3.25rem 0 1rem;
+      scroll-margin-top: 5rem;
+    }
+    main.prose h2::before {
+      content: "#";
+      color: var(--color-gray-500);
+      margin-right: 0.45rem;
+      font-weight: 400;
+    }
+    main.prose h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--color-gray-1000);
+      margin: 1.75rem 0 0.65rem;
+    }
+    main.prose ul { padding-left: 1.1rem; margin: 0.25rem 0 1.25rem; }
+    main.prose ul li { margin: 0.35rem 0; color: var(--color-gray-1000); }
+    main.prose ul li::marker { color: var(--color-gray-600); }
+
+    figure.full { margin: 1.75rem 0 2rem; max-width: 760px; }
+    figure.wide { margin: 1.75rem 0 2rem; max-width: 820px; }
+    figcaption {
+      color: var(--color-gray-700);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin-top: 0.85rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--color-gray-400);
+    }
+    figcaption strong { color: var(--color-gray-1000); font-weight: 600; }
+    .chart-card {
+      background: var(--color-background-100);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+    }
+    .chart-card svg { display: block; width: 100%; height: auto; }
+
+    .tldr {
+      background: var(--color-background-100);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-accent);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.25rem;
+      margin: 0 0 2.5rem;
+      font-size: 0.95rem;
+      color: var(--color-gray-1000);
+      line-height: 1.65;
+    }
+    .tldr .label {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .callout {
+      background: var(--color-background-100);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid #7a7a7a;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.1rem;
+      margin: 1.1rem 0 1.4rem;
+      font-size: 0.9rem;
+      color: var(--color-gray-900);
+      line-height: 1.6;
+    }
+    .callout strong { color: var(--color-gray-1000); }
+    .callout .k {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-gray-700);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.7rem;
+      margin: 1.25rem 0 0.5rem;
+    }
+    @media (min-width: 640px) { .stat-row { grid-template-columns: repeat(4, 1fr); } }
+    .stat {
+      background: var(--color-background-100);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 0.95rem;
+    }
+    .stat .k { font-size: 0.68rem; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-gray-700); font-weight: 600; }
+    .stat .v { font-size: 1.45rem; font-family: var(--font-mono); color: var(--color-accent); font-weight: 500; line-height: 1.2; margin-top: 0.25rem; }
+    .stat .s { font-size: 0.72rem; color: var(--color-gray-700); margin-top: 0.2rem; font-family: var(--font-mono); }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+      margin: 1.25rem 0 0.5rem;
+    }
+    @media (min-width: 640px) { .mode-grid { grid-template-columns: repeat(2, 1fr); } }
+    .mode-card {
+      background: var(--color-background-100);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1rem 1.1rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      min-height: 140px;
+      border-left: 3px solid var(--color-accent);
+    }
+    .mode-card .tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--color-accent);
+      letter-spacing: 0.04em;
+    }
+    .mode-card .t {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-gray-1000);
+      letter-spacing: -0.01em;
+    }
+    .mode-card .desc {
+      font-size: 0.83rem;
+      color: var(--color-gray-800);
+      line-height: 1.55;
+    }
+
+    .table-wrap {
+      margin: 1.25rem 0 1.5rem;
+      background: var(--color-background-100);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .table-label {
+      padding: 0.65rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-gray-700);
+      border-bottom: 1px solid var(--color-border);
+      display: flex; align-items: center; gap: 0.75rem;
+      background: var(--color-background-200);
+    }
+    .table-label .id { color: var(--color-accent); font-weight: 600; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    th, td {
+      padding: 0.6rem 1rem;
+      text-align: left;
+      font-size: 0.84rem;
+      border-bottom: 1px solid var(--color-gray-400);
+    }
+    th {
+      font-family: var(--font-mono);
+      font-weight: 500;
+      color: var(--color-gray-700);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--color-background-200);
+    }
+    td { color: var(--color-gray-1000); }
+    td.num { font-family: var(--font-mono); color: var(--color-gray-1000); }
+    td.pos { color: var(--color-accent); font-weight: 500; }
+    td.neg { color: var(--color-gray-700); }
+    tr:last-child td { border-bottom: none; }
+    tr.highlight td { background: rgba(255,177,238,0.05); color: var(--color-gray-1000); }
+
+    .neg-list {
+      background: var(--color-background-100);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-gray-600);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.25rem 0.6rem;
+      margin: 1.1rem 0 1.5rem;
+    }
+    .neg-list .label {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-gray-700);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .neg-list ul { list-style: none; padding: 0; margin: 0; }
+    .neg-list li {
+      padding: 0.7rem 0 0.7rem 1.1rem;
+      border-top: 1px solid var(--color-gray-400);
+      color: var(--color-gray-900);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      position: relative;
+    }
+    .neg-list li:first-child { border-top: 0; padding-top: 0.2rem; }
+    .neg-list li::before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      color: var(--color-gray-600);
+      font-family: var(--font-mono);
+    }
+    .neg-list li strong { color: var(--color-gray-1000); }
+
+    footer.post-footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.82rem;
+      color: var(--color-gray-700);
+      line-height: 1.65;
+      display: grid; gap: 0.6rem;
+    }
+    footer.post-footer a { color: var(--color-gray-900); }
+    footer.post-footer strong { color: var(--color-gray-1000); font-weight: 600; }
+
+    .mono { font-family: var(--font-mono); }
+    .muted { color: var(--color-gray-700); }
+    .accent { color: var(--color-accent); }
+    .small { font-size: 0.85rem; }
+    .break {
+      display: flex; align-items: center; justify-content: center;
+      margin: 3rem 0;
+      color: var(--color-gray-600);
+      font-size: 0.85rem; letter-spacing: 0.8em;
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#">interp<span class="accent">-experiment</span>_lab</a>
+      <nav class="topbar-links">
+        <a href="#toc">Contents</a>
+        <a href="#method">Method</a>
+        <a href="#result">Result</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page">
+
+    <div class="crumbs">
+      <a href="#">Blog</a><span class="sep">&middot;</span><span class="cat">research</span><span class="sep">&middot;</span>Apr 24, 2026
+    </div>
+
+    <h1 class="title">
+      When Llama is confident and still wrong
+      <span class="sub">A judge-proxy study comparing self-reported confidence and activation probes on merger-agreement question answering.</span>
+    </h1>
+
+    <div class="byline">
+      <span class="avatar">SC</span>
+      <span class="author">Sam Casella</span>
+      <span class="dot">&middot;</span>
+      <span>~12 min read</span>
+      <span class="dot">&middot;</span>
+      <span class="mono">merger agreements &middot; 135 examples &middot; 150 claims</span>
+    </div>
+
+    <hr class="header-rule" />
+
+    <div class="tldr">
+      <span class="label">TL;DR</span>
+      <strong>What was tested:</strong> I broke legal answers into small factual claims and asked
+      which signal best predicts the judge-labeled wrong claims: Llama's own confidence, a GPT-5.4
+      external scorer, or probes trained on hidden activations.
+      <br /><br />
+      <strong>What happened:</strong> Llama self-report was near random at ranking GPT-5.4
+      judge-proxy correctness, while raw activations carried meaningful signal.
+      <br /><br />
+      <strong>What not to overclaim:</strong> GPT-5.4 also supplies the proxy labels, so the GPT-5.4
+      external scorer is same-family consistency, not independent legal truth.
+    </div>
+
+    <div class="callout">
+      <span class="k">Reader contract</span>
+      All reported correctness is correctness against GPT-5.4 judge-proxy labels on MAUD merger-agreement
+      claims. These are not independent legal-truth labels, and the result should be read as a
+      proxy-label methods result.
+    </div>
+
+    <div class="callout">
+      <span class="k">Reader map</span>
+      If you care about model uncertainty, start with the headline result and probe sections. If you
+      care about legal-data validity, read the CUAD boundary and limits sections. If you care about
+      reproducibility, the artifact links are at the bottom.
+    </div>
+
+    <div class="body-grid">
+
+      <aside class="toc" id="toc">
+        <div class="toc-label">Contents</div>
+        <ol>
+          <li><a href="#question">The question we set out to answer</a></li>
+          <li><a href="#pivot">Why the labels are proxy labels</a></li>
+          <li><a href="#method">What the study actually measures</a></li>
+          <li><a href="#result">The headline result</a></li>
+          <li><a href="#probe">What the probes say</a></li>
+          <li><a href="#failure">The CUAD boundary result</a></li>
+          <li><a href="#limits">What this result does and does not show</a></li>
+          <li><a href="#second-judge">Second-judge update</a></li>
+          <li><a href="#next">What would strengthen the claim</a></li>
+        </ol>
+      </aside>
+
+      <main class="prose">
+
+        <p>
+          The useful surprise in this run is simple: Llama's stated confidence barely ranked
+          judge-labeled wrong claims better than chance, but its hidden activations did carry signal.
+          That matters because confidence prompts are often the cheapest safety layer people reach
+          for. In this setting, the model's internals knew more than its self-report.
+        </p>
+        <p>
+          Here the domain is legal question answering over merger agreements. MAUD is the
+          merger-agreement benchmark used in the final run. A "claim" is a small factual statement
+          extracted from a model answer, such as whether a contract has a particular termination fee
+          or approval condition. Scoring claims instead of whole answers lets every method compete on
+          the same units of meaning.
+        </p>
+        <p>
+          The experimental design was deliberately strict. The claim list is frozen before scoring.
+          Self-report, GPT-5.4 decomposition, and activation probes all score the same claims. A
+          judge LLM supplies a scalable proxy label for correctness, whether the claim matters to the
+          final answer, and the evidence that would change the answer if the claim flipped. The goal
+          is not to settle legal truth; it is to compare uncertainty signals under a reproducible
+          label source.
+        </p>
+
+        <div class="callout">
+          <span class="k">The live question</span>
+          When the entire pipeline is run on the MAUD merger-agreement benchmark with judge-proxy
+          labels, which uncertainty signals survive contact with the data?
+        </div>
+
+        <p>
+          That question is useful because it makes the comparison operational. It tells us whether
+          the pipeline works end to end, whether the task family is viable, whether self-report is
+          even competitive, and whether the probe path has enough signal to justify deeper validation.
+          The broader CUAD transfer attempt did not pass its readiness screen, which becomes a
+          boundary result later in the post.
+        </p>
+
+        <h2 id="question">The question we set out to answer</h2>
+
+        <p>
+          The protocol compares four scoring methods:
+        </p>
+
+        <div class="mode-grid">
+          <div class="mode-card">
+            <span class="tag">A1 &middot; self-report</span>
+            <span class="t">Llama rates its own answer claims</span>
+            <span class="desc">
+              Llama 3.1 8B Instruct emits structured confidence scores for the frozen claim list.
+              This is the direct "ask the model how sure it is" baseline.
+            </span>
+          </div>
+          <div class="mode-card">
+            <span class="tag">A2 &middot; external decomposition</span>
+            <span class="t">GPT-5.4 external scorer, same judge family</span>
+            <span class="desc">
+              GPT-5.4 scores the same frozen claims from the outside. It is powerful, expensive, and
+              useful as a high-end comparison point, but it is not independent from the GPT-5.4
+              judge-proxy labels.
+            </span>
+          </div>
+          <div class="mode-card">
+            <span class="tag">B1 &middot; residual probe</span>
+            <span class="t">Raw activation features</span>
+            <span class="desc">
+              A small classifier reads hidden-state vectors from the answer tokens. This tests
+              whether the model's internal activations contain correctness signal.
+            </span>
+          </div>
+          <div class="mode-card">
+            <span class="tag">B2 &middot; SAE probe</span>
+            <span class="t">Goodfire SAE features</span>
+            <span class="desc">
+              Sparse autoencoder, or SAE, features are a more compressed and interpretable view of
+              the same answer-token activations. This tests whether that basis improves over raw
+              residuals.
+            </span>
+          </div>
+        </div>
+
+        <p>
+          The starting dataset contract was broader than the final analysis: 150 MAUD
+          merger-agreement question-answering examples and 150 CUAD-derived examples from other kinds of contracts.
+          CUAD, the Contract Understanding Atticus Dataset, is a broader contract-review benchmark.
+          The intent was to test whether the same claim-level protocol would transfer across legal
+          contract families. That broader design taught us something important: not every legal
+          question-answering source produces stable claim objects under the same generation setup.
+        </p>
+
+        <h2 id="pivot">Why the labels are proxy labels</h2>
+
+        <p>
+          The judge-proxy protocol is the center of the study, not an administrative shortcut. It gives us
+          a fixed, reproducible label source over the same frozen claims scored by every method. In a
+          claim-level uncertainty experiment, that shared label surface matters more than labeling
+          ceremony: every method must be evaluated on the same unit of meaning.
+        </p>
+
+        <div class="stat-row">
+          <div class="stat">
+            <div class="k">CUAD screen size</div>
+            <div class="v">15</div>
+            <div class="s">examples inspected</div>
+          </div>
+          <div class="stat">
+            <div class="k">Suspect answers</div>
+            <div class="v">9</div>
+            <div class="s">of 15 CUAD rows</div>
+          </div>
+          <div class="stat">
+            <div class="k">Unusable claims</div>
+            <div class="v">7</div>
+            <div class="s">examples affected</div>
+          </div>
+          <div class="stat">
+            <div class="k">MAUD scope</div>
+            <div class="v">pass</div>
+            <div class="s">screening check</div>
+          </div>
+        </div>
+
+        <p>
+          CUAD did not pass readiness for a task-specific reason: it did not behave like the same
+          claim-level generation task. Even after prompt cleanup, the CUAD side produced too many
+          off-target answers and unstable claim fragments. The conservative decision was to keep CUAD
+          as a documented boundary case and run the judge-proxy comparison on MAUD, where the claim
+          surface is coherent.
+        </p>
+
+        <div class="callout">
+          <span class="k">What the labels mean</span>
+          <code>judge_llm_proxy</code> labels are the experimental reference labels for this study.
+          They are not legal adjudications and should not be read as legal truth. The claim is
+          about method ranking under a reproducible judge protocol.
+        </div>
+
+        <h2 id="method">What the study actually measures</h2>
+
+        <p>
+          The final MAUD judge-proxy run exercises the intended pipeline end to end. We have fixed answer
+          runs, frozen claims, judge labels, self-report predictions, GPT-5.4 external predictions, raw
+          activation features, SAE features, resampling-entropy targets, and paraphrase-stability
+          targets. In plain terms: we measure whether an answer stays stable when the model is sampled
+          again, and whether it stays stable when the question is rephrased.
+        </p>
+
+<pre><code><span class="c"># Completed study artifacts</span>
+<span class="k">examples</span>        <span class="s">135 merger-agreement question-answering rows</span>
+<span class="k">claims</span>          <span class="s">150 frozen claim rows</span>
+<span class="k">labels</span>          <span class="s">judge_llm_proxy via GPT-5.4</span>
+<span class="k">targets</span>         <span class="s">8 alternate generations + 3 question rewrites</span>
+<span class="k">features</span>        <span class="s">raw activations + Goodfire sparse autoencoder</span>
+<span class="k">splits</span>          <span class="s">105 train / 23 validation / 22 test claims</span></code></pre>
+
+        <p>
+          Correctness is the main signal. The judge labels have useful class variety:
+          <span class="mono">62 true</span>, <span class="mono">68 partially_true</span>, and
+          <span class="mono">20 false</span>. The primary correctness score is strict:
+          <code>partially_true</code> is counted as incorrect.
+        </p>
+
+        <p>
+          Load-bearingness, meaning whether a claim actually matters to the final answer, is less
+          healthy as a target. The proxy labels are
+          <span class="mono">138 yes</span> and <span class="mono">12 no</span>. That makes load-bearing
+          metrics possible in the baseline table, but not something I would build a strong claim on.
+          The headline results below use the stricter proxy-correctness target.
+        </p>
+
+        <h2 id="result">The headline result</h2>
+
+        <p>
+          Two metrics carry most of the result. AUROC is a ranking score: <span class="mono">0.5</span>
+          is random, <span class="mono">1.0</span> is perfect. Brier score measures probability error:
+          lower is better.
+        </p>
+
+        <p>
+          On full MAUD judge-proxy correctness, Llama self-report is weak. It lands at AUROC
+          <span class="mono">0.5114</span>, barely above random ranking, with a Brier score of
+          <span class="mono">0.58</span>. The model's own structured confidence is not tracking the
+          judge labels in a useful way.
+        </p>
+
+        <p>
+          GPT-5.4 external scoring is very strong: AUROC <span class="mono">0.9435</span>, Brier
+          <span class="mono">0.1610</span>. That is not surprising, and it is not free evidence that
+          the task is solved: the judge is also GPT-5.4. The result is best read as same-family
+          consistency between two GPT-5.4-style scoring passes, not as an independent legal-truth
+          baseline.
+        </p>
+
+        <div class="callout">
+          <span class="k">Second-judge correction</span>
+          The later Kimi K2.6 pass keeps the ordering intact but lowers the defensible GPT-5.4
+          scorer estimate from <span class="mono">0.944</span> to <span class="mono">0.872</span>.
+          So the headline should be "GPT-5.4 remains strongest after a judge-family change," not
+          "GPT-5.4 is a 0.94-AUROC independent correctness detector."
+        </div>
+
+        <div class="stat-row">
+          <div class="stat">
+            <div class="k">GPT-5.4 AUROC</div>
+            <div class="v">0.944</div>
+            <div class="s">same-family proxy</div>
+          </div>
+          <div class="stat">
+            <div class="k">Residual AUROC</div>
+            <div class="v">0.771</div>
+            <div class="s">quick check</div>
+          </div>
+          <div class="stat">
+            <div class="k">SAE AUROC</div>
+            <div class="v">0.677</div>
+            <div class="s">quick check</div>
+          </div>
+          <div class="stat">
+            <div class="k">Self-report AUROC</div>
+            <div class="v">0.511</div>
+            <div class="s">near random</div>
+          </div>
+        </div>
+
+        <figure class="wide">
+          <div class="chart-card">
+            <svg viewBox="0 0 760 320" role="img" aria-label="Correctness AUROC comparison on MAUD judge-proxy labels">
+              <style>
+                .ax-line  { stroke: #2e2e2e; stroke-width: 1; }
+                .ax-grid  { stroke: #1a1a1a; stroke-width: 1; stroke-dasharray: 2 3; }
+                .ax-label { fill: #878787; font-family: "Geist Mono", monospace; font-size: 10px; letter-spacing: 0.02em; }
+                .ax-tick  { fill: #666; font-family: "Geist Mono", monospace; font-size: 10px; }
+                .title-t  { fill: #ededed; font-family: "Geist", sans-serif; font-size: 13px; font-weight: 600; }
+                .sub-t    { fill: #878787; font-family: "Geist", sans-serif; font-size: 10px; }
+                .bar-a    { fill: #ffb1ee; }
+                .bar-b    { fill: #454545; }
+                .bar-c    { fill: #3dd68c; opacity: 0.9; }
+                .bar-label{ fill: #ededed; font-family: "Geist Mono", monospace; font-size: 10px; }
+              </style>
+              <text x="0" y="18" class="title-t">Proxy-correctness AUROC on MAUD judge labels</text>
+              <text x="0" y="34" class="sub-t">150 claims; partially_true counted incorrect; labels from GPT-5.4 judge.</text>
+
+              <line x1="150" y1="70" x2="720" y2="70" class="ax-line" />
+              <line x1="150" y1="260" x2="720" y2="260" class="ax-line" />
+              <line x1="150" y1="70" x2="150" y2="260" class="ax-line" />
+              <line x1="435" y1="70" x2="435" y2="260" class="ax-grid" />
+              <line x1="720" y1="70" x2="720" y2="260" class="ax-grid" />
+              <text x="150" y="282" text-anchor="middle" class="ax-tick">0.0</text>
+              <text x="435" y="282" text-anchor="middle" class="ax-tick">0.5</text>
+              <text x="720" y="282" text-anchor="middle" class="ax-tick">1.0</text>
+
+              <text x="0" y="96" class="ax-label">GPT-5.4 same-family</text>
+              <rect x="150" y="80" width="538" height="26" class="bar-a" />
+              <text x="700" y="98" class="bar-label">0.944</text>
+
+              <text x="0" y="141" class="ax-label">Residual probe</text>
+              <rect x="150" y="125" width="439" height="26" class="bar-c" />
+              <text x="602" y="143" class="bar-label">0.771</text>
+
+              <text x="0" y="186" class="ax-label">SAE probe</text>
+              <rect x="150" y="170" width="386" height="26" class="bar-b" />
+              <text x="548" y="188" class="bar-label">0.677</text>
+
+              <text x="0" y="231" class="ax-label">Llama self-report</text>
+              <rect x="150" y="215" width="291" height="26" class="bar-b" />
+              <text x="454" y="233" class="bar-label">0.511</text>
+            </svg>
+          </div>
+          <figcaption>
+            <strong>Figure 1.</strong> Proxy-correctness AUROC on the full MAUD judge-labeled claim set.
+            The GPT-5.4 external scorer is same-family with the label source, so its high score should
+            be read as judge-protocol consistency, not independent legal adjudication.
+          </figcaption>
+        </figure>
+
+        <div class="table-wrap">
+          <div class="table-label"><span class="id">TBL 01</span>Full-corpus proxy correctness comparison</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>AUROC</th>
+                <th>Brier</th>
+                <th>Read</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>GPT-5.4 external scorer, same judge family</td>
+                <td class="num pos">0.9435</td>
+                <td class="num pos">0.1610</td>
+                <td>Strongest, but not independent from the judge labels</td>
+              </tr>
+              <tr>
+                <td>Residual probe quick check</td>
+                <td class="num">0.7709</td>
+                <td class="num">0.2436</td>
+                <td>Meaningful activation signal</td>
+              </tr>
+              <tr>
+                <td>SAE probe quick check</td>
+                <td class="num">0.6765</td>
+                <td class="num">0.3001</td>
+                <td>Signal, but weaker than residual</td>
+              </tr>
+              <tr>
+                <td>Llama self-report</td>
+                <td class="num neg">0.5114</td>
+                <td class="num neg">0.5800</td>
+                <td>Near-random ranking</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <span class="k">Evidence tier</span>
+          Table 1 mixes full-corpus baselines with a feature-signal quick check for the probes. The
+          smaller held-out train/validation/test probe pass appears in Table 2, so the probe numbers
+          should be read as directional signal rather than final generalization estimates.
+        </div>
+
+        <p>
+          The main thesis sentence is this: under this MAUD judge-proxy protocol, activation features
+          rank GPT-5.4 proxy correctness better than Llama's structured self-report. The residual
+          probe is not as strong as a same-family GPT-5.4 external scorer, but it is clearly not noise.
+        </p>
+
+        <h2 id="probe">What the probes say</h2>
+
+        <p>
+          A probe is a small model trained on internal features from a larger model. Here it asks a
+          narrow question: do the hidden activations around an answer contain information about
+          whether a claim is correct?
+        </p>
+
+        <p>
+          The probe story has two layers. The quick check asks whether the feature files contain
+          correctness signal at all by repeatedly holding out one example and training on the rest.
+          There the answer is yes, and raw residual activations beat SAE features.
+        </p>
+
+        <p>
+          The richer train/validation/test pass adds the planned target structure. One probe predicts
+          resampling entropy, a measure of how unstable the answer is across repeated generations.
+          A second, simpler probe predicts correctness directly. The split is small:
+          <span class="mono">105</span> train claims, <span class="mono">23</span> validation claims,
+          and <span class="mono">22</span> test claims. So the numbers are useful for direction, not
+          for a final claim.
+        </p>
+
+        <div class="table-wrap">
+          <div class="table-label"><span class="id">TBL 02</span>Train/validation/test probe results</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Feature source</th>
+                <th>Probe</th>
+                <th>Test AUROC</th>
+                <th>Test Brier</th>
+                <th>Selected setting</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Residual</td>
+                <td>Entropy probe</td>
+                <td class="num">0.7667</td>
+                <td class="num">0.2406</td>
+                <td class="num">alpha=10.0</td>
+              </tr>
+              <tr>
+                <td>Residual</td>
+                <td>Direct correctness probe</td>
+                <td class="num">0.7417</td>
+                <td class="num">0.2143</td>
+                <td class="num">C=0.1</td>
+              </tr>
+              <tr class="highlight">
+                <td>SAE</td>
+                <td>Entropy probe</td>
+                <td class="num pos">0.7750</td>
+                <td class="num pos">0.1953</td>
+                <td class="num">alpha=10.0</td>
+              </tr>
+              <tr>
+                <td>SAE</td>
+                <td>Direct correctness probe</td>
+                <td class="num neg">0.5583</td>
+                <td class="num neg">0.4014</td>
+                <td class="num">C=10.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          This is why I would not yet claim "SAE is worse" or "SAE is better." In the feature-only
+          quick check, residual wins cleanly. In the small train/test split, the SAE entropy probe
+          edges out the residual entropy probe. The robust statement is more precise:
+          <strong>SAE has not clearly improved the story over raw residuals</strong>. It is
+          interesting enough to keep, not strong enough to headline.
+        </p>
+
+        <div class="callout">
+          <span class="k">The probe path fix mattered</span>
+          The activation path now reads the exact token spans from the original answer run. That was
+          not cosmetic. If feature extraction regenerates answers later, or splits them into tokens
+          differently, it can silently attach features to the wrong text. This study is valuable
+          partly because it forced that bug into the open.
+        </div>
+
+        <h2 id="failure">The CUAD boundary result</h2>
+
+        <p>
+          Negative results are easy to treat as administrative detail. This one is substantive. The
+          CUAD prompt-and-extraction setup did not pass a 15-example readiness screen because it did
+          not produce stable claim-level objects under the same generation setup. In other words, the
+          answers did not reliably decompose into clean factual claims. That means "legal question
+          answering" was too broad a category for one shared claim protocol.
+        </p>
+
+        <div class="neg-list">
+          <span class="label">Why CUAD stayed out of scope</span>
+          <ul>
+            <li><strong>CUAD answers were often off-target.</strong> Nine of fifteen CUAD screening examples had suspect answers.</li>
+            <li><strong>Claims became unstable.</strong> Seven CUAD examples produced unusable claims, with thirteen unusable claims in the initial mixed sample.</li>
+            <li><strong>The shared-claim premise broke.</strong> If the frozen claim list is unstable, no downstream comparison is fair.</li>
+            <li><strong>MAUD remained viable.</strong> The MAUD screening check passed, which is why MAUD became the analysis scope.</li>
+          </ul>
+        </div>
+
+        <p>
+          The practical lesson is that MAUD-style merger-agreement question answering is a viable substrate for this
+          claim-level uncertainty setup. CUAD probably needs a different upstream extraction pipeline:
+          tighter evidence windows, task-specific answer formats, or a non-generative field-extraction
+          framing.
+        </p>
+
+        <h2 id="limits">What this result does and does not show</h2>
+
+        <p>
+          This result has useful signal, but its boundaries are sharp.
+        </p>
+
+        <div class="callout">
+          <span class="k">What this is not</span>
+          This is not a claim about legal truth. It is not the mixed MAUD+CUAD study. It is also not a
+          clean proof that GPT-5.4 is "right"; GPT-5.4 is both the judge labeler and the strongest
+          external baseline, so that comparison is partly self-consistency.
+        </div>
+
+        <p>
+          The strongest safe claim is methodological and directional. On this MAUD judge-proxy run,
+          Llama self-report performs poorly, residual activations carry useful proxy-correctness
+          signal, and SAE features are not clearly superior to residual features. The overall pipeline
+          is complete enough to support a proxy-label methodology result.
+        </p>
+
+        <div class="callout">
+          <span class="k">Threats to validity</span>
+          The main limits are no human legal label surface yet, moderate judge disagreement on
+          borderline claims, a small held-out probe test set, possible non-independence among claims
+          from nearby source examples, and the fact that CUAD was only screened under this
+          prompt-and-extraction setup.
+        </div>
+
+        <h2 id="second-judge">Second-judge update</h2>
+
+        <p>
+          I reran the frozen 150-claim label pass with a second judge from a different model family,
+          <span class="mono">moonshotai/kimi-k2.6</span> on Prime Intellect. The story moved in
+          magnitude but not in ordering: against Kimi labels, Llama self-report was
+          <span class="mono">0.466 [0.420, 0.600]</span> AUROC, GPT-5.4 external scoring was
+          <span class="mono">0.872 [0.806, 0.923]</span>, the residual probe was
+          <span class="mono">0.707 [0.626, 0.784]</span>, and the SAE probe was
+          <span class="mono">0.652 [0.555, 0.736]</span>. The two judges agreed on
+          <span class="mono">73.3%</span> of claims, with Cohen's kappa
+          <span class="mono">0.572</span>. On the 110-claim agreement set, the same ordering held:
+          GPT-5.4 external scoring <span class="mono">0.981 [0.932, 1.000]</span>, residual probe
+          <span class="mono">0.793 [0.700, 0.868]</span>, SAE probe
+          <span class="mono">0.712 [0.611, 0.810]</span>, and Llama self-report
+          <span class="mono">0.486 [0.385, 0.609]</span>. Intervals are 95% paired bootstrap CIs
+          over claims. That makes the headline more robust than the first-pass result alone, while
+          still keeping the claim in proxy-label territory rather than legal-truth territory.
+        </p>
+
+        <h3>What the agreement set tells us</h3>
+        <p>
+          The agreement set is the most useful slice, not just a robustness appendix. All strong
+          methods improve when the two judge families agree: GPT-5.4 reaches
+          <span class="mono">0.981</span>, the residual probe reaches <span class="mono">0.793</span>,
+          and the SAE probe reaches <span class="mono">0.712</span>. Llama self-report stays at noise.
+          That pattern suggests the methods are tracking a shared claim-correctness signal rather than
+          only one judge's quirks. It also says the next ceiling is label quality: once labels are less
+          noisy, the strong methods separate claims more cleanly.
+        </p>
+
+        <p>
+          The paired bootstrap deltas make the SAE conclusion narrower. Residual beats self-report
+          under both judges and on the agreement set. GPT-5.4 beats residual. Residual is directionally
+          ahead of SAE, but residual-vs-SAE does not reliably exclude zero under Kimi or on the
+          agreement set. The honest claim is that SAE does not clearly improve over raw residuals here.
+        </p>
+
+        <p>
+          One calibration wrinkle is worth noting but not headlining: Llama self-report's Brier score
+          improves under Kimi even though its AUROC remains noise. That suggests the confidence values
+          happen to be better calibrated to Kimi's label distribution than GPT-5.4's; it is not a
+          ranking improvement.
+        </p>
+
+        <div class="table-wrap">
+          <div class="table-label"><span class="id">TBL 03</span>Progress against the judge-proxy study design</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Study component</th>
+                <th>Status</th>
+                <th>Interpretation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td>MAUD full corpus</td>
+                <td class="num pos">done</td>
+                <td>135 examples, 150 claims, complete first-pass judge-proxy run</td>
+              </tr>
+              <tr class="highlight">
+                <td>Baseline comparison</td>
+                <td class="num pos">done</td>
+                <td>Llama self-report, GPT-5.4 same-family external scoring, judge labels</td>
+              </tr>
+              <tr class="highlight">
+                <td>Probe comparison</td>
+                <td class="num pos">done</td>
+                <td>Residual and SAE features evaluated</td>
+              </tr>
+              <tr>
+                <td>Judge label source</td>
+                <td class="num pos">done</td>
+                <td>GPT-5.4 and Kimi K2.6 proxy labels for all claims</td>
+              </tr>
+              <tr class="highlight">
+                <td>Second-judge robustness</td>
+                <td class="num pos">done</td>
+                <td>Ordering holds under judge 2 and on the 110-claim agreement set</td>
+              </tr>
+              <tr>
+                <td>CUAD domain lane</td>
+                <td class="num neg">not evaluated</td>
+                <td>Did not pass this readiness screen</td>
+              </tr>
+              <tr>
+                <td>Human audit</td>
+                <td class="num neg">next</td>
+                <td>Needed to move from stable proxy labels to human legal judgment</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="next">What would strengthen the claim</h2>
+
+        <p>
+          The study is now coherent as a MAUD-focused judge-proxy result under two LLM label
+          surfaces. The next work is to connect that proxy stability to a small human legal audit.
+        </p>
+
+        <h3>Judge robustness</h3>
+        <p>
+          The second-judge check is now complete. Kimi K2.6 changed the absolute AUROCs but preserved
+          the method ordering, and the agreement-set result sharpened the same story. The remaining
+          robustness question is not another LLM judge; it is whether a small source-bound human audit
+          agrees with the proxy-label structure.
+        </p>
+
+        <h3>Report the CUAD boundary as a result</h3>
+        <p>
+          CUAD should not be hidden as setup trouble. It is evidence that the claim-level protocol
+          needs a stable generative question-answering surface. MAUD has it; CUAD, as currently
+          prompted, does not.
+          That boundary makes the methods claim sharper.
+        </p>
+
+        <div class="break">&middot; &middot; &middot;</div>
+
+        <p>
+          The project has crossed an important threshold. It is no longer a pile of setup scripts and
+          partial artifacts. It is a complete first-pass judge-proxy experiment with a clear empirical
+          shape plus a second-judge sensitivity check. Llama self-report did not rank proxy
+          correctness on this MAUD setup. Raw activations partially recovered that signal. SAE
+          features do not yet justify their complexity. A powerful external judge remains the
+          strongest comparator, even after switching the label family.
+        </p>
+
+        <p>
+          The result is not the last word on claim truth. It is a clean proxy-label answer to the
+          question this study was built to ask: under a reproducible judge, which uncertainty signals
+          actually rank the claims? The next proof point is a source-bound human audit sample.
+        </p>
+
+        <footer class="post-footer">
+          <div><strong>Sam Casella</strong> &middot; interp experiment &middot; MAUD judge-proxy study</div>
+          <div>Artifacts: <a href="maud_full_proxy_report.md">proxy report</a> &middot; <a href="maud_full_proxy_dry_run.json">full-run JSON</a> &middot; <a href="maud_full_probe_proxy_smoke.json">probe quick-check JSON</a> &middot; <a href="../../docs/second_judge_findings.md">second-judge report</a></div>
+          <div class="mono">Base model: meta-llama/Llama-3.1-8B-Instruct &middot; label source: judge_llm_proxy &middot; judge-proxy labels only &middot; second judge: moonshotai/kimi-k2.6</div>
+        </footer>
+
+      </main>
+    </div>
+  </div>
+</body>
+</html>

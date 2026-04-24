@@ -1,0 +1,17 @@
+{
+  "gpt54_cached": {
+    "correctness": {
+      "auroc": 0.8724426258672834,
+      "brier": 0.16939
+    },
+    "n_claims": 150
+  },
+  "label_source": "judge_llm_proxy_v2",
+  "llama_self_report": {
+    "correctness": {
+      "auroc": 0.4662871375200142,
+      "brier": 0.48
+    },
+    "n_claims": 150
+  }
+}

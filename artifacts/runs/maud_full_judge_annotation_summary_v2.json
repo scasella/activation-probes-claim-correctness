@@ -1,0 +1,24 @@
+{
+  "annotation_version": "proxy_v2",
+  "annotator_id": "judge_kimi_k2_6",
+  "base_url": "https://api.pinference.ai/api/v1",
+  "failures": [],
+  "model": "moonshotai/kimi-k2.6",
+  "n_examples": 135,
+  "n_examples_failed": 0,
+  "n_examples_processed_this_run": 9,
+  "n_examples_reused_existing": 126,
+  "n_examples_selected": 135,
+  "n_examples_succeeded": 135,
+  "n_rows": 150,
+  "provider": "prime_intellect_inference",
+  "proxy_only": true,
+  "same_prompt_as": "scripts/materialize_judge_annotations.py",
+  "usage": {
+    "completion_tokens": 448765,
+    "estimated_cost_usd": 1.91231565,
+    "input_usd_per_mtok": 0.95,
+    "output_usd_per_mtok": 4.0,
+    "prompt_tokens": 123427
+  }
+}

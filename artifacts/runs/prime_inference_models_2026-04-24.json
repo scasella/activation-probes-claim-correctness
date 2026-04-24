@@ -1,0 +1,1369 @@
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "allenai/olmo-3.1-32b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1768504228,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 0.6,
+        "effective_at": "2026-01-15T19:10:28.733208+00:00"
+      }
+    },
+    {
+      "id": "allenai/olmo-3.1-32b-think",
+      "object": "model",
+      "owned_by": "",
+      "created": 1768504229,
+      "pricing": {
+        "input_usd_per_mtok": 0.15,
+        "output_usd_per_mtok": 0.5,
+        "effective_at": "2026-01-15T19:10:29.936470+00:00"
+      }
+    },
+    {
+      "id": "allenai/olmo-3-32b-think",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764648788,
+      "pricing": {
+        "input_usd_per_mtok": 0.3,
+        "output_usd_per_mtok": 0.55,
+        "effective_at": "2025-12-02T04:13:08.680957+00:00"
+      }
+    },
+    {
+      "id": "allenai/olmo-3-7b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764684537,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2025-12-02T14:08:57.889555+00:00"
+      }
+    },
+    {
+      "id": "allenai/OLMo-3-7B-Instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937589,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:09.847324+00:00"
+      }
+    },
+    {
+      "id": "allenai/olmo-3-7b-think",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764684536,
+      "pricing": {
+        "input_usd_per_mtok": 0.12,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2025-12-02T14:08:56.546279+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-3.5-haiku",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029732,
+      "pricing": {
+        "input_usd_per_mtok": 0.8,
+        "output_usd_per_mtok": 4.0,
+        "effective_at": "2025-10-21T06:55:32.359337+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-3.5-sonnet",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029731,
+      "pricing": {
+        "input_usd_per_mtok": 3.0,
+        "output_usd_per_mtok": 15.0,
+        "effective_at": "2025-10-21T06:55:31.414558+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-3.7-sonnet",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030863,
+      "pricing": {
+        "input_usd_per_mtok": 3.0,
+        "output_usd_per_mtok": 15.0,
+        "effective_at": "2025-10-21T07:14:23.570821+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-3-opus",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761157327,
+      "pricing": {
+        "input_usd_per_mtok": 15.0,
+        "output_usd_per_mtok": 75.0,
+        "effective_at": "2025-10-22T18:22:07.335153+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-haiku-4.5",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030860,
+      "pricing": {
+        "input_usd_per_mtok": 1.0,
+        "output_usd_per_mtok": 5.0,
+        "effective_at": "2025-10-21T07:14:20.826034+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761157328,
+      "pricing": {
+        "input_usd_per_mtok": 15.0,
+        "output_usd_per_mtok": 75.0,
+        "effective_at": "2025-10-22T18:22:08.483959+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4.1",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761157329,
+      "pricing": {
+        "input_usd_per_mtok": 15.0,
+        "output_usd_per_mtok": 75.0,
+        "effective_at": "2025-10-22T18:22:09.605939+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4.5",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764746904,
+      "pricing": {
+        "input_usd_per_mtok": 5.0,
+        "output_usd_per_mtok": 25.0,
+        "effective_at": "2025-12-03T07:28:24.760458+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4.6",
+      "object": "model",
+      "owned_by": "",
+      "created": 1772938679,
+      "pricing": {
+        "input_usd_per_mtok": 5.0,
+        "output_usd_per_mtok": 25.0,
+        "effective_at": "2026-03-08T02:57:59.615639+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4.7",
+      "object": "model",
+      "owned_by": "",
+      "created": 1776679634,
+      "pricing": {
+        "input_usd_per_mtok": 5.0,
+        "output_usd_per_mtok": 25.0,
+        "effective_at": "2026-04-20T10:07:14.028142+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-sonnet-4",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029716,
+      "pricing": {
+        "input_usd_per_mtok": 3.0,
+        "output_usd_per_mtok": 15.0,
+        "effective_at": "2025-10-21T06:55:16.611551+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-sonnet-4.5",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759212031,
+      "pricing": {
+        "input_usd_per_mtok": 3.0,
+        "output_usd_per_mtok": 15.0,
+        "effective_at": "2025-09-30T06:00:31.866675+00:00"
+      }
+    },
+    {
+      "id": "anthropic/claude-sonnet-4.6",
+      "object": "model",
+      "owned_by": "",
+      "created": 1772054770,
+      "pricing": {
+        "input_usd_per_mtok": 3.0,
+        "output_usd_per_mtok": 15.0,
+        "effective_at": "2026-02-25T21:26:10.104879+00:00"
+      }
+    },
+    {
+      "id": "arcee-ai/trinity-large-thinking",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779888,
+      "pricing": {
+        "input_usd_per_mtok": 0.3125,
+        "output_usd_per_mtok": 1.125,
+        "effective_at": "2026-04-10T00:11:28.813444+00:00"
+      }
+    },
+    {
+      "id": "arcee-ai/trinity-mini",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764648787,
+      "pricing": {
+        "input_usd_per_mtok": 0.045,
+        "output_usd_per_mtok": 0.15,
+        "effective_at": "2025-12-02T04:13:07.168284+00:00"
+      }
+    },
+    {
+      "id": "arcee-ai/Trinity-Mini",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937596,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:16.931810+00:00"
+      }
+    },
+    {
+      "id": "arcee-ai/Trinity-Nano-Preview",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771939038,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T13:17:18.529802+00:00"
+      }
+    },
+    {
+      "id": "deepseek/deepseek-chat",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029728,
+      "pricing": {
+        "input_usd_per_mtok": 0.5,
+        "output_usd_per_mtok": 1.5,
+        "effective_at": "2025-10-21T06:55:28.408953+00:00"
+      }
+    },
+    {
+      "id": "deepseek/deepseek-chat-v3-0324",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029720,
+      "pricing": {
+        "input_usd_per_mtok": 1.25,
+        "output_usd_per_mtok": 1.5,
+        "effective_at": "2025-10-21T06:55:20.362826+00:00"
+      }
+    },
+    {
+      "id": "deepseek/deepseek-chat-v3.1",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029725,
+      "pricing": {
+        "input_usd_per_mtok": 0.56,
+        "output_usd_per_mtok": 1.68,
+        "effective_at": "2025-10-21T06:55:25.583563+00:00"
+      }
+    },
+    {
+      "id": "deepseek/deepseek-r1-0528",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030853,
+      "pricing": {
+        "input_usd_per_mtok": 3.0,
+        "output_usd_per_mtok": 7.0,
+        "effective_at": "2025-10-21T07:14:13.874291+00:00"
+      }
+    },
+    {
+      "id": "deepseek/deepseek-v3.1-terminus",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759198118,
+      "pricing": {
+        "input_usd_per_mtok": 0.45,
+        "output_usd_per_mtok": 1.5,
+        "effective_at": "2025-09-30T02:08:38.000459+00:00"
+      }
+    },
+    {
+      "id": "deepseek/deepseek-v3.2",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764658428,
+      "pricing": {
+        "input_usd_per_mtok": 0.28,
+        "output_usd_per_mtok": 0.42,
+        "effective_at": "2025-12-02T06:53:48.223623+00:00"
+      }
+    },
+    {
+      "id": "deepseek/deepseek-v3.2-exp",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759198146,
+      "pricing": {
+        "input_usd_per_mtok": 0.28,
+        "output_usd_per_mtok": 0.42,
+        "effective_at": "2025-09-30T02:09:06.170541+00:00"
+      }
+    },
+    {
+      "id": "deepseek/deepseek-v3.2-speciale",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764746905,
+      "pricing": {
+        "input_usd_per_mtok": 0.28,
+        "output_usd_per_mtok": 0.42,
+        "effective_at": "2025-12-03T07:28:25.800589+00:00"
+      }
+    },
+    {
+      "id": "google/gemini-2.5-flash",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029715,
+      "pricing": {
+        "input_usd_per_mtok": 0.3,
+        "output_usd_per_mtok": 2.5,
+        "effective_at": "2025-10-21T06:55:15.585176+00:00"
+      }
+    },
+    {
+      "id": "google/gemini-2.5-flash-lite",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029721,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.4,
+        "effective_at": "2025-10-21T06:55:21.403298+00:00"
+      }
+    },
+    {
+      "id": "google/gemini-2.5-pro",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029717,
+      "pricing": {
+        "input_usd_per_mtok": 1.25,
+        "output_usd_per_mtok": 10.0,
+        "effective_at": "2025-10-21T06:55:17.621295+00:00"
+      }
+    },
+    {
+      "id": "google/gemini-3.1-pro-preview",
+      "object": "model",
+      "owned_by": "",
+      "created": 1772054806,
+      "pricing": {
+        "input_usd_per_mtok": 2.0,
+        "output_usd_per_mtok": 12.0,
+        "effective_at": "2026-02-25T21:26:46.169413+00:00"
+      }
+    },
+    {
+      "id": "google/gemini-3-flash-preview",
+      "object": "model",
+      "owned_by": "",
+      "created": 1766202374,
+      "pricing": {
+        "input_usd_per_mtok": 0.5,
+        "output_usd_per_mtok": 3.0,
+        "effective_at": "2025-12-20T03:46:14.305378+00:00"
+      }
+    },
+    {
+      "id": "google/gemma-3-27b-it",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030851,
+      "pricing": {
+        "input_usd_per_mtok": 0.119,
+        "output_usd_per_mtok": 0.3,
+        "effective_at": "2025-10-21T07:14:11.952792+00:00"
+      }
+    },
+    {
+      "id": "HuggingFaceTB/SmolLM3-3B",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937595,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:15.191198+00:00"
+      }
+    },
+    {
+      "id": "meta-llama/llama-3.1-70b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759197543,
+      "pricing": {
+        "input_usd_per_mtok": 0.9,
+        "output_usd_per_mtok": 0.9,
+        "effective_at": "2025-09-30T01:59:03.900142+00:00"
+      }
+    },
+    {
+      "id": "meta-llama/Llama-3.2-1B-Instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771939296,
+      "pricing": {
+        "input_usd_per_mtok": 0.027,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T13:21:36.921319+00:00"
+      }
+    },
+    {
+      "id": "meta-llama/Llama-3.2-3B-Instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771939312,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.34,
+        "effective_at": "2026-02-24T13:21:52.649872+00:00"
+      }
+    },
+    {
+      "id": "meta-llama/llama-3.3-70b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759196298,
+      "pricing": {
+        "input_usd_per_mtok": 0.9,
+        "output_usd_per_mtok": 0.9,
+        "effective_at": "2025-09-30T01:38:18.545960+00:00"
+      }
+    },
+    {
+      "id": "meta-llama/llama-4-maverick",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030850,
+      "pricing": {
+        "input_usd_per_mtok": 0.27,
+        "output_usd_per_mtok": 0.88,
+        "effective_at": "2025-10-21T07:14:10.101027+00:00"
+      }
+    },
+    {
+      "id": "minimax/minimax-m2.5",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771374795,
+      "pricing": {
+        "input_usd_per_mtok": 0.3,
+        "output_usd_per_mtok": 1.2,
+        "effective_at": "2026-02-18T00:33:15.739871+00:00"
+      }
+    },
+    {
+      "id": "minimax/minimax-m2.7",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779870,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 2.4,
+        "effective_at": "2026-04-10T00:11:10.312006+00:00"
+      }
+    },
+    {
+      "id": "mistralai/mistral-large-2512",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764689752,
+      "pricing": {
+        "input_usd_per_mtok": 0.5,
+        "output_usd_per_mtok": 1.5,
+        "effective_at": "2025-12-02T15:35:52.296516+00:00"
+      }
+    },
+    {
+      "id": "mistralai/mistral-nemo",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030857,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.25,
+        "effective_at": "2025-10-21T07:14:17.801302+00:00"
+      }
+    },
+    {
+      "id": "mistralai/mistral-small-24b-instruct-2501",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029727,
+      "pricing": {
+        "input_usd_per_mtok": 0.8,
+        "output_usd_per_mtok": 0.8,
+        "effective_at": "2025-10-21T06:55:27.425999+00:00"
+      }
+    },
+    {
+      "id": "mistralai/mistral-small-2603",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779872,
+      "pricing": {
+        "input_usd_per_mtok": 0.1875,
+        "output_usd_per_mtok": 0.75,
+        "effective_at": "2026-04-10T00:11:12.604966+00:00"
+      }
+    },
+    {
+      "id": "mistralai/mistral-small-3.2-24b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030848,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 0.5,
+        "effective_at": "2025-10-21T07:14:08.027076+00:00"
+      }
+    },
+    {
+      "id": "mistralai/mixtral-8x22b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759198003,
+      "pricing": {
+        "input_usd_per_mtok": 2.0,
+        "output_usd_per_mtok": 6.0,
+        "effective_at": "2025-09-30T02:06:43.614656+00:00"
+      }
+    },
+    {
+      "id": "mistralai/mixtral-8x7b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1762122973,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 0.6,
+        "effective_at": "2025-11-02T22:36:13.547136+00:00"
+      }
+    },
+    {
+      "id": "moonshotai/kimi-k2-0905",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759907126,
+      "pricing": {
+        "input_usd_per_mtok": 1.2,
+        "output_usd_per_mtok": 5.0,
+        "effective_at": "2025-10-08T07:05:26.057085+00:00"
+      }
+    },
+    {
+      "id": "moonshotai/kimi-k2.5",
+      "object": "model",
+      "owned_by": "",
+      "created": 1769800671,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 3.2,
+        "effective_at": "2026-01-30T19:17:51.210047+00:00"
+      }
+    },
+    {
+      "id": "moonshotai/kimi-k2.6",
+      "object": "model",
+      "owned_by": "",
+      "created": 1776733288,
+      "pricing": {
+        "input_usd_per_mtok": 0.95,
+        "output_usd_per_mtok": 4.0,
+        "effective_at": "2026-04-21T01:01:28.804384+00:00"
+      }
+    },
+    {
+      "id": "moonshotai/kimi-k2-thinking",
+      "object": "model",
+      "owned_by": "",
+      "created": 1762890660,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 2.5,
+        "effective_at": "2025-11-11T19:51:00.830395+00:00"
+      }
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-30b-a3b",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779886,
+      "pricing": {
+        "input_usd_per_mtok": 0.05,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-04-10T00:11:26.952299+00:00"
+      }
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779884,
+      "pricing": {
+        "input_usd_per_mtok": 0.3,
+        "output_usd_per_mtok": 0.9,
+        "effective_at": "2026-04-10T00:11:24.529333+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-4.1",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759401802,
+      "pricing": {
+        "input_usd_per_mtok": 2.0,
+        "output_usd_per_mtok": 8.0,
+        "effective_at": "2025-10-02T10:43:22.496353+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-4.1-mini",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759401806,
+      "pricing": {
+        "input_usd_per_mtok": 0.4,
+        "output_usd_per_mtok": 1.6,
+        "effective_at": "2025-10-02T10:43:26.911016+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-4.1-nano",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759401808,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.4,
+        "effective_at": "2025-10-02T10:43:28.011794+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-4o",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029734,
+      "pricing": {
+        "input_usd_per_mtok": 2.5,
+        "output_usd_per_mtok": 10.0,
+        "effective_at": "2025-10-21T06:55:34.447350+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-4o-mini",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029722,
+      "pricing": {
+        "input_usd_per_mtok": 0.15,
+        "output_usd_per_mtok": 0.6,
+        "effective_at": "2025-10-21T06:55:22.331052+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759211784,
+      "pricing": {
+        "input_usd_per_mtok": 1.25,
+        "output_usd_per_mtok": 10.0,
+        "effective_at": "2025-09-30T05:56:24.831437+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.1",
+      "object": "model",
+      "owned_by": "",
+      "created": 1763426084,
+      "pricing": {
+        "input_usd_per_mtok": 1.25,
+        "output_usd_per_mtok": 10.0,
+        "effective_at": "2025-11-18T00:34:44.949671+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.1-chat",
+      "object": "model",
+      "owned_by": "",
+      "created": 1763426086,
+      "pricing": {
+        "input_usd_per_mtok": 1.25,
+        "output_usd_per_mtok": 10.0,
+        "effective_at": "2025-11-18T00:34:46.105477+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.1-codex",
+      "object": "model",
+      "owned_by": "",
+      "created": 1763426087,
+      "pricing": {
+        "input_usd_per_mtok": 1.25,
+        "output_usd_per_mtok": 10.0,
+        "effective_at": "2025-11-18T00:34:47.141647+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.1-codex-mini",
+      "object": "model",
+      "owned_by": "",
+      "created": 1763426088,
+      "pricing": {
+        "input_usd_per_mtok": 0.25,
+        "output_usd_per_mtok": 2.0,
+        "effective_at": "2025-11-18T00:34:48.291757+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.2",
+      "object": "model",
+      "owned_by": "",
+      "created": 1765611176,
+      "pricing": {
+        "input_usd_per_mtok": 1.75,
+        "output_usd_per_mtok": 14.0,
+        "effective_at": "2025-12-13T07:32:56.544785+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.2-chat",
+      "object": "model",
+      "owned_by": "",
+      "created": 1765611162,
+      "pricing": {
+        "input_usd_per_mtok": 1.75,
+        "output_usd_per_mtok": 14.0,
+        "effective_at": "2025-12-13T07:32:42.510052+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.2-pro",
+      "object": "model",
+      "owned_by": "",
+      "created": 1765611177,
+      "pricing": {
+        "input_usd_per_mtok": 21.0,
+        "output_usd_per_mtok": 168.0,
+        "effective_at": "2025-12-13T07:32:57.583455+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.3-codex",
+      "object": "model",
+      "owned_by": "",
+      "created": 1772054791,
+      "pricing": {
+        "input_usd_per_mtok": 1.75,
+        "output_usd_per_mtok": 14.0,
+        "effective_at": "2026-02-25T21:26:31.496994+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.4",
+      "object": "model",
+      "owned_by": "",
+      "created": 1773713673,
+      "pricing": {
+        "input_usd_per_mtok": 2.5,
+        "output_usd_per_mtok": 15.0,
+        "effective_at": "2026-03-17T02:14:33.278960+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-mini",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779863,
+      "pricing": {
+        "input_usd_per_mtok": 0.75,
+        "output_usd_per_mtok": 4.5,
+        "effective_at": "2026-04-10T00:11:03.742760+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-nano",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779866,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 1.25,
+        "effective_at": "2026-04-10T00:11:06.153745+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-pro",
+      "object": "model",
+      "owned_by": "",
+      "created": 1773713674,
+      "pricing": {
+        "input_usd_per_mtok": 30.0,
+        "output_usd_per_mtok": 180.0,
+        "effective_at": "2026-03-17T02:14:34.995439+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5-chat",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029733,
+      "pricing": {
+        "input_usd_per_mtok": 1.25,
+        "output_usd_per_mtok": 10.0,
+        "effective_at": "2025-10-21T06:55:33.430759+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5-codex",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030851,
+      "pricing": {
+        "input_usd_per_mtok": 1.25,
+        "output_usd_per_mtok": 10.0,
+        "effective_at": "2025-10-21T07:14:11.037617+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5-mini",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759401800,
+      "pricing": {
+        "input_usd_per_mtok": 0.25,
+        "output_usd_per_mtok": 2.0,
+        "effective_at": "2025-10-02T10:43:20.338354+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-5-nano",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759401801,
+      "pricing": {
+        "input_usd_per_mtok": 0.05,
+        "output_usd_per_mtok": 0.4,
+        "effective_at": "2025-10-02T10:43:21.418908+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-oss-120b",
+      "object": "model",
+      "owned_by": "",
+      "created": 1760042083,
+      "pricing": {
+        "input_usd_per_mtok": 0.15,
+        "output_usd_per_mtok": 0.6,
+        "effective_at": "2025-10-09T20:34:43.236004+00:00"
+      }
+    },
+    {
+      "id": "openai/gpt-oss-20b",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030856,
+      "pricing": {
+        "input_usd_per_mtok": 0.07,
+        "output_usd_per_mtok": 0.3,
+        "effective_at": "2025-10-21T07:14:16.897238+00:00"
+      }
+    },
+    {
+      "id": "prime-intellect/intellect-3",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764214853,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 1.1,
+        "effective_at": "2025-11-27T03:40:53.742193+00:00"
+      }
+    },
+    {
+      "id": "PrimeIntellect/INTELLECT-3.1",
+      "object": "model",
+      "owned_by": "",
+      "created": 1774575029,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-03-27T01:30:29.877541+00:00"
+      }
+    },
+    {
+      "id": "PrimeIntellect/Qwen3-0.6B-Reverse-Text-SFT",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937594,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:14.386003+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen-2.5-72b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759198002,
+      "pricing": {
+        "input_usd_per_mtok": 0.38,
+        "output_usd_per_mtok": 0.4,
+        "effective_at": "2025-09-30T02:06:42.924197+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-235b-a22b-2507",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759198117,
+      "pricing": {
+        "input_usd_per_mtok": 0.22,
+        "output_usd_per_mtok": 0.88,
+        "effective_at": "2025-09-30T02:08:37.415647+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-235b-a22b-instruct-2507",
+      "object": "model",
+      "owned_by": "",
+      "created": 1760149944,
+      "pricing": {
+        "input_usd_per_mtok": 0.22,
+        "output_usd_per_mtok": 0.88,
+        "effective_at": "2025-10-11T02:32:24.815686+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-235b-a22b-thinking-2507",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759401805,
+      "pricing": {
+        "input_usd_per_mtok": 0.65,
+        "output_usd_per_mtok": 3.0,
+        "effective_at": "2025-10-02T10:43:25.775862+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-30b-a3b-instruct-2507",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759401803,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 0.8,
+        "effective_at": "2025-10-02T10:43:23.646850+00:00"
+      }
+    },
+    {
+      "id": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937591,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:11.446834+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-30b-a3b-thinking-2507",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759401804,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 2.4,
+        "effective_at": "2025-10-02T10:43:24.744120+00:00"
+      }
+    },
+    {
+      "id": "Qwen/Qwen3-30B-A3B-Thinking-2507",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937592,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:12.163500+00:00"
+      }
+    },
+    {
+      "id": "Qwen/Qwen3-4B-Instruct-2507",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937592,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:12.896966+00:00"
+      }
+    },
+    {
+      "id": "Qwen/Qwen3-4B-Thinking-2507",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937593,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:13.627818+00:00"
+      }
+    },
+    {
+      "id": "Qwen/Qwen3.5-35B-A3B",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775373414,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 1.3,
+        "effective_at": "2026-04-05T07:16:54.726585+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3.5-397b-a17b",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775696599,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 3.6,
+        "effective_at": "2026-04-09T01:03:19.130519+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-8b",
+      "object": "model",
+      "owned_by": "",
+      "created": 1767847988,
+      "pricing": {
+        "input_usd_per_mtok": 0.117,
+        "output_usd_per_mtok": 0.455,
+        "effective_at": "2026-01-08T04:53:08.134989+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-coder",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030855,
+      "pricing": {
+        "input_usd_per_mtok": 2.0,
+        "output_usd_per_mtok": 4.875,
+        "effective_at": "2025-10-21T07:14:15.022804+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-coder-next",
+      "object": "model",
+      "owned_by": "",
+      "created": 1772054821,
+      "pricing": {
+        "input_usd_per_mtok": 0.5,
+        "output_usd_per_mtok": 1.5,
+        "effective_at": "2026-02-25T21:27:01.126222+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-max",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764463224,
+      "pricing": {
+        "input_usd_per_mtok": 1.2,
+        "output_usd_per_mtok": 6.0,
+        "effective_at": "2025-11-30T00:40:24.859337+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-vl-235b-a22b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030856,
+      "pricing": {
+        "input_usd_per_mtok": 0.4,
+        "output_usd_per_mtok": 1.9,
+        "effective_at": "2025-10-21T07:14:16.011386+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-vl-235b-a22b-thinking",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764830992,
+      "pricing": {
+        "input_usd_per_mtok": 0.784,
+        "output_usd_per_mtok": 3.16,
+        "effective_at": "2025-12-04T06:49:52.368716+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-vl-30b-a3b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764830991,
+      "pricing": {
+        "input_usd_per_mtok": 0.25,
+        "output_usd_per_mtok": 1.0,
+        "effective_at": "2025-12-04T06:49:51.204281+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-vl-30b-a3b-thinking",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764830990,
+      "pricing": {
+        "input_usd_per_mtok": 0.16,
+        "output_usd_per_mtok": 0.8,
+        "effective_at": "2025-12-04T06:49:50.134619+00:00"
+      }
+    },
+    {
+      "id": "Qwen/Qwen3-VL-30B-A3B-Thinking",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937598,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:18.456091+00:00"
+      }
+    },
+    {
+      "id": "Qwen/Qwen3-VL-4B-Instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937597,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.2,
+        "effective_at": "2026-02-24T12:53:17.691100+00:00"
+      }
+    },
+    {
+      "id": "qwen/qwen3-vl-8b-instruct",
+      "object": "model",
+      "owned_by": "",
+      "created": 1764830989,
+      "pricing": {
+        "input_usd_per_mtok": 0.18,
+        "output_usd_per_mtok": 0.7,
+        "effective_at": "2025-12-04T06:49:49.046332+00:00"
+      }
+    },
+    {
+      "id": "x-ai/grok-3-mini",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030861,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 4.0,
+        "effective_at": "2025-10-21T07:14:21.718359+00:00"
+      }
+    },
+    {
+      "id": "x-ai/grok-4",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761030846,
+      "pricing": {
+        "input_usd_per_mtok": 3.0,
+        "output_usd_per_mtok": 15.0,
+        "effective_at": "2025-10-21T07:14:06.905436+00:00"
+      }
+    },
+    {
+      "id": "x-ai/grok-4.1-fast",
+      "object": "model",
+      "owned_by": "",
+      "created": 1768524621,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 0.5,
+        "effective_at": "2026-01-16T00:50:21.790747+00:00"
+      }
+    },
+    {
+      "id": "x-ai/grok-4.20",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779880,
+      "pricing": {
+        "input_usd_per_mtok": 2.0,
+        "output_usd_per_mtok": 6.0,
+        "effective_at": "2026-04-10T00:11:20.257314+00:00"
+      }
+    },
+    {
+      "id": "x-ai/grok-4.20-multi-agent",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779882,
+      "pricing": {
+        "input_usd_per_mtok": 2.0,
+        "output_usd_per_mtok": 6.0,
+        "effective_at": "2026-04-10T00:11:22.350470+00:00"
+      }
+    },
+    {
+      "id": "x-ai/grok-4-fast",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029719,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 0.5,
+        "effective_at": "2025-10-21T06:55:19.473593+00:00"
+      }
+    },
+    {
+      "id": "x-ai/grok-code-fast-1",
+      "object": "model",
+      "owned_by": "",
+      "created": 1761029713,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 1.5,
+        "effective_at": "2025-10-21T06:55:13.109060+00:00"
+      }
+    },
+    {
+      "id": "xiaomi/mimo-v2-pro",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779868,
+      "pricing": {
+        "input_usd_per_mtok": 1.0,
+        "output_usd_per_mtok": 3.0,
+        "effective_at": "2026-04-10T00:11:08.427925+00:00"
+      }
+    },
+    {
+      "id": "z-ai/glm-4.5",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759907123,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 2.2,
+        "effective_at": "2025-10-08T07:05:23.880304+00:00"
+      }
+    },
+    {
+      "id": "z-ai/glm-4.5-air",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759907122,
+      "pricing": {
+        "input_usd_per_mtok": 0.2,
+        "output_usd_per_mtok": 1.1,
+        "effective_at": "2025-10-08T07:05:22.754541+00:00"
+      }
+    },
+    {
+      "id": "z-ai/glm-4.6",
+      "object": "model",
+      "owned_by": "",
+      "created": 1759907125,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 2.2,
+        "effective_at": "2025-10-08T07:05:25.067849+00:00"
+      }
+    },
+    {
+      "id": "z-ai/glm-4.7",
+      "object": "model",
+      "owned_by": "",
+      "created": 1768006861,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 2.65,
+        "effective_at": "2026-01-10T01:01:01.166455+00:00"
+      }
+    },
+    {
+      "id": "z-ai/glm-4.7-flash",
+      "object": "model",
+      "owned_by": "",
+      "created": 1770082685,
+      "pricing": {
+        "input_usd_per_mtok": 0.1,
+        "output_usd_per_mtok": 0.43,
+        "effective_at": "2026-02-03T01:38:05.842638+00:00"
+      }
+    },
+    {
+      "id": "z-ai/glm-5",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771374834,
+      "pricing": {
+        "input_usd_per_mtok": 1.2,
+        "output_usd_per_mtok": 3.5,
+        "effective_at": "2026-02-18T00:33:54.765331+00:00"
+      }
+    },
+    {
+      "id": "z-ai/glm-5.1",
+      "object": "model",
+      "owned_by": "",
+      "created": 1775779875,
+      "pricing": {
+        "input_usd_per_mtok": 1.75,
+        "output_usd_per_mtok": 5.5,
+        "effective_at": "2026-04-10T00:11:15.012238+00:00"
+      }
+    },
+    {
+      "id": "zai-org/GLM-4.7",
+      "object": "model",
+      "owned_by": "",
+      "created": 1771937590,
+      "pricing": {
+        "input_usd_per_mtok": 0.6,
+        "output_usd_per_mtok": 2.65,
+        "effective_at": "2026-02-24T12:53:10.608022+00:00"
+      }
+    }
+  ]
+}

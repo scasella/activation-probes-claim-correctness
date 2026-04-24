@@ -1,0 +1,55 @@
+{
+  "judge1_full_ordering": [
+    "gpt54_cached",
+    "residual_probe",
+    "sae_probe",
+    "llama_self_report"
+  ],
+  "judge2_full_ordering": [
+    "gpt54_cached",
+    "residual_probe",
+    "sae_probe",
+    "llama_self_report"
+  ],
+  "label_source": "judge_agreement_set",
+  "matches_judge1_full_ordering": true,
+  "matches_judge2_full_ordering": true,
+  "method_ordering": [
+    "gpt54_cached",
+    "residual_probe",
+    "sae_probe",
+    "llama_self_report"
+  ],
+  "metrics": {
+    "gpt54_cached": {
+      "correctness": {
+        "auroc": 0.9814814814814815,
+        "brier": 0.10133090909090907
+      },
+      "n_claims": 110
+    },
+    "llama_self_report": {
+      "correctness": {
+        "auroc": 0.4861111111111111,
+        "brier": 0.509090909090909
+      },
+      "n_claims": 110
+    },
+    "residual_probe": {
+      "correctness": {
+        "auroc": 0.792989417989418,
+        "brier": 0.2305211572134516
+      },
+      "n_claims": 110
+    },
+    "sae_probe": {
+      "correctness": {
+        "auroc": 0.7119708994708994,
+        "brier": 0.2676051615141327
+      },
+      "n_claims": 110
+    }
+  },
+  "n_claims": 110,
+  "probe_fit_label_source": "judge_llm_proxy_v1"
+}

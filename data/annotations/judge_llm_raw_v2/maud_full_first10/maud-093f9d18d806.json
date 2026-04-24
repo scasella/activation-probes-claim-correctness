@@ -1,0 +1,189 @@
+{
+  "annotation_version": "proxy_v2",
+  "annotator_id": "judge_kimi_k2_6",
+  "attempt": 2,
+  "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-9bd90f30e7a6\",\n      \"correctness_label\": \"true\",\n      \"flip_evidence_text\": \"provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry.\",\n      \"load_bearing_label\": \"yes\",\n      \"notes\": \"The claim accurately captures the carve-back in the MAE definition: the general exclusions in clauses (a), (b), (c), and (f) are disregarded unless they disproportionally affect the party relative to similarly situated banking industry participants.\"\n    }\n  ]\n}",
+  "elapsed_sec": 33.30438208580017,
+  "example_id": "maud-093f9d18d806",
+  "model": "moonshotai/kimi-k2.6",
+  "ok": true,
+  "parsed": {
+    "claims": [
+      {
+        "claim_id": "claim-9bd90f30e7a6",
+        "correctness_label": "true",
+        "flip_evidence_text": "provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry.",
+        "load_bearing_label": "yes",
+        "notes": "The claim accurately captures the carve-back in the MAE definition: the general exclusions in clauses (a), (b), (c), and (f) are disregarded unless they disproportionally affect the party relative to similarly situated banking industry participants."
+      }
+    ]
+  },
+  "prompt": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cMaterial Adverse Effect\u201d means with respect to any Person, any effect, circumstance, occurrence or change that is material and adverse to the financial position, results of operations or business of such Person and its Subsidiaries, taken as a whole, or which would materially impair the ability of such Person to perform its obligations under this Agreement or otherwise materially impairs the ability of such Person to consummate the transactions contemplated hereby; provided, however, that Material Adverse Effect shall not be deemed to include the impact of (a) changes in banking and similar Laws of general applicability or interpretations thereof by Governmental Authorities, (b) changes in GAAP or regulatory accounting requirements applicable to banks or bank holding companies generally, (c) changes after the date of this Agreement in general economic or capital market conditions affecting financial institutions or their market prices generally, including, but not limited to, changes in levels of interest rates generally and any change in the value of deposits, borrowings or loan service rights associated therewith, (d) the effects of any action or omission taken by First Choice or any First Choice Subsidiary with the prior consent of Enterprise, and vice versa, or as otherwise expressly permitted or contemplated by this Agreement; (e) the impact of the Agreement and the transactions contemplated hereby, including the impact of any public announcement thereof, on relationships with customers or employees (including the loss of personnel subsequent to the date of this Agreement); (f) changes in national or international political or social conditions including the engagement by the United States in hostilities, whether or not pursuant to the declaration of a national emergency or war, or the occurrence of any military or terrorist attack upon or within the United States, and any national or global epidemic, pandemic or disease outbreak (including COVID-19), or the worsening of such conditions threatened or existing as of the date of this Agreement; (g) the failure, in and of itself, to meet earnings projections or internal financial forecasts, but not including the underlying causes thereof (unless otherwise excluded hereunder); (h) any actual or threatened Legal Proceeding against First Choice and/or the members of the First Choice Board related to this Agreement and the disposition, adjudication or settlement thereof; and (i) natural disaster or other force majeure event; provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry. For the avoidance of doubt, any changes in any program administered by or related to the SBA under which First Choice participates, including, without limitation, any changes in any Laws 96 applicable or relating thereto (or any interpretations of any such Laws), that would (A) eliminate or materially limit or impair the ability of First Choice or any First Choice Subsidiary to originate or service Loans under any such program, or (B) eliminate or materially limit or impair Loan guarantees under such program, whether on a prospective or retroactive basis, in each case shall be deemed a \u201cMaterial Adverse Effect\u201d with respect to First Choice and its Subsidiaries, taken as a whole. (Pages 101-102)\n\nQuestion:\nW/N/A/F subject to \"disproportionate impact\"-Answer\n\nLlama answer:\nSubject to disproportionate impact.\n\nCanonical claims:\n- claim-9bd90f30e7a6: Subject to disproportionate impact.\n",
+  "request": {
+    "messages": [
+      {
+        "content": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cMaterial Adverse Effect\u201d means with respect to any Person, any effect, circumstance, occurrence or change that is material and adverse to the financial position, results of operations or business of such Person and its Subsidiaries, taken as a whole, or which would materially impair the ability of such Person to perform its obligations under this Agreement or otherwise materially impairs the ability of such Person to consummate the transactions contemplated hereby; provided, however, that Material Adverse Effect shall not be deemed to include the impact of (a) changes in banking and similar Laws of general applicability or interpretations thereof by Governmental Authorities, (b) changes in GAAP or regulatory accounting requirements applicable to banks or bank holding companies generally, (c) changes after the date of this Agreement in general economic or capital market conditions affecting financial institutions or their market prices generally, including, but not limited to, changes in levels of interest rates generally and any change in the value of deposits, borrowings or loan service rights associated therewith, (d) the effects of any action or omission taken by First Choice or any First Choice Subsidiary with the prior consent of Enterprise, and vice versa, or as otherwise expressly permitted or contemplated by this Agreement; (e) the impact of the Agreement and the transactions contemplated hereby, including the impact of any public announcement thereof, on relationships with customers or employees (including the loss of personnel subsequent to the date of this Agreement); (f) changes in national or international political or social conditions including the engagement by the United States in hostilities, whether or not pursuant to the declaration of a national emergency or war, or the occurrence of any military or terrorist attack upon or within the United States, and any national or global epidemic, pandemic or disease outbreak (including COVID-19), or the worsening of such conditions threatened or existing as of the date of this Agreement; (g) the failure, in and of itself, to meet earnings projections or internal financial forecasts, but not including the underlying causes thereof (unless otherwise excluded hereunder); (h) any actual or threatened Legal Proceeding against First Choice and/or the members of the First Choice Board related to this Agreement and the disposition, adjudication or settlement thereof; and (i) natural disaster or other force majeure event; provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry. For the avoidance of doubt, any changes in any program administered by or related to the SBA under which First Choice participates, including, without limitation, any changes in any Laws 96 applicable or relating thereto (or any interpretations of any such Laws), that would (A) eliminate or materially limit or impair the ability of First Choice or any First Choice Subsidiary to originate or service Loans under any such program, or (B) eliminate or materially limit or impair Loan guarantees under such program, whether on a prospective or retroactive basis, in each case shall be deemed a \u201cMaterial Adverse Effect\u201d with respect to First Choice and its Subsidiaries, taken as a whole. (Pages 101-102)\n\nQuestion:\nW/N/A/F subject to \"disproportionate impact\"-Answer\n\nLlama answer:\nSubject to disproportionate impact.\n\nCanonical claims:\n- claim-9bd90f30e7a6: Subject to disproportionate impact.\n",
+        "role": "user"
+      }
+    ],
+    "model": "moonshotai/kimi-k2.6",
+    "response_format": {
+      "json_schema": {
+        "name": "judge_annotations",
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "additionalProperties": false,
+          "properties": {
+            "claims": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "enum": [
+                      "claim-9bd90f30e7a6"
+                    ],
+                    "type": "string"
+                  },
+                  "correctness_label": {
+                    "enum": [
+                      "true",
+                      "false",
+                      "partially_true"
+                    ],
+                    "type": "string"
+                  },
+                  "flip_evidence_text": {
+                    "type": "string"
+                  },
+                  "load_bearing_label": {
+                    "enum": [
+                      "yes",
+                      "no"
+                    ],
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "correctness_label",
+                  "load_bearing_label",
+                  "flip_evidence_text",
+                  "notes"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "claims"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "type": "json_schema"
+    },
+    "temperature": 0,
+    "usage": {
+      "include": true
+    }
+  },
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-9bd90f30e7a6\",\n      \"correctness_label\": \"true\",\n      \"flip_evidence_text\": \"provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry.\",\n      \"load_bearing_label\": \"yes\",\n      \"notes\": \"The claim accurately captures the carve-back in the MAE definition: the general exclusions in clauses (a), (b), (c), and (f) are disregarded unless they disproportionally affect the party relative to similarly situated banking industry participants.\"\n    }\n  ]\n}",
+          "reasoning": "The user wants me to act as a proxy legal annotator. I need to evaluate the single claim provided against the contract excerpt, question, and model answer.\n\n Inputs:\n - Contract excerpt: Defines \"Material Adverse Effect\" and includes a proviso that changes in clauses (a), (b), (c), and (f) are taken into account if they disproportionally affect one party compared to similarly situated participants in the banking industry.\n - Question: \"W/N/A/F subject to 'disproportionate impact'-Answer\" (This seems to be asking whether the answer is subject to \"disproportionate impact\")\n - Llama answer: \"Subject to disproportionate impact.\"\n - Canonical claim: claim-9bd90f30e7a6: \"Subject to disproportionate impact.\"\n\n I need to determine:\n 1. correctness_label: true, false, or partially_true\n 2. load_bearing_label: yes or no\n 3. flip_evidence_text: required if load_bearing_label=yes, else empty string\n 4. notes: optional short note\n\n Analysis:\n The contract states: \"provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry.\"\n\n This means that generally, changes in (a), (b), (c), and (f) are excluded from MAE, UNLESS they disproportionately affect the party. So the exclusion is \"subject to disproportionate impact\" or the MAE determination is \"subject to disproportionate impact\" for those clauses.\n\n The Llama answer \"Subject to disproportionate impact\" is essentially correct and supported by the text. The question seems to be asking if the answer is subject to disproportionate impact, and the Llama answer confirms it.\n\n Wait, let me look at the question more carefully: \"W/N/A/F subject to 'disproportionate impact'-Answer\". This looks like a prompt format where W/N/A/F might stand for something (like Whether/Not Applicable/False? Or maybe it's a classification task). But the key is the claim: \"Subject to disproportionate impact.\"\n\n Is the claim correct? Yes, the contract explicitly has a disproportionate impact carve-back for clauses (a), (b), (c), and (f).\n\n Is it load-bearing? The claim is a short statement summarizing a key condition in the contract. The evidence text would be the sentence starting with \"provided, further, that any effect...\". Since the claim is directly supported by a specific sentence in the contract, and it's a substantive legal point, I would say load_bearing_label = yes. The flip_evidence_text should be the text that supports or refutes it. Actually, \"flip_evidence_text\" usually means the text that if flipped/changed would change the label? Or is it the evidence text from the contract? Let me reconsider.\n\n In some annotation frameworks, \"load_bearing\" means the claim hinges on a specific piece of evidence, and \"flip_evidence_text\" is the specific text that bears the load (i.e., the evidence). If the evidence were flipped/negated, the claim would be false. So I should provide the relevant contract text.\n\n Let me check the exact wording: \"flip_evidence_text: required if load_bearing_label=yes, else empty string\". This suggests it's the text that can be used to verify/flip the claim. I'll provide the relevant sentence.\n\n correctness_label: true\n load_bearing_label: yes\n flip_evidence_text: \"provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry.\"\n\n notes: The claim accurately reflects the disproportionate impact carve-back to the MAE exclusions in clauses (a), (b), (c), and (f).\n\n Wait, is there any nuance that makes it partially_true? The Llama answer is very brief: \"Subject to disproportionate impact.\" The contract says that the exclusions in (a), (b), (c), and (f) are subject to disproportionate impact. It doesn't say everything is subject to disproportionate impact. But the question seems to be specifically about whether the answer is subject to disproportionate impact. Given the context, the claim is true, though brief. It might be slightly incomplete because it doesn't specify which clauses, but as an answer to the question \"W/N/A/F subject to 'disproportionate impact'-Answer\", it seems correct.\n\n Actually, looking at the question format again: \"W/N/A/F subject to 'disproportionate impact'-Answer\". This might be a Yes/No question where the expected answer is just the phrase. Or it could be asking \"What is the answer subject to?\" and the answer is \"disproportionate impact\". The claim is just \"Subject to disproportionate impact.\" This is a true statement regarding the contract's MAE definition.\n\n I'll go with true.\n\n Let me double-check if \"load_bearing\" should be yes. Load-bearing usually means the claim is directly supported by a specific, discrete piece of text. Yes, the \"provided, further\" clause is exactly that.\n\n So final output should be structured as requested. The user wants \"For each claim return: ...\". There's only one claim.\n\n Format:\n - claim-9bd90f30e7a6:\n   correctness_label: true\n   load_bearing_label: yes\n   flip_evidence_text: \"...\"\n   notes: ...\n\n Or maybe they want a JSON-like or YAML-like format. I'll provide it clearly.\n\n Let me make sure the flip_evidence_text is exact. I'll copy from the contract:\n \"provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry.\"\n\n I should include the quotation marks or not? Probably just the text.\n\n One final check: Is the claim \"Subject to disproportionate impact.\" potentially false because the contract says \"disproportionally\" (with an 'a') not \"disproportionately\"? No, the claim uses the noun phrase \"disproportionate impact\" which is standard legal terminology and matches the meaning. The contract uses the adverb \"disproportionally\". The claim is still true.\n\n Also, the question says \"W/N/A/F subject to 'disproportionate impact'-Answer\". The \"W/N/A/F\" might indicate \"Whether / Not applicable / False\"? No, it's likely just a prompt ID. The model answer is \"Subject to disproportionate impact.\" This is correct.\n\n I'll proceed.",
+          "reasoning_details": [
+            {
+              "format": "unknown",
+              "index": 0,
+              "text": "The user wants me to act as a proxy legal annotator. I need to evaluate the single claim provided against the contract excerpt, question, and model answer.\n\n Inputs:\n - Contract excerpt: Defines \"Material Adverse Effect\" and includes a proviso that changes in clauses (a), (b), (c), and (f) are taken into account if they disproportionally affect one party compared to similarly situated participants in the banking industry.\n - Question: \"W/N/A/F subject to 'disproportionate impact'-Answer\" (This seems to be asking whether the answer is subject to \"disproportionate impact\")\n - Llama answer: \"Subject to disproportionate impact.\"\n - Canonical claim: claim-9bd90f30e7a6: \"Subject to disproportionate impact.\"\n\n I need to determine:\n 1. correctness_label: true, false, or partially_true\n 2. load_bearing_label: yes or no\n 3. flip_evidence_text: required if load_bearing_label=yes, else empty string\n 4. notes: optional short note\n\n Analysis:\n The contract states: \"provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry.\"\n\n This means that generally, changes in (a), (b), (c), and (f) are excluded from MAE, UNLESS they disproportionately affect the party. So the exclusion is \"subject to disproportionate impact\" or the MAE determination is \"subject to disproportionate impact\" for those clauses.\n\n The Llama answer \"Subject to disproportionate impact\" is essentially correct and supported by the text. The question seems to be asking if the answer is subject to disproportionate impact, and the Llama answer confirms it.\n\n Wait, let me look at the question more carefully: \"W/N/A/F subject to 'disproportionate impact'-Answer\". This looks like a prompt format where W/N/A/F might stand for something (like Whether/Not Applicable/False? Or maybe it's a classification task). But the key is the claim: \"Subject to disproportionate impact.\"\n\n Is the claim correct? Yes, the contract explicitly has a disproportionate impact carve-back for clauses (a), (b), (c), and (f).\n\n Is it load-bearing? The claim is a short statement summarizing a key condition in the contract. The evidence text would be the sentence starting with \"provided, further, that any effect...\". Since the claim is directly supported by a specific sentence in the contract, and it's a substantive legal point, I would say load_bearing_label = yes. The flip_evidence_text should be the text that supports or refutes it. Actually, \"flip_evidence_text\" usually means the text that if flipped/changed would change the label? Or is it the evidence text from the contract? Let me reconsider.\n\n In some annotation frameworks, \"load_bearing\" means the claim hinges on a specific piece of evidence, and \"flip_evidence_text\" is the specific text that bears the load (i.e., the evidence). If the evidence were flipped/negated, the claim would be false. So I should provide the relevant contract text.\n\n Let me check the exact wording: \"flip_evidence_text: required if load_bearing_label=yes, else empty string\". This suggests it's the text that can be used to verify/flip the claim. I'll provide the relevant sentence.\n\n correctness_label: true\n load_bearing_label: yes\n flip_evidence_text: \"provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry.\"\n\n notes: The claim accurately reflects the disproportionate impact carve-back to the MAE exclusions in clauses (a), (b), (c), and (f).\n\n Wait, is there any nuance that makes it partially_true? The Llama answer is very brief: \"Subject to disproportionate impact.\" The contract says that the exclusions in (a), (b), (c), and (f) are subject to disproportionate impact. It doesn't say everything is subject to disproportionate impact. But the question seems to be specifically about whether the answer is subject to disproportionate impact. Given the context, the claim is true, though brief. It might be slightly incomplete because it doesn't specify which clauses, but as an answer to the question \"W/N/A/F subject to 'disproportionate impact'-Answer\", it seems correct.\n\n Actually, looking at the question format again: \"W/N/A/F subject to 'disproportionate impact'-Answer\". This might be a Yes/No question where the expected answer is just the phrase. Or it could be asking \"What is the answer subject to?\" and the answer is \"disproportionate impact\". The claim is just \"Subject to disproportionate impact.\" This is a true statement regarding the contract's MAE definition.\n\n I'll go with true.\n\n Let me double-check if \"load_bearing\" should be yes. Load-bearing usually means the claim is directly supported by a specific, discrete piece of text. Yes, the \"provided, further\" clause is exactly that.\n\n So final output should be structured as requested. The user wants \"For each claim return: ...\". There's only one claim.\n\n Format:\n - claim-9bd90f30e7a6:\n   correctness_label: true\n   load_bearing_label: yes\n   flip_evidence_text: \"...\"\n   notes: ...\n\n Or maybe they want a JSON-like or YAML-like format. I'll provide it clearly.\n\n Let me make sure the flip_evidence_text is exact. I'll copy from the contract:\n \"provided, further, that any effect, circumstance, occurrence or change referred to in clauses (a), (b), (c), and (f) above shall be taken into account in determining whether a Material Adverse Effect has occurred to the extent such effect, circumstance, occurrence or change has disproportionally affected First Choice and First Choice Subsidiaries or Enterprise and Enterprise Subsidiaries, as applicable, as compared to similarly situated participants in the banking industry.\"\n\n I should include the quotation marks or not? Probably just the text.\n\n One final check: Is the claim \"Subject to disproportionate impact.\" potentially false because the contract says \"disproportionally\" (with an 'a') not \"disproportionately\"? No, the claim uses the noun phrase \"disproportionate impact\" which is standard legal terminology and matches the meaning. The contract uses the adverb \"disproportionally\". The claim is still true.\n\n Also, the question says \"W/N/A/F subject to 'disproportionate impact'-Answer\". The \"W/N/A/F\" might indicate \"Whether / Not applicable / False\"? No, it's likely just a prompt ID. The model answer is \"Subject to disproportionate impact.\" This is correct.\n\n I'll proceed.",
+              "type": "reasoning.text"
+            }
+          ],
+          "refusal": null,
+          "role": "assistant"
+        },
+        "native_finish_reason": "stop"
+      }
+    ],
+    "created": 1777049297,
+    "id": "9f16983e28eac58d-IAD",
+    "model": "moonshotai/kimi-k2.6",
+    "object": "chat.completion",
+    "system_fingerprint": null,
+    "usage": {
+      "completion_tokens": 1740,
+      "cost": 0.0078,
+      "input_tokens": 847,
+      "output_tokens": 1740,
+      "prompt_tokens": 847,
+      "total_tokens": 2587
+    }
+  },
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "claims": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "claim_id": {
+              "enum": [
+                "claim-9bd90f30e7a6"
+              ],
+              "type": "string"
+            },
+            "correctness_label": {
+              "enum": [
+                "true",
+                "false",
+                "partially_true"
+              ],
+              "type": "string"
+            },
+            "flip_evidence_text": {
+              "type": "string"
+            },
+            "load_bearing_label": {
+              "enum": [
+                "yes",
+                "no"
+              ],
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "claim_id",
+            "correctness_label",
+            "load_bearing_label",
+            "flip_evidence_text",
+            "notes"
+          ],
+          "type": "object"
+        },
+        "maxItems": 1,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "claims"
+    ],
+    "type": "object"
+  }
+}

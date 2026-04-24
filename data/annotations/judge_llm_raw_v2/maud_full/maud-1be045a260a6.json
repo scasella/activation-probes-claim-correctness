@@ -1,0 +1,189 @@
+{
+  "annotation_version": "proxy_v2",
+  "annotator_id": "judge_kimi_k2_6",
+  "attempt": 2,
+  "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-cd640873fab3\",\n      \"correctness_label\": \"true\",\n      \"flip_evidence_text\": \"excluding any effect, change, condition, fact, development, occurrence or event resulting from or arising out of (i) general economic or political conditions in the United States or any foreign jurisdiction or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates\",\n      \"load_bearing_label\": \"yes\",\n      \"notes\": \"Clause (i) expressly excludes general economic and financial-market conditions from the MAE definition (unless disproportionate), supporting the answer 'No'.\"\n    }\n  ]\n}",
+  "elapsed_sec": 13.924608945846558,
+  "example_id": "maud-1be045a260a6",
+  "model": "moonshotai/kimi-k2.6",
+  "ok": true,
+  "parsed": {
+    "claims": [
+      {
+        "claim_id": "claim-cd640873fab3",
+        "correctness_label": "true",
+        "flip_evidence_text": "excluding any effect, change, condition, fact, development, occurrence or event resulting from or arising out of (i) general economic or political conditions in the United States or any foreign jurisdiction or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates",
+        "load_bearing_label": "yes",
+        "notes": "Clause (i) expressly excludes general economic and financial-market conditions from the MAE definition (unless disproportionate), supporting the answer 'No'."
+      }
+    ]
+  },
+  "prompt": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cCompany Material Adverse Effect\u201d means any effect, change, condition, fact, development, occurrence or event that, individually or in the aggregate, has resulted in, or would reasonably be expected to result in, a material adverse effect on the financial condition, business, assets or results of operations of the Company and its Subsidiaries, taken as a whole, excluding any effect, change, condition, fact, development, occurrence or event resulting from or arising out of (i) general economic or political conditions in the United States or any foreign jurisdiction or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates, (ii) changes or conditions generally affecting the industries, markets or geographical areas in which the Company or any of its Subsidiaries operates, (iii) outbreak or escalation of hostilities, acts of war (whether or not declared), terrorism or sabotage, or other changes in geopolitical conditions, including any material worsening of such conditions threatened or existing as of the date hereof, (iv) any epidemics, pandemics or other disease outbreaks (including COVID-19), natural disasters (including hurricanes, tornadoes, floods or earthquakes) or other force majeure events, including any material worsening of such conditions threatened or existing as of the date hereof, and any governmental or industry responses thereto (including any COVID-19 Measures), (v) any failure by the Company or its Subsidiaries to meet any internal or published (including analyst) projections, expectations, forecasts or predictions in 4 respect of the Company\u2019s revenue, earnings or other financial performance or results of operations, or any failure by the Company to meet its internal budgets, plans or forecasts of its revenue, earnings or other financial performance or results of operations (it being understood that any effect, change, condition, fact, development, occurrence or event giving rise to or contributing to any such failure may be deemed, constitute or be taken into account in determining whether there has been, or would reasonably be expected to be, a Company Material Adverse Effect, to the extent not otherwise excluded in clauses (i) to (xii) hereof), (vi) the downgrade in rating of any debt or debt securities of the Company or any of its Subsidiaries (it being understood that any effect, change, condition, fact, development, occurrence or event giving rise to or contributing to any such downgrade may be deemed, constitute or be taken into account in determining whether there has been, or would reasonably be expected to be, a Company Material Adverse Effect, to the extent not otherwise excluded in clauses (i) to (xii) hereof), (vii) changes in GAAP or the interpretation thereof or the adoption, implementation, promulgation, repeal, modification, amendment, reinterpretation, change or proposal of any Law (including COVID-19 Measures) applicable to the operation of the business of the Company or any of its Subsidiaries, (viii) the taking of any action required by, or the failure to take any action prohibited by, this Agreement, including any action expressly prohibited by Section 5.1, (ix) the taking of any action or refraining from taking any action at Parent or Merger Sub\u2019s written request, (x) any change in the market price or trading volume of the Company\u2019s securities (it being understood that any effect, change, condition, fact, development, occurrence or event giving rise to or contributing to any such change may be deemed, constitute or be taken into account in determining whether there has been, or would reasonably be expected to be, a Company Material Adverse Effect, to the extent not otherwise excluded in clauses (i) to (xii) hereof), (xi) the execution and delivery of this Agreement or the consummation of the transactions contemplated hereby, or the public announcement or pendency of this Agreement or the Merger, including any resulting (A) loss or departure of officers or other employees of the Company or any of its Subsidiaries, or (B) termination or reduction (or potential reduction) or any other resulting negative development in the Company\u2019s or any of its Subsidiaries\u2019 relationships with any of its customers, suppliers, distributors, lenders, other business partners, employees or regulators; provided, however, that this clause (xi) shall not apply to any representation or warranty contained in Section 3.4 or Section 3.17(h) to the extent the purpose of such representation or warranty is to address the consequences resulting from this Agreement or the consummation of the transactions contemplated hereby and (xii) any Proceeding brought or threatened by stockholders of either Parent or the Company (whether on behalf of the Company, Parent or otherwise) asserting allegations of breach of fiduciary duty relating to this Agreement or violations of securities Laws solely in connection with the Merger; provided, however, that in the case of each of clauses (i), (ii), (iii), (iv) and (vii), any such effect, change, condition, fact, development, occurrence or event may be taken into account in determining whether or not there has been a Company Material Adverse Effect to the extent such effect, change, condition, fact, development, occurrence or event has a disproportionate impact on the Company and its Subsidiaries, taken as a whole, as compared to other similarly situated participants in the industry in which the Company and its Subsidiaries operate. (Pages 9-10)\n\nQuestion:\nGeneral economic and financial conditions (Y/N)\n\nLlama answer:\nNo.\n\nCanonical claims:\n- claim-cd640873fab3: No.\n",
+  "request": {
+    "messages": [
+      {
+        "content": "You are a proxy legal annotator for a research pilot. Use only the contract excerpt, the question, the model answer, and the fixed claim list.\n\nFor each claim return:\n- correctness_label: true, false, or partially_true\n- load_bearing_label: yes or no\n- flip_evidence_text: required if load_bearing_label=yes, else empty string\n- notes: optional short note\n\nContract excerpt:\n\u201cCompany Material Adverse Effect\u201d means any effect, change, condition, fact, development, occurrence or event that, individually or in the aggregate, has resulted in, or would reasonably be expected to result in, a material adverse effect on the financial condition, business, assets or results of operations of the Company and its Subsidiaries, taken as a whole, excluding any effect, change, condition, fact, development, occurrence or event resulting from or arising out of (i) general economic or political conditions in the United States or any foreign jurisdiction or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates, (ii) changes or conditions generally affecting the industries, markets or geographical areas in which the Company or any of its Subsidiaries operates, (iii) outbreak or escalation of hostilities, acts of war (whether or not declared), terrorism or sabotage, or other changes in geopolitical conditions, including any material worsening of such conditions threatened or existing as of the date hereof, (iv) any epidemics, pandemics or other disease outbreaks (including COVID-19), natural disasters (including hurricanes, tornadoes, floods or earthquakes) or other force majeure events, including any material worsening of such conditions threatened or existing as of the date hereof, and any governmental or industry responses thereto (including any COVID-19 Measures), (v) any failure by the Company or its Subsidiaries to meet any internal or published (including analyst) projections, expectations, forecasts or predictions in 4 respect of the Company\u2019s revenue, earnings or other financial performance or results of operations, or any failure by the Company to meet its internal budgets, plans or forecasts of its revenue, earnings or other financial performance or results of operations (it being understood that any effect, change, condition, fact, development, occurrence or event giving rise to or contributing to any such failure may be deemed, constitute or be taken into account in determining whether there has been, or would reasonably be expected to be, a Company Material Adverse Effect, to the extent not otherwise excluded in clauses (i) to (xii) hereof), (vi) the downgrade in rating of any debt or debt securities of the Company or any of its Subsidiaries (it being understood that any effect, change, condition, fact, development, occurrence or event giving rise to or contributing to any such downgrade may be deemed, constitute or be taken into account in determining whether there has been, or would reasonably be expected to be, a Company Material Adverse Effect, to the extent not otherwise excluded in clauses (i) to (xii) hereof), (vii) changes in GAAP or the interpretation thereof or the adoption, implementation, promulgation, repeal, modification, amendment, reinterpretation, change or proposal of any Law (including COVID-19 Measures) applicable to the operation of the business of the Company or any of its Subsidiaries, (viii) the taking of any action required by, or the failure to take any action prohibited by, this Agreement, including any action expressly prohibited by Section 5.1, (ix) the taking of any action or refraining from taking any action at Parent or Merger Sub\u2019s written request, (x) any change in the market price or trading volume of the Company\u2019s securities (it being understood that any effect, change, condition, fact, development, occurrence or event giving rise to or contributing to any such change may be deemed, constitute or be taken into account in determining whether there has been, or would reasonably be expected to be, a Company Material Adverse Effect, to the extent not otherwise excluded in clauses (i) to (xii) hereof), (xi) the execution and delivery of this Agreement or the consummation of the transactions contemplated hereby, or the public announcement or pendency of this Agreement or the Merger, including any resulting (A) loss or departure of officers or other employees of the Company or any of its Subsidiaries, or (B) termination or reduction (or potential reduction) or any other resulting negative development in the Company\u2019s or any of its Subsidiaries\u2019 relationships with any of its customers, suppliers, distributors, lenders, other business partners, employees or regulators; provided, however, that this clause (xi) shall not apply to any representation or warranty contained in Section 3.4 or Section 3.17(h) to the extent the purpose of such representation or warranty is to address the consequences resulting from this Agreement or the consummation of the transactions contemplated hereby and (xii) any Proceeding brought or threatened by stockholders of either Parent or the Company (whether on behalf of the Company, Parent or otherwise) asserting allegations of breach of fiduciary duty relating to this Agreement or violations of securities Laws solely in connection with the Merger; provided, however, that in the case of each of clauses (i), (ii), (iii), (iv) and (vii), any such effect, change, condition, fact, development, occurrence or event may be taken into account in determining whether or not there has been a Company Material Adverse Effect to the extent such effect, change, condition, fact, development, occurrence or event has a disproportionate impact on the Company and its Subsidiaries, taken as a whole, as compared to other similarly situated participants in the industry in which the Company and its Subsidiaries operate. (Pages 9-10)\n\nQuestion:\nGeneral economic and financial conditions (Y/N)\n\nLlama answer:\nNo.\n\nCanonical claims:\n- claim-cd640873fab3: No.\n",
+        "role": "user"
+      }
+    ],
+    "model": "moonshotai/kimi-k2.6",
+    "response_format": {
+      "json_schema": {
+        "name": "judge_annotations",
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "additionalProperties": false,
+          "properties": {
+            "claims": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "claim_id": {
+                    "enum": [
+                      "claim-cd640873fab3"
+                    ],
+                    "type": "string"
+                  },
+                  "correctness_label": {
+                    "enum": [
+                      "true",
+                      "false",
+                      "partially_true"
+                    ],
+                    "type": "string"
+                  },
+                  "flip_evidence_text": {
+                    "type": "string"
+                  },
+                  "load_bearing_label": {
+                    "enum": [
+                      "yes",
+                      "no"
+                    ],
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "correctness_label",
+                  "load_bearing_label",
+                  "flip_evidence_text",
+                  "notes"
+                ],
+                "type": "object"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "claims"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "type": "json_schema"
+    },
+    "temperature": 0,
+    "usage": {
+      "include": true
+    }
+  },
+  "response": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"claim-cd640873fab3\",\n      \"correctness_label\": \"true\",\n      \"flip_evidence_text\": \"excluding any effect, change, condition, fact, development, occurrence or event resulting from or arising out of (i) general economic or political conditions in the United States or any foreign jurisdiction or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates\",\n      \"load_bearing_label\": \"yes\",\n      \"notes\": \"Clause (i) expressly excludes general economic and financial-market conditions from the MAE definition (unless disproportionate), supporting the answer 'No'.\"\n    }\n  ]\n}",
+          "reasoning": "The user wants me to act as a proxy legal annotator. I need to evaluate the canonical claim against the contract excerpt, question, and model answer.\n\n Contract excerpt defines \"Company Material Adverse Effect\" and lists exclusions. The question asks: \"General economic and financial conditions (Y/N)\". The Llama answer is \"No.\" The canonical claim is: \"claim-cd640873fab3: No.\"\n\n Let me analyze:\n - The question seems to be asking whether general economic and financial conditions are INCLUDED in the definition of Company Material Adverse Effect (i.e., do they count as an MAE), or perhaps whether they are excluded. Given the Llama answer is \"No\", and looking at the contract, clause (i) excludes \"general economic or political conditions... or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates\". So general economic and financial conditions are EXCLUDED from MAE (unless disproportionate impact).\n - The question \"General economic and financial conditions (Y/N)\" is ambiguous without more context, but likely asking \"Does a general economic and financial condition constitute a Company Material Adverse Effect?\" or \"Are general economic and financial conditions excluded?\" Given the Llama answer \"No\", it seems the question is interpreted as \"Do general economic/financial conditions count as an MAE?\" Answer: No, they are excluded.\n - The canonical claim is simply \"No.\" This aligns with the Llama answer and the contract text (clause (i) excludes them).\n\n Wait, I need to be careful. The question might be from a list where each item asks whether that item is excluded from the MAE definition. Or it could be asking whether it qualifies as an MAE. Let me look at the pattern. The contract excerpt explicitly excludes general economic conditions in clause (i). So if the question is \"General economic and financial conditions\" with Y/N asking if they are excluded, the answer would be Yes. But the Llama answer is \"No.\" So the question must be asking whether general economic and financial conditions constitute a Company Material Adverse Effect (or are included in the definition as a qualifying event). The answer is No, because they are excluded by clause (i).\n\n Actually, looking at the question format \"General economic and financial conditions (Y/N)\", this looks like it could be from a dataset where the question is effectively: \"Is [item] excluded from the MAE definition?\" But Llama says \"No.\" Hmm. Let me reconsider.\n\n Wait, maybe the question is: \"Does the MAE definition exclude general economic and financial conditions?\" If yes, answer Y. But Llama says \"No.\" That would mean Llama is saying they are NOT excluded? That contradicts the text.\n\n Alternatively, maybe the question is: \"Are general economic and financial conditions considered a Company Material Adverse Effect?\" Answer: No (because excluded). This matches Llama's \"No.\"\n\n So the claim \"No.\" is correct.\n\n correctness_label: true\n load_bearing_label: Is there evidence in the text that directly supports this and if flipped would change the answer? The key evidence is clause (i) which excludes general economic conditions. If the text didn't have this exclusion, the answer might be different. So yes, it's load bearing.\n flip_evidence_text: I need to provide the text that if flipped/changed would change the answer. The exclusion in clause (i) is the load bearing evidence. If clause (i) were absent or said the opposite (that general economic conditions ARE included), the answer would change. So the flip evidence text should be the relevant part of clause (i): \"excluding any effect... resulting from or arising out of (i) general economic or political conditions in the United States or any foreign jurisdiction or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates\"\n\n Actually, the prompt says \"flip_evidence_text: required if load_bearing_label=yes, else empty string\". This should be the text that bears the load, which if flipped (i.e., if it said the opposite or was absent), the claim would be false. So I should quote the specific exclusion.\n\n Let me double check if the claim is partially_true. The claim is just \"No.\" It's a direct answer to the Y/N question. It's fully supported by the exclusion in clause (i) (subject to the disproportionate impact carve-out, but generally the answer is No). So true seems right.\n\n Wait, is there any nuance? The exclusion says \"excluding any effect... resulting from or arising out of (i) general economic or political conditions...\". So general economic conditions themselves are excluded as causes. The question is \"General economic and financial conditions (Y/N)\". It's terse. But given the Llama answer and the contract, \"No\" is the correct answer to whether they constitute an MAE. The disproportionate impact exception doesn't make the answer \"partially true\" because the base rule is exclusion. The question seems to expect a binary answer.\n\n So:\n - correctness_label: true\n - load_bearing_label: yes\n - flip_evidence_text: \"excluding any effect, change, condition, fact, development, occurrence or event resulting from or arising out of (i) general economic or political conditions in the United States or any foreign jurisdiction or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates\"\n - notes: empty or brief note about clause (i) exclusion.\n\n Let me make sure about the format. The user wants for each claim:\n - correctness_label: true, false, or partially_true\n - load_bearing_label: yes or no\n - flip_evidence_text: required if load_bearing_label=yes, else empty string\n - notes: optional short note\n\n I'll provide it in a structured format.",
+          "reasoning_details": [
+            {
+              "format": "unknown",
+              "index": 0,
+              "text": "The user wants me to act as a proxy legal annotator. I need to evaluate the canonical claim against the contract excerpt, question, and model answer.\n\n Contract excerpt defines \"Company Material Adverse Effect\" and lists exclusions. The question asks: \"General economic and financial conditions (Y/N)\". The Llama answer is \"No.\" The canonical claim is: \"claim-cd640873fab3: No.\"\n\n Let me analyze:\n - The question seems to be asking whether general economic and financial conditions are INCLUDED in the definition of Company Material Adverse Effect (i.e., do they count as an MAE), or perhaps whether they are excluded. Given the Llama answer is \"No\", and looking at the contract, clause (i) excludes \"general economic or political conditions... or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates\". So general economic and financial conditions are EXCLUDED from MAE (unless disproportionate impact).\n - The question \"General economic and financial conditions (Y/N)\" is ambiguous without more context, but likely asking \"Does a general economic and financial condition constitute a Company Material Adverse Effect?\" or \"Are general economic and financial conditions excluded?\" Given the Llama answer \"No\", it seems the question is interpreted as \"Do general economic/financial conditions count as an MAE?\" Answer: No, they are excluded.\n - The canonical claim is simply \"No.\" This aligns with the Llama answer and the contract text (clause (i) excludes them).\n\n Wait, I need to be careful. The question might be from a list where each item asks whether that item is excluded from the MAE definition. Or it could be asking whether it qualifies as an MAE. Let me look at the pattern. The contract excerpt explicitly excludes general economic conditions in clause (i). So if the question is \"General economic and financial conditions\" with Y/N asking if they are excluded, the answer would be Yes. But the Llama answer is \"No.\" So the question must be asking whether general economic and financial conditions constitute a Company Material Adverse Effect (or are included in the definition as a qualifying event). The answer is No, because they are excluded by clause (i).\n\n Actually, looking at the question format \"General economic and financial conditions (Y/N)\", this looks like it could be from a dataset where the question is effectively: \"Is [item] excluded from the MAE definition?\" But Llama says \"No.\" Hmm. Let me reconsider.\n\n Wait, maybe the question is: \"Does the MAE definition exclude general economic and financial conditions?\" If yes, answer Y. But Llama says \"No.\" That would mean Llama is saying they are NOT excluded? That contradicts the text.\n\n Alternatively, maybe the question is: \"Are general economic and financial conditions considered a Company Material Adverse Effect?\" Answer: No (because excluded). This matches Llama's \"No.\"\n\n So the claim \"No.\" is correct.\n\n correctness_label: true\n load_bearing_label: Is there evidence in the text that directly supports this and if flipped would change the answer? The key evidence is clause (i) which excludes general economic conditions. If the text didn't have this exclusion, the answer might be different. So yes, it's load bearing.\n flip_evidence_text: I need to provide the text that if flipped/changed would change the answer. The exclusion in clause (i) is the load bearing evidence. If clause (i) were absent or said the opposite (that general economic conditions ARE included), the answer would change. So the flip evidence text should be the relevant part of clause (i): \"excluding any effect... resulting from or arising out of (i) general economic or political conditions in the United States or any foreign jurisdiction or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates\"\n\n Actually, the prompt says \"flip_evidence_text: required if load_bearing_label=yes, else empty string\". This should be the text that bears the load, which if flipped (i.e., if it said the opposite or was absent), the claim would be false. So I should quote the specific exclusion.\n\n Let me double check if the claim is partially_true. The claim is just \"No.\" It's a direct answer to the Y/N question. It's fully supported by the exclusion in clause (i) (subject to the disproportionate impact carve-out, but generally the answer is No). So true seems right.\n\n Wait, is there any nuance? The exclusion says \"excluding any effect... resulting from or arising out of (i) general economic or political conditions...\". So general economic conditions themselves are excluded as causes. The question is \"General economic and financial conditions (Y/N)\". It's terse. But given the Llama answer and the contract, \"No\" is the correct answer to whether they constitute an MAE. The disproportionate impact exception doesn't make the answer \"partially true\" because the base rule is exclusion. The question seems to expect a binary answer.\n\n So:\n - correctness_label: true\n - load_bearing_label: yes\n - flip_evidence_text: \"excluding any effect, change, condition, fact, development, occurrence or event resulting from or arising out of (i) general economic or political conditions in the United States or any foreign jurisdiction or in securities, credit or financial markets, including changes in interest rates and changes in exchange rates\"\n - notes: empty or brief note about clause (i) exclusion.\n\n Let me make sure about the format. The user wants for each claim:\n - correctness_label: true, false, or partially_true\n - load_bearing_label: yes or no\n - flip_evidence_text: required if load_bearing_label=yes, else empty string\n - notes: optional short note\n\n I'll provide it in a structured format.",
+              "type": "reasoning.text"
+            }
+          ],
+          "refusal": null,
+          "role": "assistant"
+        },
+        "native_finish_reason": "stop"
+      }
+    ],
+    "created": 1777051309,
+    "id": "9f16c959a93420cf-IAD",
+    "model": "moonshotai/kimi-k2.6",
+    "object": "chat.completion",
+    "system_fingerprint": null,
+    "usage": {
+      "completion_tokens": 1339,
+      "cost": 0.0065,
+      "input_tokens": 1255,
+      "output_tokens": 1339,
+      "prompt_tokens": 1255,
+      "total_tokens": 2594
+    }
+  },
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "claims": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "claim_id": {
+              "enum": [
+                "claim-cd640873fab3"
+              ],
+              "type": "string"
+            },
+            "correctness_label": {
+              "enum": [
+                "true",
+                "false",
+                "partially_true"
+              ],
+              "type": "string"
+            },
+            "flip_evidence_text": {
+              "type": "string"
+            },
+            "load_bearing_label": {
+              "enum": [
+                "yes",
+                "no"
+              ],
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "claim_id",
+            "correctness_label",
+            "load_bearing_label",
+            "flip_evidence_text",
+            "notes"
+          ],
+          "type": "object"
+        },
+        "maxItems": 1,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "claims"
+    ],
+    "type": "object"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "fit_label_source": "judge_llm_proxy_v1",
+  "label_source": "judge_llm_proxy_v2",
+  "note": "leave_one_out_probe_scores_fit_on_judge1_labels_scored_against_judge2_labels",
+  "proxy_only": true,
+  "residual": {
+    "correctness": {
+      "auroc": 0.7071695427859811,
+      "brier": 0.28952804490962636
+    },
+    "n_claims": 150
+  },
+  "sae": {
+    "correctness": {
+      "auroc": 0.6521971179505426,
+      "brier": 0.32612776844359087
+    },
+    "n_claims": 150
+  }
+}
