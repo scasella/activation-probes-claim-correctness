@@ -1,0 +1,7 @@
+# Activation Probes Recover Claim-Level Correctness Signal in Legal QA
+
+Preregistered abstract date: 2026-04-24
+
+## Abstract
+
+Llama 3.1 8B Instruct can answer merger-agreement questions with high stated confidence even when individual factual claims in its answer are wrong. We study 150 frozen claim-level units from MAUD merger-agreement question answering and compare four uncertainty signals: Llama's structured self-reported confidence, a GPT-5.4 external scorer, linear probes on residual activations, and linear probes on Goodfire sparse-autoencoder features. Correctness is measured with a judge-proxy protocol using GPT-5.4 labels plus an independent Kimi K2.6 sensitivity pass; a small human audit is used only as a validation anchor, not for probe training. Self-report confidence is near random at ranking claim correctness under both LLM judges. Residual activation probes recover meaningful correctness signal that self-report misses, while SAE features are not reliably distinguishable from residual features on current evidence. GPT-5.4 external scoring remains strongest, but its same-family headline AUROC is inflated; the Kimi-scored estimate is the more defensible comparison. The results support a bounded methods claim: hidden activations encode claim-level correctness signal in this MAUD setting, but the finding remains single-domain, single-model, and dependent on proxy labels plus a small audit.
