@@ -1,0 +1,27 @@
+{
+  "message": "Human audit packet is built, but completed human labels have not been provided.",
+  "n_packet_claims": 30,
+  "n_valid_human_labels": 0,
+  "sample_manifest": {
+    "agreement_label": {
+      "false": 2,
+      "partially_true": 7,
+      "true": 11
+    },
+    "judge_pair": {
+      "false__false": 2,
+      "false__true": 1,
+      "partially_true__false": 2,
+      "partially_true__partially_true": 7,
+      "partially_true__true": 4,
+      "true__false": 1,
+      "true__partially_true": 2,
+      "true__true": 11
+    },
+    "judge_relation": {
+      "agreement": 20,
+      "disagreement": 10
+    }
+  },
+  "status": "pending_human_labels"
+}

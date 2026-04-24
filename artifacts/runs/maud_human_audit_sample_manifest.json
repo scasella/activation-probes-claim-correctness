@@ -1,0 +1,309 @@
+{
+  "final_composition": {
+    "agreement_label": {
+      "false": 2,
+      "partially_true": 7,
+      "true": 11
+    },
+    "judge_pair": {
+      "false__false": 2,
+      "false__true": 1,
+      "partially_true__false": 2,
+      "partially_true__partially_true": 7,
+      "partially_true__true": 4,
+      "true__false": 1,
+      "true__partially_true": 2,
+      "true__true": 11
+    },
+    "judge_relation": {
+      "agreement": 20,
+      "disagreement": 10
+    }
+  },
+  "packet_excludes_judge_labels": true,
+  "packet_is_blinded": true,
+  "rows": [
+    {
+      "agreement_label": "partially_true",
+      "audit_id": "maud-human-audit-001",
+      "claim_id": "claim-216e3e9d114a",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "partially_true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "partially_true",
+      "audit_id": "maud-human-audit-002",
+      "claim_id": "claim-c7a23c7ecc36",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "partially_true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-003",
+      "claim_id": "claim-0962ab52d56b",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": "partially_true",
+      "audit_id": "maud-human-audit-004",
+      "claim_id": "claim-65a93b4845c9",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "partially_true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-005",
+      "claim_id": "claim-1ff17fba16c8",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-006",
+      "claim_id": "claim-395deaa87892",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-007",
+      "claim_id": "claim-b3ee683d928c",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-008",
+      "claim_id": "claim-34de3e99dc49",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "partially_true",
+      "audit_id": "maud-human-audit-009",
+      "claim_id": "claim-fbcfa3054c33",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "partially_true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-010",
+      "claim_id": "claim-b15cb658b73f",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-011",
+      "claim_id": "claim-b9d18343fdf2",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "partially_true",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-012",
+      "claim_id": "claim-1bf8db8781c7",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "partially_true",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-013",
+      "claim_id": "claim-1f273adf751f",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-014",
+      "claim_id": "claim-efc3ebe241ba",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-015",
+      "claim_id": "claim-41529e2970bd",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "false",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": "partially_true",
+      "audit_id": "maud-human-audit-016",
+      "claim_id": "claim-3447273cd9f9",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "partially_true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-017",
+      "claim_id": "claim-aed6aaec08cb",
+      "judge1_correctness_label": "false",
+      "judge2_correctness_label": "true",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-018",
+      "claim_id": "claim-a853f8a339e5",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "false",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-019",
+      "claim_id": "claim-65776cb35537",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-020",
+      "claim_id": "claim-9578c6283165",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-021",
+      "claim_id": "claim-9bd90f30e7a6",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "partially_true",
+      "audit_id": "maud-human-audit-022",
+      "claim_id": "claim-55b4a3cc1245",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "partially_true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-023",
+      "claim_id": "claim-bd3927b1a0e1",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "partially_true",
+      "audit_id": "maud-human-audit-024",
+      "claim_id": "claim-04bb73677629",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "partially_true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-025",
+      "claim_id": "claim-0f803d8eb781",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": null,
+      "audit_id": "maud-human-audit-026",
+      "claim_id": "claim-2f08bc036aea",
+      "judge1_correctness_label": "partially_true",
+      "judge2_correctness_label": "false",
+      "judge_relation": "disagreement"
+    },
+    {
+      "agreement_label": "false",
+      "audit_id": "maud-human-audit-027",
+      "claim_id": "claim-794e19467d73",
+      "judge1_correctness_label": "false",
+      "judge2_correctness_label": "false",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-028",
+      "claim_id": "claim-63d67fe84636",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "true",
+      "audit_id": "maud-human-audit-029",
+      "claim_id": "claim-d2d9aa40202a",
+      "judge1_correctness_label": "true",
+      "judge2_correctness_label": "true",
+      "judge_relation": "agreement"
+    },
+    {
+      "agreement_label": "false",
+      "audit_id": "maud-human-audit-030",
+      "claim_id": "claim-a75b529dfd9e",
+      "judge1_correctness_label": "false",
+      "judge2_correctness_label": "false",
+      "judge_relation": "agreement"
+    }
+  ],
+  "sample_size": 30,
+  "seed": 240424,
+  "selection_sources": {
+    "agreement": [
+      "claim-55b4a3cc1245",
+      "claim-216e3e9d114a",
+      "claim-34de3e99dc49",
+      "claim-3447273cd9f9",
+      "claim-63d67fe84636",
+      "claim-bd3927b1a0e1",
+      "claim-b15cb658b73f",
+      "claim-9bd90f30e7a6",
+      "claim-65776cb35537",
+      "claim-04bb73677629"
+    ],
+    "both_false_or_partially_true": [
+      "claim-65a93b4845c9",
+      "claim-794e19467d73",
+      "claim-a75b529dfd9e",
+      "claim-c7a23c7ecc36",
+      "claim-fbcfa3054c33"
+    ],
+    "both_true": [
+      "claim-d2d9aa40202a",
+      "claim-1ff17fba16c8",
+      "claim-1f273adf751f",
+      "claim-395deaa87892",
+      "claim-0f803d8eb781"
+    ],
+    "disagreement": [
+      "claim-9578c6283165",
+      "claim-a853f8a339e5",
+      "claim-b9d18343fdf2",
+      "claim-41529e2970bd",
+      "claim-aed6aaec08cb",
+      "claim-b3ee683d928c",
+      "claim-efc3ebe241ba",
+      "claim-1bf8db8781c7",
+      "claim-0962ab52d56b",
+      "claim-2f08bc036aea"
+    ]
+  }
+}
