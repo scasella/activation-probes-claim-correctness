@@ -45,7 +45,7 @@ Send `data/annotations/maud_human_audit_packet.jsonl` and the rubric in `docs/hu
 
 ```bash
 uv run python scripts/analyze_maud_human_audit.py
-uv run python scripts/bootstrap_maud_ci.py
+uv run python scripts/compute_bootstrap_ci.py
 ```
 
 Only after that should the paper be called submission-ready.

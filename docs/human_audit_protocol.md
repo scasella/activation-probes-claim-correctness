@@ -52,7 +52,7 @@ Completed labels should be written to `data/annotations/maud_human_audit_labels.
 
 ```bash
 uv run python scripts/analyze_maud_human_audit.py
-uv run python scripts/bootstrap_maud_ci.py
+uv run python scripts/compute_bootstrap_ci.py
 ```
 
 The audit report must state the audit N wherever audit-derived numbers appear. If two annotators are used, compute human-human Cohen's kappa before using adjudicated labels as validation evidence.

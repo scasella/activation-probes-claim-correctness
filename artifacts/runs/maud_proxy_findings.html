@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>When Llama is confident and still wrong</title>
-  <meta name="description" content="A judge-proxy study on MAUD, a merger-agreement legal question-answering benchmark, comparing Llama self-report, GPT-5.4 same-family external scoring, residual probes, and SAE probes on 150 claims." />
-  <meta property="og:title" content="When Llama is confident and still wrong" />
-  <meta property="og:description" content="A judge-proxy comparison of self-reported confidence and activation probes on merger-agreement question answering." />
+  <title>Llama's activations know more than its confidence</title>
+  <meta name="description" content="An interpretability-first judge-proxy study on MAUD showing that Llama hidden activations recover claim-level correctness signal that self-reported confidence misses." />
+  <meta property="og:title" content="Llama's activations know more than its confidence" />
+  <meta property="og:description" content="Activation probes recover claim-level correctness signal in merger-agreement QA where Llama self-report is near random." />
   <meta property="og:type" content="article" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -378,7 +378,7 @@
       background: var(--color-background-100);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
-      overflow: hidden;
+      overflow-x: auto;
     }
     .table-label {
       padding: 0.65rem 1rem;
@@ -414,6 +414,7 @@
     }
     td { color: var(--color-gray-1000); }
     td.num { font-family: var(--font-mono); color: var(--color-gray-1000); }
+    td.num .ci { display: block; color: var(--color-gray-700); font-size: 0.72rem; margin-top: 0.08rem; white-space: nowrap; }
     td.pos { color: var(--color-accent); font-weight: 500; }
     td.neg { color: var(--color-gray-700); }
     tr:last-child td { border-bottom: none; }
@@ -501,8 +502,8 @@
     </div>
 
     <h1 class="title">
-      When Llama is confident and still wrong
-      <span class="sub">A judge-proxy study comparing self-reported confidence and activation probes on merger-agreement question answering.</span>
+      Llama's activations know more than its confidence
+      <span class="sub">An interpretability-first judge-proxy study showing that hidden states recover claim-level correctness signal in merger-agreement question answering.</span>
     </h1>
 
     <div class="byline">
@@ -519,28 +520,31 @@
     <div class="tldr">
       <span class="label">TL;DR</span>
       <strong>What was tested:</strong> I broke legal answers into small factual claims and asked
-      which signal best predicts the judge-labeled wrong claims: Llama's own confidence, a GPT-5.4
+      which signal best predicts claim correctness: Llama's own confidence, a GPT-5.4
       external scorer, or probes trained on hidden activations.
       <br /><br />
-      <strong>What happened:</strong> Llama self-report was near random at ranking GPT-5.4
-      judge-proxy correctness, while raw activations carried meaningful signal.
+      <strong>What happened:</strong> The interpretability result is the win: raw Llama activations
+      carried meaningful claim-correctness signal across two judge families, while Llama's own
+      self-reported confidence stayed near random.
       <br /><br />
       <strong>What not to overclaim:</strong> GPT-5.4 also supplies the proxy labels, so the GPT-5.4
-      external scorer is same-family consistency, not independent legal truth.
+      external scorer is same-family consistency, not independent legal truth. The activation-probe
+      result is evidence of internal correctness signal, not proof of absolute legal correctness.
     </div>
 
     <div class="callout">
       <span class="k">Reader contract</span>
-      All reported correctness is correctness against GPT-5.4 judge-proxy labels on MAUD merger-agreement
-      claims. These are not independent legal-truth labels, and the result should be read as a
-      proxy-label methods result.
+      All reported correctness is proxy correctness on MAUD merger-agreement claims, first against
+      GPT-5.4 labels and then stress-tested with Kimi K2.6. These are not independent legal-truth
+      labels, and the result should be read as an interpretability methods result with proxy-label
+      boundaries.
     </div>
 
     <div class="callout">
       <span class="k">Reader map</span>
-      If you care about model uncertainty, start with the headline result and probe sections. If you
-      care about legal-data validity, read the CUAD boundary and limits sections. If you care about
-      reproducibility, the artifact links are at the bottom.
+      If you care about interpretability, start with the headline result, probe, and agreement-set
+      sections. If you care about legal-data validity, read the CUAD boundary and limits sections. If
+      you care about reproducibility, the artifact links are at the bottom.
     </div>
 
     <div class="body-grid">
@@ -563,10 +567,10 @@
       <main class="prose">
 
         <p>
-          The useful surprise in this run is simple: Llama's stated confidence barely ranked
-          judge-labeled wrong claims better than chance, but its hidden activations did carry signal.
-          That matters because confidence prompts are often the cheapest safety layer people reach
-          for. In this setting, the model's internals knew more than its self-report.
+          The useful surprise in this run is an interpretability win: Llama's hidden activations
+          carried a real signal about which legal claims were correct, even when the model's stated
+          confidence barely ranked wrong claims better than chance. In this setting, the model's
+          internals knew more than its self-report.
         </p>
         <p>
           Here the domain is legal question answering over merger agreements. MAUD is the
@@ -580,20 +584,21 @@
           Self-report, GPT-5.4 decomposition, and activation probes all score the same claims. A
           judge LLM supplies a scalable proxy label for correctness, whether the claim matters to the
           final answer, and the evidence that would change the answer if the claim flipped. The goal
-          is not to settle legal truth; it is to compare uncertainty signals under a reproducible
-          label source.
+          is not to settle legal truth; it is to ask whether internal representations expose
+          correctness information that the model does not surface verbally.
         </p>
 
         <div class="callout">
           <span class="k">The live question</span>
           When the entire pipeline is run on the MAUD merger-agreement benchmark with judge-proxy
-          labels, which uncertainty signals survive contact with the data?
+          labels, do activation probes reveal claim-level correctness signal that self-report hides?
         </div>
 
         <p>
           That question is useful because it makes the comparison operational. It tells us whether
           the pipeline works end to end, whether the task family is viable, whether self-report is
-          even competitive, and whether the probe path has enough signal to justify deeper validation.
+          even competitive, and whether the model's internals contain enough signal to justify deeper
+          validation.
           The broader CUAD transfer attempt did not pass its readiness screen, which becomes a
           boundary result later in the post.
         </p>
@@ -730,7 +735,7 @@
           The headline results below use the stricter proxy-correctness target.
         </p>
 
-        <h2 id="result">The headline result</h2>
+        <h2 id="result">The headline result: hidden-state signal survives</h2>
 
         <p>
           Two metrics carry most of the result. AUROC is a ranking score: <span class="mono">0.5</span>
@@ -739,26 +744,29 @@
         </p>
 
         <p>
-          On full MAUD judge-proxy correctness, Llama self-report is weak. It lands at AUROC
-          <span class="mono">0.5114</span>, barely above random ranking, with a Brier score of
-          <span class="mono">0.58</span>. The model's own structured confidence is not tracking the
-          judge labels in a useful way.
+          The interpretability result is that simple linear probes on Llama activations recover
+          correctness signal that the model's own confidence does not expose. On the full MAUD
+          judge-proxy set, the residual probe reaches AUROC <span class="mono">0.7709</span>, while
+          Llama self-report lands at <span class="mono">0.5114</span>, barely above random ranking.
+          That is the main win: internal states separate correct from not-true legal claims better
+          than the model's verbal confidence.
         </p>
 
         <p>
-          GPT-5.4 external scoring is very strong: AUROC <span class="mono">0.9435</span>, Brier
-          <span class="mono">0.1610</span>. That is not surprising, and it is not free evidence that
-          the task is solved: the judge is also GPT-5.4. The result is best read as same-family
-          consistency between two GPT-5.4-style scoring passes, not as an independent legal-truth
-          baseline.
+          GPT-5.4 external scoring is still the strongest comparator: AUROC
+          <span class="mono">0.9435</span>, Brier <span class="mono">0.1610</span>. But it is not the
+          interpretability result, and it is not free evidence that the task is solved: the first judge
+          is also GPT-5.4. The result is best read as a ceiling-style external scorer plus an
+          activation-probe finding below it, not as an independent legal-truth baseline.
         </p>
 
         <div class="callout">
           <span class="k">Second-judge correction</span>
           The later Kimi K2.6 pass keeps the ordering intact but lowers the defensible GPT-5.4
           scorer estimate from <span class="mono">0.944</span> to <span class="mono">0.872</span>.
-          So the headline should be "GPT-5.4 remains strongest after a judge-family change," not
-          "GPT-5.4 is a 0.94-AUROC independent correctness detector."
+          The activation-probe result also survives the judge-family change: residual activations
+          score <span class="mono">0.707</span> under Kimi and <span class="mono">0.793</span> on the
+          agreement set, while self-report remains near random.
         </div>
 
         <div class="stat-row">
@@ -799,7 +807,7 @@
                 .bar-c    { fill: #3dd68c; opacity: 0.9; }
                 .bar-label{ fill: #ededed; font-family: "Geist Mono", monospace; font-size: 10px; }
               </style>
-              <text x="0" y="18" class="title-t">Proxy-correctness AUROC on MAUD judge labels</text>
+              <text x="0" y="18" class="title-t">Hidden activations recover proxy-correctness signal</text>
               <text x="0" y="34" class="sub-t">150 claims; partially_true counted incorrect; labels from GPT-5.4 judge.</text>
 
               <line x1="150" y1="70" x2="720" y2="70" class="ax-line" />
@@ -830,8 +838,9 @@
           </div>
           <figcaption>
             <strong>Figure 1.</strong> Proxy-correctness AUROC on the full MAUD judge-labeled claim set.
-            The GPT-5.4 external scorer is same-family with the label source, so its high score should
-            be read as judge-protocol consistency, not independent legal adjudication.
+            The interpretability finding is the gap between residual activations and self-report; the
+            GPT-5.4 external scorer is same-family with the label source, so its high score should be
+            read as judge-protocol consistency, not independent legal adjudication.
           </figcaption>
         </figure>
 
@@ -849,26 +858,26 @@
             <tbody>
               <tr class="highlight">
                 <td>GPT-5.4 external scorer, same judge family</td>
-                <td class="num pos">0.9435</td>
-                <td class="num pos">0.1610</td>
+                <td class="num pos">0.9435<span class="ci">[0.906, 0.984]</span></td>
+                <td class="num pos">0.1610<span class="ci">[0.118, 0.206]</span></td>
                 <td>Strongest, but not independent from the judge labels</td>
               </tr>
               <tr>
                 <td>Residual probe quick check</td>
-                <td class="num">0.7709</td>
-                <td class="num">0.2436</td>
+                <td class="num">0.7709<span class="ci">[0.687, 0.838]</span></td>
+                <td class="num">0.2436<span class="ci">[0.189, 0.308]</span></td>
                 <td>Meaningful activation signal</td>
               </tr>
               <tr>
                 <td>SAE probe quick check</td>
-                <td class="num">0.6765</td>
-                <td class="num">0.3001</td>
-                <td>Signal, but weaker than residual</td>
+                <td class="num">0.6765<span class="ci">[0.582, 0.763]</span></td>
+                <td class="num">0.3001<span class="ci">[0.229, 0.372]</span></td>
+                <td>Signal, comparable to residual on current evidence</td>
               </tr>
               <tr>
                 <td>Llama self-report</td>
-                <td class="num neg">0.5114</td>
-                <td class="num neg">0.5800</td>
+                <td class="num neg">0.5114<span class="ci">[0.411, 0.597]</span></td>
+                <td class="num neg">0.5800<span class="ci">[0.500, 0.653]</span></td>
                 <td>Near-random ranking</td>
               </tr>
             </tbody>
@@ -879,27 +888,31 @@
           <span class="k">Evidence tier</span>
           Table 1 mixes full-corpus baselines with a feature-signal quick check for the probes. The
           smaller held-out train/validation/test probe pass appears in Table 2, so the probe numbers
-          should be read as directional signal rather than final generalization estimates.
+          should be read as directional interpretability signal rather than final generalization
+          estimates.
         </div>
 
         <p>
-          The main thesis sentence is this: under this MAUD judge-proxy protocol, activation features
-          rank GPT-5.4 proxy correctness better than Llama's structured self-report. The residual
-          probe is not as strong as a same-family GPT-5.4 external scorer, but it is clearly not noise.
+          The main thesis sentence is this: under this MAUD judge-proxy protocol, hidden activations
+          expose claim-level correctness signal that Llama's structured self-report does not. The
+          residual probe is not as strong as a same-family GPT-5.4 external scorer, but it is clearly
+          not noise.
         </p>
 
         <h2 id="probe">What the probes say</h2>
 
         <p>
-          A probe is a small model trained on internal features from a larger model. Here it asks a
-          narrow question: do the hidden activations around an answer contain information about
-          whether a claim is correct?
+          A probe is a small model trained on internal features from a larger model. Here it asks the
+          interpretability question directly: do hidden activations around an answer contain
+          information about whether a claim is correct?
         </p>
 
         <p>
           The probe story has two layers. The quick check asks whether the feature files contain
           correctness signal at all by repeatedly holding out one example and training on the rest.
-          There the answer is yes, and raw residual activations beat SAE features.
+          There the answer is yes: raw residual activations and SAE features both carry signal.
+          Residuals are directionally stronger in the full-corpus quick check, but the bootstrap
+          evidence supports the narrower claim that the two probe representations are comparable.
         </p>
 
         <p>
@@ -958,7 +971,8 @@
 
         <p>
           This is why I would not yet claim "SAE is worse" or "SAE is better." In the feature-only
-          quick check, residual wins cleanly. In the small train/test split, the SAE entropy probe
+          quick check, residual is directionally ahead, but the second-judge and agreement-set
+          bootstrap intervals make the gap inconclusive. In the small train/test split, the SAE entropy probe
           edges out the residual entropy probe. The robust statement is more precise:
           <strong>SAE has not clearly improved the story over raw residuals</strong>. It is
           interesting enough to keep, not strong enough to headline.
@@ -1014,9 +1028,9 @@
 
         <p>
           The strongest safe claim is methodological and directional. On this MAUD judge-proxy run,
-          Llama self-report performs poorly, residual activations carry useful proxy-correctness
-          signal, and SAE features are not clearly superior to residual features. The overall pipeline
-          is complete enough to support a proxy-label methodology result.
+          hidden activations carry useful proxy-correctness signal that Llama self-report does not
+          expose, and SAE features are not clearly superior to residual features. The overall pipeline
+          is complete enough to support a proxy-label interpretability result.
         </p>
 
         <div class="callout">
@@ -1033,19 +1047,75 @@
           I reran the frozen 150-claim label pass with a second judge from a different model family,
           <span class="mono">moonshotai/kimi-k2.6</span> on Prime Intellect. The story moved in
           magnitude but not in ordering: against Kimi labels, Llama self-report was
-          <span class="mono">0.466 [0.420, 0.600]</span> AUROC, GPT-5.4 external scoring was
-          <span class="mono">0.872 [0.806, 0.923]</span>, the residual probe was
-          <span class="mono">0.707 [0.626, 0.784]</span>, and the SAE probe was
-          <span class="mono">0.652 [0.555, 0.736]</span>. The two judges agreed on
+          <span class="mono">0.466 [0.413, 0.604]</span> AUROC, GPT-5.4 external scoring was
+          <span class="mono">0.872 [0.807, 0.926]</span>, the residual probe was
+          <span class="mono">0.707 [0.627, 0.792]</span>, and the SAE probe was
+          <span class="mono">0.652 [0.563, 0.735]</span>. The two judges agreed on
           <span class="mono">73.3%</span> of claims, with Cohen's kappa
-          <span class="mono">0.572</span>. On the 110-claim agreement set, the same ordering held:
-          GPT-5.4 external scoring <span class="mono">0.981 [0.932, 1.000]</span>, residual probe
-          <span class="mono">0.793 [0.700, 0.868]</span>, SAE probe
-          <span class="mono">0.712 [0.611, 0.810]</span>, and Llama self-report
-          <span class="mono">0.486 [0.385, 0.609]</span>. Intervals are 95% paired bootstrap CIs
-          over claims. That makes the headline more robust than the first-pass result alone, while
-          still keeping the claim in proxy-label territory rather than legal-truth territory.
+          <span class="mono">0.572 [0.456, 0.682]</span>. On the 110-claim agreement set, the same ordering held:
+          GPT-5.4 external scoring <span class="mono">0.981 [0.931, 1.000]</span>, residual probe
+          <span class="mono">0.793 [0.709, 0.870]</span>, SAE probe
+          <span class="mono">0.712 [0.616, 0.812]</span>, and Llama self-report
+          <span class="mono">0.486 [0.392, 0.598]</span>. Intervals are 95% paired bootstrap CIs
+          over claims. That makes the interpretability headline more robust than the first-pass result
+          alone, while still keeping the claim in proxy-label territory rather than legal-truth
+          territory.
         </p>
+
+        <div class="table-wrap">
+          <div class="table-label"><span class="id">TBL 03</span>Two-judge headline metrics with bootstrap CIs</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Judge 1 AUROC</th>
+                <th>Judge 2 AUROC</th>
+                <th>Agreement AUROC</th>
+                <th>Judge 1 Brier</th>
+                <th>Judge 2 Brier</th>
+                <th>Agreement Brier</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Llama self-report</td>
+                <td class="num neg">0.511<span class="ci">[0.411, 0.597]</span></td>
+                <td class="num neg">0.466<span class="ci">[0.413, 0.604]</span></td>
+                <td class="num neg">0.486<span class="ci">[0.392, 0.598]</span></td>
+                <td class="num neg">0.580<span class="ci">[0.500, 0.653]</span></td>
+                <td class="num neg">0.480<span class="ci">[0.407, 0.560]</span></td>
+                <td class="num neg">0.509<span class="ci">[0.400, 0.600]</span></td>
+              </tr>
+              <tr class="highlight">
+                <td>GPT-5.4 external scorer</td>
+                <td class="num pos">0.944<span class="ci">[0.906, 0.984]</span></td>
+                <td class="num pos">0.872<span class="ci">[0.807, 0.926]</span></td>
+                <td class="num pos">0.981<span class="ci">[0.931, 1.000]</span></td>
+                <td class="num pos">0.161<span class="ci">[0.118, 0.206]</span></td>
+                <td class="num pos">0.169<span class="ci">[0.124, 0.217]</span></td>
+                <td class="num pos">0.101<span class="ci">[0.064, 0.144]</span></td>
+              </tr>
+              <tr>
+                <td>Residual probe</td>
+                <td class="num">0.771<span class="ci">[0.687, 0.838]</span></td>
+                <td class="num">0.707<span class="ci">[0.627, 0.792]</span></td>
+                <td class="num">0.793<span class="ci">[0.709, 0.870]</span></td>
+                <td class="num">0.244<span class="ci">[0.189, 0.308]</span></td>
+                <td class="num">0.290<span class="ci">[0.227, 0.350]</span></td>
+                <td class="num">0.231<span class="ci">[0.166, 0.299]</span></td>
+              </tr>
+              <tr>
+                <td>SAE probe</td>
+                <td class="num">0.677<span class="ci">[0.582, 0.763]</span></td>
+                <td class="num">0.652<span class="ci">[0.563, 0.735]</span></td>
+                <td class="num">0.712<span class="ci">[0.616, 0.812]</span></td>
+                <td class="num">0.300<span class="ci">[0.229, 0.372]</span></td>
+                <td class="num">0.326<span class="ci">[0.259, 0.395]</span></td>
+                <td class="num">0.268<span class="ci">[0.193, 0.350]</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3>What the agreement set tells us</h3>
         <p>
@@ -1053,9 +1123,9 @@
           methods improve when the two judge families agree: GPT-5.4 reaches
           <span class="mono">0.981</span>, the residual probe reaches <span class="mono">0.793</span>,
           and the SAE probe reaches <span class="mono">0.712</span>. Llama self-report stays at noise.
-          That pattern suggests the methods are tracking a shared claim-correctness signal rather than
+          That pattern suggests the probes are tracking a shared claim-correctness signal rather than
           only one judge's quirks. It also says the next ceiling is label quality: once labels are less
-          noisy, the strong methods separate claims more cleanly.
+          noisy, the internal-state methods separate claims more cleanly.
         </p>
 
         <p>
@@ -1073,7 +1143,7 @@
         </p>
 
         <div class="table-wrap">
-          <div class="table-label"><span class="id">TBL 03</span>Progress against the judge-proxy study design</div>
+          <div class="table-label"><span class="id">TBL 04</span>Progress against the judge-proxy study design</div>
           <table>
             <thead>
               <tr>
@@ -1151,9 +1221,10 @@
           The project has crossed an important threshold. It is no longer a pile of setup scripts and
           partial artifacts. It is a complete first-pass judge-proxy experiment with a clear empirical
           shape plus a second-judge sensitivity check. Llama self-report did not rank proxy
-          correctness on this MAUD setup. Raw activations partially recovered that signal. SAE
-          features do not yet justify their complexity. A powerful external judge remains the
-          strongest comparator, even after switching the label family.
+          correctness on this MAUD setup. Raw activations recovered a meaningful part of that signal.
+          SAE features perform comparably rather than decisively better or worse. A powerful external judge remains the
+          strongest comparator, even after switching the label family, but the interpretability win is
+          that Llama's hidden states know something its self-report does not.
         </p>
 
         <p>

@@ -68,6 +68,8 @@ The probes are not retrained on Kimi labels or audit labels. For second-judge se
 
 The bootstrap analysis is paired at the claim level. Every resample draws claims with replacement and evaluates all methods on the same drawn claims. This is important because the method comparisons are not independent: a hard or ambiguous claim affects every method. Paired deltas estimate whether one method ranks the same claims better than another, rather than mixing method variance with sample composition variance.
 
+Confidence intervals use 1000 paired claim-level bootstrap resamples with fixed seed 20260424 and percentile 95% intervals. AUROC-undefined resamples, which occur only if a bootstrap draw contains a single class, are skipped and counted; none occurred in the headline run. Agreement-set intervals resample within the 110-claim agreement set rather than from the full 150 claims.
+
 ### Human Audit
 
 A blinded 30-claim audit packet has been frozen at `data/annotations/maud_human_audit_packet.jsonl`. It contains 20 claims where the two LLM judges agree and 10 where they disagree. The packet excludes LLM labels and sampling strata. Annotators see only the excerpt, question, Llama answer, extracted claim, and rubric.
@@ -82,10 +84,10 @@ All intervals are 95% paired bootstrap confidence intervals over claims, using 1
 
 | Method | GPT-5.4 judge | Kimi K2.6 judge | Judge-agreement set |
 | --- | ---: | ---: | ---: |
-| Llama self-report | 0.511 [0.416, 0.599] | 0.466 [0.420, 0.600] | 0.486 [0.385, 0.609] |
-| GPT-5.4 external scorer | 0.944 [0.909, 0.983] | 0.872 [0.806, 0.923] | 0.981 [0.932, 1.000] |
-| Residual activation probe | 0.771 [0.692, 0.841] | 0.707 [0.626, 0.784] | 0.793 [0.700, 0.868] |
-| SAE feature probe | 0.677 [0.584, 0.762] | 0.652 [0.555, 0.736] | 0.712 [0.611, 0.810] |
+| Llama self-report | 0.511 [0.411, 0.597] | 0.466 [0.413, 0.604] | 0.486 [0.392, 0.598] |
+| GPT-5.4 external scorer | 0.944 [0.906, 0.984] | 0.872 [0.807, 0.926] | 0.981 [0.931, 1.000] |
+| Residual activation probe | 0.771 [0.687, 0.838] | 0.707 [0.627, 0.792] | 0.793 [0.709, 0.870] |
+| SAE feature probe | 0.677 [0.582, 0.763] | 0.652 [0.563, 0.735] | 0.712 [0.616, 0.812] |
 
 The ordering is stable: GPT-5.4 external scoring is strongest, residual probes are next, SAE probes are above self-report, and self-report is near random. The important correction is that GPT-5.4's original 0.944 should not be treated as an independent estimate. Under Kimi, the same method scores 0.872. That is still strong, but the defensible headline is closer to 0.87 than 0.94.
 
@@ -93,17 +95,19 @@ The ordering is stable: GPT-5.4 external scoring is strongest, residual probes a
 
 | Context | Delta | AUROC delta | 95% CI | Excludes zero? |
 | --- | --- | ---: | ---: | --- |
-| GPT-5.4 judge | GPT-5.4 - residual | 0.173 | [0.108, 0.256] | yes |
-| GPT-5.4 judge | residual - SAE | 0.094 | [0.008, 0.184] | yes, narrowly |
-| GPT-5.4 judge | residual - self-report | 0.260 | [0.152, 0.395] | yes |
-| Kimi judge | GPT-5.4 - residual | 0.165 | [0.066, 0.248] | yes |
-| Kimi judge | residual - SAE | 0.055 | [-0.048, 0.145] | no |
-| Kimi judge | residual - self-report | 0.241 | [0.066, 0.327] | yes |
-| Agreement set | GPT-5.4 - residual | 0.188 | [0.094, 0.273] | yes |
-| Agreement set | residual - SAE | 0.081 | [-0.020, 0.186] | no |
-| Agreement set | residual - self-report | 0.307 | [0.164, 0.430] | yes |
+| GPT-5.4 judge | GPT-5.4 - residual | 0.173 | [0.107, 0.264] | yes |
+| GPT-5.4 judge | residual - SAE | 0.094 | [0.003, 0.180] | yes, narrowly |
+| GPT-5.4 judge | residual - self-report | 0.260 | [0.137, 0.387] | yes |
+| Kimi judge | GPT-5.4 - residual | 0.165 | [0.070, 0.251] | yes |
+| Kimi judge | residual - SAE | 0.055 | [-0.039, 0.150] | no |
+| Kimi judge | residual - self-report | 0.241 | [0.075, 0.320] | yes |
+| Agreement set | GPT-5.4 - residual | 0.188 | [0.093, 0.268] | yes |
+| Agreement set | residual - SAE | 0.081 | [-0.021, 0.185] | no |
+| Agreement set | residual - self-report | 0.307 | [0.153, 0.428] | yes |
 
 The residual-vs-SAE comparison is not reliably distinguishable on current evidence. It narrowly excludes zero under the GPT-5.4 judge, but does not exclude zero under Kimi or on the agreement set. The safe claim is that SAE does not clearly improve over raw residual features here.
+
+The GPT-5.4 scorer's same-family inflation is also statistically visible: its AUROC is 0.080 higher under the GPT-5.4 judge than under Kimi, with paired 95% CI [0.019, 0.149].
 
 ### What the Agreement Set Tells Us
 
@@ -115,7 +119,24 @@ This also bounds future progress. With current labels, some residual error is me
 
 ### Brier Sensitivity
 
+| Method | GPT-5.4 judge | Kimi K2.6 judge | Judge-agreement set |
+| --- | ---: | ---: | ---: |
+| Llama self-report | 0.580 [0.500, 0.653] | 0.480 [0.407, 0.560] | 0.509 [0.400, 0.600] |
+| GPT-5.4 external scorer | 0.161 [0.118, 0.206] | 0.169 [0.124, 0.217] | 0.101 [0.064, 0.144] |
+| Residual activation probe | 0.244 [0.189, 0.308] | 0.290 [0.227, 0.350] | 0.231 [0.166, 0.299] |
+| SAE feature probe | 0.300 [0.229, 0.372] | 0.326 [0.259, 0.395] | 0.268 [0.193, 0.350] |
+
 Llama self-report's Brier score improves from 0.580 under GPT-5.4 labels to 0.480 under Kimi labels even though AUROC remains noise. This suggests a calibration-distribution coincidence: the confidence values happen to align better with Kimi's base rate, but they do not rank correct claims better.
+
+### Defensible Claims
+
+The paper makes five substantive claims:
+
+1. Llama 3.1 8B's structured self-reported confidence does not track claim-level correctness on MAUD merger-agreement QA as measured by two independent LLM judges; the frozen human audit remains pending.
+2. Linear probes on Llama hidden-state activations recover meaningful correctness signal that self-report does not, and this finding is robust to judge family change.
+3. Raw residual features and Goodfire SAE features perform comparably; the residual-vs-SAE difference is not significant under Kimi or on the agreement set.
+4. A GPT-5.4 external scorer is the strongest method, with corrected AUROC around 0.87 after accounting for same-family judge coupling.
+5. The claim-level judge-proxy protocol does not transfer to CUAD as prompted; claim extraction is unstable on that task without a different upstream pipeline.
 
 ### Human Audit Status
 

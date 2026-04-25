@@ -4,10 +4,10 @@
 
 | Method | AUROC under judge 1 (GPT-5.4) | AUROC under judge 2 (Kimi K2.6) | AUROC on judge-agreement set |
 | --- | ---: | ---: | ---: |
-| Llama self-report | 0.511 [0.416, 0.599] | 0.466 [0.420, 0.600] | 0.486 [0.385, 0.609] |
-| GPT-5.4 external scorer | 0.944 [0.909, 0.983] | 0.872 [0.806, 0.923] | 0.981 [0.932, 1.000] |
-| Residual activation probe | 0.771 [0.692, 0.841] | 0.707 [0.626, 0.784] | 0.793 [0.700, 0.868] |
-| SAE feature probe | 0.677 [0.584, 0.762] | 0.652 [0.555, 0.736] | 0.712 [0.611, 0.810] |
+| Llama self-report | 0.511 [0.411, 0.597] | 0.466 [0.413, 0.604] | 0.486 [0.392, 0.598] |
+| GPT-5.4 external scorer | 0.944 [0.906, 0.984] | 0.872 [0.807, 0.926] | 0.981 [0.931, 1.000] |
+| Residual activation probe | 0.771 [0.687, 0.838] | 0.707 [0.627, 0.792] | 0.793 [0.709, 0.870] |
+| SAE feature probe | 0.677 [0.582, 0.763] | 0.652 [0.563, 0.735] | 0.712 [0.616, 0.812] |
 
 Intervals are 95% percentile bootstrap CIs from 1000 paired claim-level resamples.
 
@@ -15,10 +15,10 @@ The same table with Brier scores:
 
 | Method | Brier under judge 1 | Brier under judge 2 | Brier on judge-agreement set |
 | --- | ---: | ---: | ---: |
-| Llama self-report | 0.580 | 0.480 | 0.509 |
-| GPT-5.4 external scorer | 0.161 | 0.169 | 0.101 |
-| Residual activation probe | 0.244 | 0.290 | 0.231 |
-| SAE feature probe | 0.300 | 0.326 | 0.268 |
+| Llama self-report | 0.580 [0.500, 0.653] | 0.480 [0.407, 0.560] | 0.509 [0.400, 0.600] |
+| GPT-5.4 external scorer | 0.161 [0.118, 0.206] | 0.169 [0.124, 0.217] | 0.101 [0.064, 0.144] |
+| Residual activation probe | 0.244 [0.189, 0.308] | 0.290 [0.227, 0.350] | 0.231 [0.166, 0.299] |
+| SAE feature probe | 0.300 [0.229, 0.372] | 0.326 [0.259, 0.395] | 0.268 [0.193, 0.350] |
 
 ## Second-judge model choice
 
@@ -33,7 +33,7 @@ The completed run produced 150/150 labels across 135/135 examples after retrying
 - Shared claims: 150
 - Missing v2 labels: 0
 - Raw agreement: 0.733
-- Cohen's kappa: 0.572
+- Cohen's kappa: 0.572 [0.456, 0.682]
 
 | Judge 1 label | Judge 2 true | Judge 2 partially_true | Judge 2 false |
 | --- | ---: | ---: | ---: |
@@ -63,17 +63,19 @@ This pattern is evidence that the methods are tracking a real claim-correctness 
 
 | Context | Delta | AUROC delta | 95% CI | Excludes zero? |
 | --- | --- | ---: | ---: | --- |
-| Judge 1 | GPT-5.4 - residual | 0.173 | [0.108, 0.256] | yes |
-| Judge 1 | residual - SAE | 0.094 | [0.008, 0.184] | yes, narrowly |
-| Judge 1 | residual - self-report | 0.260 | [0.152, 0.395] | yes |
-| Judge 2 | GPT-5.4 - residual | 0.165 | [0.066, 0.248] | yes |
-| Judge 2 | residual - SAE | 0.055 | [-0.048, 0.145] | no |
-| Judge 2 | residual - self-report | 0.241 | [0.066, 0.327] | yes |
-| Agreement set | GPT-5.4 - residual | 0.188 | [0.094, 0.273] | yes |
-| Agreement set | residual - SAE | 0.081 | [-0.020, 0.186] | no |
-| Agreement set | residual - self-report | 0.307 | [0.164, 0.430] | yes |
+| Judge 1 | GPT-5.4 - residual | 0.173 | [0.107, 0.264] | yes |
+| Judge 1 | residual - SAE | 0.094 | [0.003, 0.180] | yes, narrowly |
+| Judge 1 | residual - self-report | 0.260 | [0.137, 0.387] | yes |
+| Judge 2 | GPT-5.4 - residual | 0.165 | [0.070, 0.251] | yes |
+| Judge 2 | residual - SAE | 0.055 | [-0.039, 0.150] | no |
+| Judge 2 | residual - self-report | 0.241 | [0.075, 0.320] | yes |
+| Agreement set | GPT-5.4 - residual | 0.188 | [0.093, 0.268] | yes |
+| Agreement set | residual - SAE | 0.081 | [-0.021, 0.185] | no |
+| Agreement set | residual - self-report | 0.307 | [0.153, 0.428] | yes |
 
 The residual-vs-SAE comparison should not be treated as a stable finding. It is directionally residual-favored, but it does not reliably exclude zero under the independent judge or on the agreement set.
+
+Across paired bootstrap deltas, residual probes significantly outperform Llama self-report in all three contexts, and GPT-5.4 external scoring significantly outperforms residual probes in all three contexts. The GPT-5.4 scorer's judge-1 minus judge-2 AUROC delta is also significant: 0.080 [0.019, 0.149], confirming measurable same-family inflation. The residual-vs-SAE comparison is the weak link: it narrowly excludes zero under judge 1 but crosses zero under judge 2 and on the agreement set, so the paper should describe residual and SAE probes as comparable on current evidence.
 
 Llama self-report's Brier score improves under judge 2 even though its AUROC does not, suggesting the self-report confidences happen to be better calibrated against Kimi's label distribution than GPT-5.4's. This is a calibration-distribution coincidence rather than a ranking improvement.
 
