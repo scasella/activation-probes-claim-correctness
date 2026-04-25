@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hidden-state uncertainty flags for legal QA</title>
+  <meta name="description" content="A static research demo showing claim-level uncertainty flags from a residual activation probe on MAUD legal QA examples." />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css?v=report-theme-1" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#">interp<span class="accent">-experiment</span>_lab</a>
+      <nav class="topbar-links">
+        <a href="#demo">Demo</a>
+        <a href="#details">Details</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div class="crumbs">
+        <a href="#">Demo</a><span class="sep">&middot;</span><span class="cat">research</span><span class="sep">&middot;</span>precomputed MAUD examples
+      </div>
+      <h1 class="title">
+        Hidden-state uncertainty flags for legal QA
+        <span class="sub">A static demo of a residual activation probe flagging claim-level risk that Llama's self-report mostly misses.</span>
+      </h1>
+      <div class="byline">
+        <span class="avatar">SC</span>
+        <span class="author">Sam Casella</span>
+        <span class="dot">&middot;</span>
+        <span class="mono">Llama 3.1 8B &middot; layer 19 &middot; 8 examples</span>
+      </div>
+      <hr class="header-rule" />
+      <div class="tldr">
+        <span class="label">Interactive finding</span>
+        Click through the examples. The model answer looks like ordinary legal prose, but the hidden-state
+        probe assigns different scores to individual claims. Redder spans are lower probe scores; greener
+        spans are higher probe scores.
+      </div>
+    </section>
+
+    <section class="notice" id="disclaimer">
+      <span class="k">What this is</span>
+      <strong>What this is.</strong>
+      <span id="disclaimer-text">
+        This is a research demo. The probe was trained on Llama 3.1 8B activations during merger-agreement question answering,
+        supervised on labels from an LLM judge. Flag colors reflect what the probe learned to associate with
+        judge-assigned correctness on this domain. Do not use this for legal decisions.
+      </span>
+    </section>
+
+    <section class="legend-row" aria-label="Score color legend">
+      <div class="stat">
+        <div class="k">Lower score</div>
+        <div class="v red">red</div>
+        <div class="s">probe flags risk</div>
+      </div>
+      <div class="scale-card">
+        <span>continuous calibrated score</span>
+        <div class="scale"></div>
+        <span class="scale-labels"><b>0.0</b><b>0.5</b><b>1.0</b></span>
+      </div>
+      <div class="stat">
+        <div class="k">Higher score</div>
+        <div class="v green">green</div>
+        <div class="s">probe sees support</div>
+      </div>
+    </section>
+
+    <section class="demo-grid" id="demo">
+      <aside class="picker" aria-label="Example picker">
+        <div class="table-label"><span class="id">EX</span>Examples</div>
+        <div id="example-buttons" class="buttons"></div>
+      </aside>
+
+      <article class="reader">
+        <div class="reader-head">
+          <div>
+            <div class="table-label"><span class="id">Q</span>Question</div>
+            <h2 id="question">Loading examples…</h2>
+          </div>
+          <div class="scorebox">
+            <span>mean probe score</span>
+            <strong id="mean-score">—</strong>
+          </div>
+        </div>
+
+        <div class="answer-card">
+          <div class="table-label"><span class="id">A</span>Llama answer with hidden-state flags</div>
+          <div id="answer" class="answer" aria-live="polite"></div>
+        </div>
+
+        <details class="details" id="details">
+          <summary>Show source and scoring details</summary>
+          <dl>
+            <div><dt>MAUD source ID</dt><dd id="source-id">—</dd></div>
+            <div><dt>Split</dt><dd id="split">—</dd></div>
+            <div><dt>Contract</dt><dd id="contract">—</dd></div>
+            <div><dt>Score range</dt><dd id="score-range">—</dd></div>
+          </dl>
+          <p id="excerpt" class="excerpt"></p>
+        </details>
+      </article>
+    </section>
+
+    <section class="takeaway">
+      <h2>The thirty-second takeaway</h2>
+      <p>
+        Llama can give a confident-looking legal answer while a linear probe over its hidden
+        activations assigns very different scores to individual claims. The paper result is not that
+        this probe is a legal oracle. It is that hidden states carry claim-level correctness signal
+        that the model's own self-report mostly fails to expose.
+      </p>
+    </section>
+
+    <footer class="post-footer">
+      <strong>Static artifact.</strong>
+      The page loads precomputed examples from <span class="mono">examples.json</span>. It does not run live generation,
+      call a model server, or operate a legal QA product.
+    </footer>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

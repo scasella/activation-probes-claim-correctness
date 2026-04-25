@@ -1,0 +1,8 @@
+{
+  "coef": 1.1088858596917779,
+  "intercept": -0.02941772257191205,
+  "method": "Platt scaling on methods-paper train split raw residual-probe logits",
+  "n_train_claims": 105,
+  "negative_train_claims": 62,
+  "positive_train_claims": 43
+}

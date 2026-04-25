@@ -1,0 +1,436 @@
+{
+  "examples": [
+    {
+      "answer": "Yes. The Company is permitted to undertake COVID-19 Measures without violating the Negative Interim Covenant.",
+      "claims": [
+        {
+          "calibrated_score": 0.9999999999717375,
+          "char_end": 3,
+          "char_start": 0,
+          "claim_id": "claim-8340ee0086c5",
+          "judge_label": "true",
+          "raw_score": 21.930937442240044,
+          "text": "Yes."
+        },
+        {
+          "calibrated_score": 0.00044068832932936706,
+          "char_end": 108,
+          "char_start": 4,
+          "claim_id": "claim-98bf2e25fd38",
+          "judge_label": "partially_true",
+          "raw_score": -6.941484638188479,
+          "text": "The Company is permitted to undertake COVID-19 Measures without violating the Negative Interim Covenant."
+        }
+      ],
+      "contract_group": "merger_agreement",
+      "contract_id": "contract_42",
+      "example_id": "maud-88ea798310ca",
+      "excerpt_preview": "Section 6.01 Conduct of the Company. The Company covenants and agrees that, except for matters (i) expressly permitted or expressly contemplated by this Agreement, (ii) set forth on Section 6.01 of the Company Disclosure Schedule, (iii) reasonably undertaken in connection with anyCOVID-19 Measures, (iv) undertaken with the prior written consent of Parent (which shall not be unreasonably withheld, conditioned or delayed; provided, that Parent shall be deemed to have approved in writing if it provides no written response within five Business Days after a written request bythe Company for such approval in compliance with the terms of Section 9.01), (v) required by Applicable Law or the rules and regulations of Nasdaq, from the date hereof until the earlier of the Effective Time and the termination of this Agreement in accordance with Article 8, the Company <omitted> (B) shall not, and shall",
+      "maud_source_id": "maud-88ea798310ca",
+      "question": "Negative Interim Covenant includes carveout for pandemic responses-Answer (Y/N)",
+      "score_summary": {
+        "max": 0.9999999999717376,
+        "mean": 0.5002203441505335,
+        "min": 0.00044068832932936706,
+        "range": 0.9995593116424082
+      },
+      "sentences": [
+        {
+          "calibrated_score": 0.9999999999717376,
+          "char_end": 4,
+          "char_start": 0,
+          "claim_ids": [
+            "claim-8340ee0086c5"
+          ],
+          "raw_score": 21.930937442240047,
+          "score_source": "overlapping_claim_spans",
+          "text": "Yes."
+        },
+        {
+          "calibrated_score": 0.00044068832932936706,
+          "char_end": 109,
+          "char_start": 5,
+          "claim_ids": [
+            "claim-98bf2e25fd38"
+          ],
+          "raw_score": -6.941484638188478,
+          "score_source": "overlapping_claim_spans",
+          "text": "The Company is permitted to undertake COVID-19 Measures without violating the Negative Interim Covenant."
+        }
+      ],
+      "source_corpus": "maud",
+      "split": "train"
+    },
+    {
+      "answer": "The Buyer's consent is required for any actions taken by the Company or its Subsidiaries that are not in the ordinary course of business, except for actions taken in response to COVID-19 or COVID-19 Measures. The Buyer's consent will not be unreasonably withheld, conditioned, or delayed, and is deemed given if the Buyer does not reject the request in writing within five Business Days after the Company provides a written request for consent.",
+      "claims": [
+        {
+          "calibrated_score": 0.0007388781857510388,
+          "char_end": 207,
+          "char_start": 0,
+          "claim_id": "claim-fbcfa3054c33",
+          "judge_label": "partially_true",
+          "raw_score": -6.475166538184854,
+          "text": "The Buyer's consent is required for any actions taken by the Company or its Subsidiaries that are not in the ordinary course of business, except for actions taken in response to COVID-19 or COVID-19 Measures."
+        },
+        {
+          "calibrated_score": 0.999538378278341,
+          "char_end": 443,
+          "char_start": 208,
+          "claim_id": "claim-213bc34bfcc8",
+          "judge_label": "true",
+          "raw_score": 6.952673003667524,
+          "text": "The Buyer's consent will not be unreasonably withheld, conditioned, or delayed, and is deemed given if the Buyer does not reject the request in writing within five Business Days after the Company provides a written request for consent."
+        }
+      ],
+      "contract_group": "merger_agreement",
+      "contract_id": "contract_134",
+      "example_id": "maud-f44781413158",
+      "excerpt_preview": "Except for matters set forth in Section 6.01 of the Company Disclosure Letter, as contemplated by this Agreement (including any actions taken by the Company or any of its Subsidiaries pursuant to Section 8.07(h)), as required by Applicable Law or Contract, due to factors excluded from the definition of Material Adverse Effect, or with the prior written consent of Parent (which consent shall not be unreasonably withheld, conditioned or delayed, and shall be deemed to be given if, within five (5) Business Days after the Company has provided to Parent a written request for consent, Parent has not rejected such request in writing), from and after the date hereof until the earlier of the Effective Time or the date this Agreement is terminated, as applicable, (I) the Company shall, and shall cause each of its Subsidiaries to, conduct its business in the ordinary course (except for any actions ",
+      "maud_source_id": "maud-f44781413158",
+      "question": "Application of Buyer consent requirement (negative interim covenant)-Answer",
+      "score_summary": {
+        "max": 0.999538378278341,
+        "mean": 0.500138628232046,
+        "min": 0.0007388781857510388,
+        "range": 0.99879950009259
+      },
+      "sentences": [
+        {
+          "calibrated_score": 0.0007388781857510388,
+          "char_end": 208,
+          "char_start": 0,
+          "claim_ids": [
+            "claim-fbcfa3054c33"
+          ],
+          "raw_score": -6.475166538184854,
+          "score_source": "overlapping_claim_spans",
+          "text": "The Buyer's consent is required for any actions taken by the Company or its Subsidiaries that are not in the ordinary course of business, except for actions taken in response to COVID-19 or COVID-19 Measures."
+        },
+        {
+          "calibrated_score": 0.999538378278341,
+          "char_end": 444,
+          "char_start": 209,
+          "claim_ids": [
+            "claim-213bc34bfcc8"
+          ],
+          "raw_score": 6.952673003667524,
+          "score_source": "overlapping_claim_spans",
+          "text": "The Buyer's consent will not be unreasonably withheld, conditioned, or delayed, and is deemed given if the Buyer does not reject the request in writing within five Business Days after the Company provides a written request for consent."
+        }
+      ],
+      "source_corpus": "maud",
+      "split": "train"
+    },
+    {
+      "answer": "The twelve-month period during which the Company must consummate an Acquisition Proposal or enter into a definitive agreement for an Acquisition Proposal after termination of the Agreement is the key condition. This period is twelve months.",
+      "claims": [
+        {
+          "calibrated_score": 0.0012917380850504935,
+          "char_end": 209,
+          "char_start": 0,
+          "claim_id": "claim-947ebccb247c",
+          "judge_label": "partially_true",
+          "raw_score": -5.970908783066344,
+          "text": "The twelve-month period during which the Company must consummate an Acquisition Proposal or enter into a definitive agreement for an Acquisition Proposal after termination of the Agreement is the key condition."
+        },
+        {
+          "calibrated_score": 0.9999196474856672,
+          "char_end": 239,
+          "char_start": 210,
+          "claim_id": "claim-d35cdcb28669",
+          "judge_label": "true",
+          "raw_score": 8.52966467033161,
+          "text": "This period is twelve months."
+        }
+      ],
+      "contract_group": "merger_agreement",
+      "contract_id": "contract_9",
+      "example_id": "maud-1c2624700335",
+      "excerpt_preview": "Section 7.5. Effect of Termination and Abandonment. <omitted> (b) In the event that: (i) (A) this Agreement is terminated pursuant to Section 7.2(a), Section 7.2(b) or Section 7.4(b); <omitted> (C) within twelve (12) months of such termination the Company shall have consummated an Acquisition Proposal or entered into a definitive agreement for an Acquisition Proposal that is subsequently consummated (whether consummated within such twelve (12)-month period or thereafter), then the Company shall, on the date such Acquisition Proposal is consummated, pay the Company Termination Fee to Parent (or its designee) by wire transfer of same day funds to one or more accounts designated by Parent; (Page 31)",
+      "maud_source_id": "maud-1c2624700335",
+      "question": "Tail Period Length-Answer",
+      "score_summary": {
+        "max": 0.9999196474856672,
+        "mean": 0.5006056927853588,
+        "min": 0.0012917380850504935,
+        "range": 0.9986279094006167
+      },
+      "sentences": [
+        {
+          "calibrated_score": 0.0012917380850504935,
+          "char_end": 210,
+          "char_start": 0,
+          "claim_ids": [
+            "claim-947ebccb247c"
+          ],
+          "raw_score": -5.970908783066344,
+          "score_source": "overlapping_claim_spans",
+          "text": "The twelve-month period during which the Company must consummate an Acquisition Proposal or enter into a definitive agreement for an Acquisition Proposal after termination of the Agreement is the key condition."
+        },
+        {
+          "calibrated_score": 0.9999196474856672,
+          "char_end": 240,
+          "char_start": 211,
+          "claim_ids": [
+            "claim-d35cdcb28669"
+          ],
+          "raw_score": 8.52966467033161,
+          "score_source": "overlapping_claim_spans",
+          "text": "This period is twelve months."
+        }
+      ],
+      "source_corpus": "maud",
+      "split": "validation"
+    },
+    {
+      "answer": "No, actions taken by Buyer are not excluded from being considered a Material Adverse Effect.",
+      "claims": [
+        {
+          "calibrated_score": 2.0151533735220968e-05,
+          "char_end": 91,
+          "char_start": 0,
+          "claim_id": "claim-efc3ebe241ba",
+          "judge_label": "partially_true",
+          "raw_score": -9.723987539407208,
+          "text": "No, actions taken by Buyer are not excluded from being considered a Material Adverse Effect."
+        }
+      ],
+      "contract_group": "merger_agreement",
+      "contract_id": "contract_20",
+      "example_id": "maud-6a7280b2d481",
+      "excerpt_preview": "“Material Adverse Effect” means, when used with respect to any Person, any fact, circumstance, occurrence, state of fact, effect, change, event or development that (a) individually or in the aggregate, has had or would reasonably be expected to have a material adverse effect on the financial condition, business, assets, properties or results of operations of such Person and its Subsidiaries, taken as a whole, or (b) will prevent the ability of such Person and its Subsidiaries to consummate the Transactions before the End Date; provided, however, that for purposes of clause (a) no fact, circumstance, occurrence, state of fact, effect, change, event or development (by itself or when aggregated or taken together with any and all other effects) resulting from, arising out of, attributable to, or related to any of the following shall be deemed to be or constitute a “Material Adverse Effect” o",
+      "maud_source_id": "maud-6a7280b2d481",
+      "question": "Actions taken by Buyer-Answer (Y/N)",
+      "score_summary": {
+        "max": 2.0151533735220968e-05,
+        "mean": 2.0151533735220968e-05,
+        "min": 2.0151533735220968e-05,
+        "range": 0.0
+      },
+      "sentences": [
+        {
+          "calibrated_score": 2.0151533735220968e-05,
+          "char_end": 92,
+          "char_start": 0,
+          "claim_ids": [
+            "claim-efc3ebe241ba"
+          ],
+          "raw_score": -9.723987539407208,
+          "score_source": "overlapping_claim_spans",
+          "text": "No, actions taken by Buyer are not excluded from being considered a Material Adverse Effect."
+        }
+      ],
+      "source_corpus": "maud",
+      "split": "train"
+    },
+    {
+      "answer": "Yes, the Company and its directors, officers, and employees are liable for breaches of the no-shop provision by Target Representatives.",
+      "claims": [
+        {
+          "calibrated_score": 3.4740141676037976e-05,
+          "char_end": 134,
+          "char_start": 0,
+          "claim_id": "claim-ae1a800001c3",
+          "judge_label": "partially_true",
+          "raw_score": -9.232836875119402,
+          "text": "Yes, the Company and its directors, officers, and employees are liable for breaches of the no-shop provision by Target Representatives."
+        }
+      ],
+      "contract_group": "merger_agreement",
+      "contract_id": "contract_57",
+      "example_id": "maud-0201dde23af2",
+      "excerpt_preview": "“Representatives” means, with respect to an Entity, its directors, officers, employees, attorneys, accountants, investment bankers, consultants, agents, financial advisors, other advisors and other representatives. <omitted> Section 6.3 No Solicitation. (a) Except as permitted by this Section 6.3, during the Pre-Closing Period, each Acquired Company shall not, and shall not authorize its Representatives to, and shall use reasonable best efforts not permit or allow its Representatives to, (i) directly or indirectly, (A) solicit, initiate or knowingly facilitate or encourage (including by way of furnishing non-public information) any inquiries regarding, or the making of any proposal or offer that would reasonably be expected to lead to an Acquisition Proposal, (B) engage in, continue or otherwise participate in any discussions (except to notify a Person that makes any inquiry or offer wit",
+      "maud_source_id": "maud-0201dde23af2",
+      "question": "Liability for breaches of no-shop by Target Representatives (Y/N)",
+      "score_summary": {
+        "max": 3.4740141676037976e-05,
+        "mean": 3.4740141676037976e-05,
+        "min": 3.4740141676037976e-05,
+        "range": 0.0
+      },
+      "sentences": [
+        {
+          "calibrated_score": 3.4740141676037976e-05,
+          "char_end": 135,
+          "char_start": 0,
+          "claim_ids": [
+            "claim-ae1a800001c3"
+          ],
+          "raw_score": -9.232836875119402,
+          "score_source": "overlapping_claim_spans",
+          "text": "Yes, the Company and its directors, officers, and employees are liable for breaches of the no-shop provision by Target Representatives."
+        }
+      ],
+      "source_corpus": "maud",
+      "split": "train"
+    },
+    {
+      "answer": "Yes.",
+      "claims": [
+        {
+          "calibrated_score": 0.9999999997483238,
+          "char_end": 3,
+          "char_start": 0,
+          "claim_id": "claim-6e53dbe0d738",
+          "judge_label": "true",
+          "raw_score": 19.959037984257563,
+          "text": "Yes."
+        }
+      ],
+      "contract_group": "merger_agreement",
+      "contract_id": "contract_23",
+      "example_id": "maud-656c0af11083",
+      "excerpt_preview": "“Material Adverse Effect” with respect to a Party means any event, change, effect, circumstance, fact, development or occurrence, individually or in the aggregate, that (a) has had or would reasonably be expected to have a material adverse effect on the business, operations, condition (financial or otherwise), assets or liabilities of such Party and its Subsidiaries, taken as a whole, or (b) materially impairs the ability of such Party to consummate the transactions contemplated by this Agreement or would reasonably be expected to do so; provided, that in the case of clause (a) only, no event, change, effect, circumstance, fact, development or occurrence to the extent resulting from, arising out of, or relating to any of the following shall be deemed to constitute a Material Adverse Effect with respect to such Party or shall be taken into account in determining whether there has been or ",
+      "maud_source_id": "maud-656c0af11083",
+      "question": "MAE definition includes adverse impact on Target's ability to consummate (Y/N)",
+      "score_summary": {
+        "max": 0.9999999997483237,
+        "mean": 0.9999999997483237,
+        "min": 0.9999999997483237,
+        "range": 0.0
+      },
+      "sentences": [
+        {
+          "calibrated_score": 0.9999999997483237,
+          "char_end": 4,
+          "char_start": 0,
+          "claim_ids": [
+            "claim-6e53dbe0d738"
+          ],
+          "raw_score": 19.959037984257563,
+          "score_source": "overlapping_claim_spans",
+          "text": "Yes."
+        }
+      ],
+      "source_corpus": "maud",
+      "split": "train"
+    },
+    {
+      "answer": "Yes.",
+      "claims": [
+        {
+          "calibrated_score": 0.9999999980196488,
+          "char_end": 3,
+          "char_start": 0,
+          "claim_id": "claim-63d67fe84636",
+          "judge_label": "true",
+          "raw_score": 18.09871521799289,
+          "text": "Yes."
+        }
+      ],
+      "contract_group": "merger_agreement",
+      "contract_id": "contract_78",
+      "example_id": "maud-0f73330d9ab2",
+      "excerpt_preview": "“Company Material Adverse Effect” means a change, event, condition, effect or occurrence that, individually or in the aggregate with all other changes, events, conditions, effects or occurrences, has had, or would reasonably be expected to have, a material adverse effect on (x) the business, operations, assets, liabilities, financial condition or results of operations of the Company and its Subsidiaries, taken as a whole or (y) the ability of the Company to consummate the Transactions on or before the Outside Date, but, solely for purposes of clause (x), shall not include changes, events, conditions, effects or occurrences relating to, resulting from or arising out of: (i) general economic or political conditions or in securities, capital, credit or financial markets, including changes in interest rates and changes in exchange rates, (ii) conditions in or affecting the industries in whic",
+      "maud_source_id": "maud-0f73330d9ab2",
+      "question": "Relational language (MAE carveout)-Answer (Y/N)",
+      "score_summary": {
+        "max": 0.9999999980196487,
+        "mean": 0.9999999980196487,
+        "min": 0.9999999980196487,
+        "range": 0.0
+      },
+      "sentences": [
+        {
+          "calibrated_score": 0.9999999980196487,
+          "char_end": 4,
+          "char_start": 0,
+          "claim_ids": [
+            "claim-63d67fe84636"
+          ],
+          "raw_score": 18.09871521799289,
+          "score_source": "overlapping_claim_spans",
+          "text": "Yes."
+        }
+      ],
+      "source_corpus": "maud",
+      "split": "train"
+    },
+    {
+      "answer": "The parties to the Agreement are entitled to seek specific performance of the terms, including an injunction to prevent breaches or enforce performance, in addition to other remedies. This is subject to the condition that irreparable damage would occur if any provision of the Agreement were not performed in accordance with its specific terms or otherwise breached.",
+      "claims": [
+        {
+          "calibrated_score": 0.9990777020960397,
+          "char_end": 182,
+          "char_start": 0,
+          "claim_id": "claim-3095376b75ae",
+          "judge_label": "true",
+          "raw_score": 6.328096997636681,
+          "text": "The parties to the Agreement are entitled to seek specific performance of the terms, including an injunction to prevent breaches or enforce performance, in addition to other remedies."
+        },
+        {
+          "calibrated_score": 0.002914758899102339,
+          "char_end": 365,
+          "char_start": 183,
+          "claim_id": "claim-65a93b4845c9",
+          "judge_label": "partially_true",
+          "raw_score": -5.235553672754797,
+          "text": "This is subject to the condition that irreparable damage would occur if any provision of the Agreement were not performed in accordance with its specific terms or otherwise breached."
+        }
+      ],
+      "contract_group": "merger_agreement",
+      "contract_id": "contract_77",
+      "example_id": "maud-1d61b4637adb",
+      "excerpt_preview": "Section 8.12 Specific Performance. The parties hereto agree that irreparable damage would occur if any provision of this Agreement were not performed in accordance with its specific terms or otherwise breached. Accordingly, the parties shall be entitled to seek specific performance of the terms hereof, including an injunction or injunctions to prevent breaches of this Agreement or to enforce specifically the performance of the terms and provisions hereof (including the parties’ obligation to consummate the Merger), in addition to any other remedy to which they are entitled at law or in equity. (Page 57)",
+      "maud_source_id": "maud-1d61b4637adb",
+      "question": "Specific Performance-Answer",
+      "score_summary": {
+        "max": 0.9990777020960397,
+        "mean": 0.500996230497571,
+        "min": 0.0029147588991023385,
+        "range": 0.9961629431969374
+      },
+      "sentences": [
+        {
+          "calibrated_score": 0.9990777020960397,
+          "char_end": 183,
+          "char_start": 0,
+          "claim_ids": [
+            "claim-3095376b75ae"
+          ],
+          "raw_score": 6.328096997636681,
+          "score_source": "overlapping_claim_spans",
+          "text": "The parties to the Agreement are entitled to seek specific performance of the terms, including an injunction to prevent breaches or enforce performance, in addition to other remedies."
+        },
+        {
+          "calibrated_score": 0.0029147588991023385,
+          "char_end": 366,
+          "char_start": 184,
+          "claim_ids": [
+            "claim-65a93b4845c9"
+          ],
+          "raw_score": -5.235553672754797,
+          "score_source": "overlapping_claim_spans",
+          "text": "This is subject to the condition that irreparable damage would occur if any provision of the Agreement were not performed in accordance with its specific terms or otherwise breached."
+        }
+      ],
+      "source_corpus": "maud",
+      "split": "train"
+    }
+  ],
+  "metadata": {
+    "calibration": {
+      "coef": 1.1088858596917779,
+      "intercept": -0.02941772257191205,
+      "method": "Platt scaling on methods-paper train split raw residual-probe logits",
+      "n_train_claims": 105,
+      "negative_train_claims": 62,
+      "positive_train_claims": 43
+    },
+    "demo_version": "v1",
+    "disclaimer": "This is a research demo. The probe was trained on Llama 3.1 8B activations during merger-agreement question answering, supervised on labels from an LLM judge. Flag colors reflect what the probe learned to associate with judge-assigned correctness on this domain. Do not use this for legal decisions.",
+    "generated_at": "2026-04-25T01:18:05.001104+00:00",
+    "inputs": {
+      "answer_runs_jsonl": "artifacts/runs/maud_full_answer_runs.jsonl",
+      "claims_jsonl": "artifacts/runs/maud_full_claims.jsonl",
+      "examples_jsonl": "artifacts/runs/maud_full_examples.jsonl",
+      "labels_jsonl": "data/annotations/maud_full_judge_annotations.jsonl",
+      "probe_npz": "artifacts/runs/residual_correctness_probe_direction.npz",
+      "residual_features_jsonl": "artifacts/runs/maud_full_probe_features_residual.jsonl"
+    },
+    "n_examples": 8,
+    "score_explanation": "Sentence colors are calibrated residual-probe scores aggregated from overlapping frozen claim spans. Lower scores are rendered redder; higher scores are rendered greener.",
+    "selection_rule": "Deterministic variety sample from non-test MAUD examples: high-range, low-score, high-score, and mid-score cases."
+  }
+}
