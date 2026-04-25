@@ -1,0 +1,12 @@
+{
+  "c_value": 1.0,
+  "direction_l2_norm": 25.27094313509207,
+  "manual_decision_max_abs_error": 4.440892098500626e-15,
+  "n_claims": 150,
+  "n_features": 4096,
+  "negative_count": 88,
+  "note": "No persisted residual-probe pickle existed in the repo. This artifact fixes a single interpretation direction by fitting the same C=1.0 standardized logistic probe used by the full-corpus residual signal check, on the frozen v1 label surface.",
+  "positive_count": 62,
+  "source": "deterministic_full_corpus_materialization_from_frozen_v1_labels",
+  "standardized_coef_l2_norm": 1.67123634633521
+}
