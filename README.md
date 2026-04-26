@@ -4,10 +4,6 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.5+-EE4C2C.svg)](https://pytorch.org/)
 [![Backbone: Llama 3.1 8B](https://img.shields.io/badge/backbone-Llama%203.1%208B-ff6b6b.svg)](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
-[![Library: ProbeMon](https://img.shields.io/badge/library-ProbeMon-9cdcfe.svg)](library/README.md)
-[![MAUD ΔAUROC: +0.260](https://img.shields.io/badge/MAUD%20%CE%94AUROC-%2B0.260-3dd68c.svg)](docs/paper_draft.md)
-[![FActScore ΔAUROC: +0.262](https://img.shields.io/badge/FActScore%20%CE%94AUROC-%2B0.262-3dd68c.svg)](docs/paper_draft.md)
-[![Tests: pytest](https://img.shields.io/badge/tests-pytest-0a9edc.svg)](tests/)
 
 This repository tests whether simple linear probes on Llama 3.1 8B hidden activations recover claim-level correctness signal that the model's own structured self-report misses. The public branch exposes three main surfaces:
 
