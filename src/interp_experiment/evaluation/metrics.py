@@ -22,9 +22,18 @@ def auroc(y_true: list[int] | np.ndarray, y_score: list[float] | np.ndarray) -> 
     n_neg = int(negatives.sum())
     if n_pos == 0 or n_neg == 0:
         raise ValueError("AUROC requires at least one positive and one negative example")
-    order = np.argsort(score)
-    ranks = np.empty_like(order, dtype=float)
-    ranks[order] = np.arange(1, len(score) + 1)
+    order = np.argsort(score, kind="mergesort")
+    sorted_score = score[order]
+    sorted_ranks = np.empty(len(score), dtype=float)
+    start = 0
+    while start < len(score):
+        end = start + 1
+        while end < len(score) and sorted_score[end] == sorted_score[start]:
+            end += 1
+        sorted_ranks[start:end] = (start + 1 + end) / 2
+        start = end
+    ranks = np.empty_like(sorted_ranks)
+    ranks[order] = sorted_ranks
     pos_ranks = ranks[positives]
     return float((pos_ranks.sum() - n_pos * (n_pos + 1) / 2) / (n_pos * n_neg))
 

@@ -1,0 +1,56 @@
+{
+  "auroc": {
+    "llama_self_report": {
+      "ci_high": 0.5699963423561165,
+      "ci_low": 0.5139080825434776,
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.5407135087734091
+    },
+    "residual_probe": {
+      "ci_high": 0.8326716904941893,
+      "ci_low": 0.7688225976543389,
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.8022968540519575
+    }
+  },
+  "bootstrap_method": "paired claim-level bootstrap with percentile 95% intervals",
+  "brier": {
+    "llama_self_report": {
+      "ci_high": 0.3301031839622642,
+      "ci_low": 0.2623979952830188,
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.29765498652291106
+    },
+    "residual_probe": {
+      "ci_high": 0.18948454976411144,
+      "ci_low": 0.15550498702373033,
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.17145574397579874
+    }
+  },
+  "confidence_level": 0.95,
+  "dataset": "FActScore",
+  "deltas": {
+    "residual_minus_self_report": {
+      "ci_excludes_zero": true,
+      "ci_high": 0.30169493716685153,
+      "ci_low": 0.21941335359228623,
+      "metric": "auroc",
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.26158334527854843
+    }
+  },
+  "inputs": {
+    "eval_json": "artifacts/runs/factscore_chatgpt_validation_eval.json"
+  },
+  "n_claims": 742,
+  "n_negative": 233,
+  "n_positive": 509,
+  "n_resamples": 1000,
+  "seed": 20260424
+}

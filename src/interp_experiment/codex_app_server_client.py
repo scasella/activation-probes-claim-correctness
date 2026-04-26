@@ -127,7 +127,13 @@ class CodexAppServerClient:
         self._wait_for_response(initialize_id)
         self._send({"method": "initialized"})
 
-    def run_prompt(self, prompt_text: str, *, output_schema: dict[str, Any] | None = None) -> str:
+    def run_prompt(
+        self,
+        prompt_text: str,
+        *,
+        output_schema: dict[str, Any] | None = None,
+        turn_timeout_sec: float = 300.0,
+    ) -> str:
         thread_id = self._new_id()
         self._send(
             {
@@ -160,7 +166,7 @@ class CodexAppServerClient:
         self._wait_for_response(turn_request_id)
 
         final_text: str | None = None
-        for message in self._read_messages(timeout_sec=300.0):
+        for message in self._read_messages(timeout_sec=turn_timeout_sec):
             if message.get("method") == "item/completed":
                 item = message.get("params", {}).get("item", {})
                 if item.get("type") == "agentMessage" and item.get("phase") == "final_answer":

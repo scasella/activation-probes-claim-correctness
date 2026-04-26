@@ -1,0 +1,297 @@
+from __future__ import annotations
+
+import argparse
+import base64
+import io
+import json
+from collections import defaultdict
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+
+from interp_experiment.activations.claim_pooling import mean_pool_claim_features
+from interp_experiment.activations.extractors import build_extractor_with_info
+from interp_experiment.baselines.llama_self_report import parse_baseline_claims
+from interp_experiment.baselines.utils import (
+    extract_json_object,
+    normalize_prediction_claim_ids,
+    validate_prediction_claim_ids,
+)
+from interp_experiment.env import load_repo_env
+from interp_experiment.io import read_jsonl
+from interp_experiment.schemas import AnswerRunRow, ClaimRow, ExampleRow
+
+
+GENERAL_SELF_REPORT_SYSTEM = (
+    "You are evaluating factual segments in a model answer. Use the question, answer, and fixed "
+    "segment list. Do not rewrite the segments. Return strict JSON only."
+)
+
+
+def _emit_json_section(label: str, payload: dict[str, object]) -> None:
+    print(f"===BEGIN_{label}===")
+    print(json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=True))
+    print(f"===END_{label}===")
+
+
+def _emit_jsonl_section(label: str, rows: list[dict[str, object]]) -> None:
+    print(f"===BEGIN_{label}===")
+    for row in rows:
+        print(json.dumps(row, ensure_ascii=True))
+    print(f"===END_{label}===")
+
+
+def _emit_text_section(label: str, text: str) -> None:
+    print(f"===BEGIN_{label}===")
+    print(text)
+    print(f"===END_{label}===")
+
+
+def _llama_chat_prompt(system: str, user: str) -> str:
+    return (
+        "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n"
+        f"{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n"
+        f"{user}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n"
+    )
+
+
+def _answer_prompt(example: ExampleRow) -> str:
+    return _llama_chat_prompt(
+        "You are a helpful assistant. Answer the user's question directly.",
+        example.question_text,
+    )
+
+
+def _claims_block(segments: list[dict[str, Any]]) -> str:
+    return "\n".join(f"- {segment['claim_id']}: {segment['claim_text']}" for segment in segments)
+
+
+def _self_report_prompt(example: ExampleRow, segments: list[dict[str, Any]]) -> tuple[str, str]:
+    user = (
+        "Question:\n"
+        f"{example.question_text}\n\n"
+        "Model answer:\n"
+        f"{example.llama_answer_text}\n\n"
+        "Fixed answer segments to score:\n"
+        f"{_claims_block(segments)}\n\n"
+        "For each segment, estimate the probability that the segment is factually correct as stated. "
+        "Return strict JSON with this shape:\n"
+        "{\n"
+        '  "claims": [\n'
+        "    {\n"
+        '      "claim_id": "string",\n'
+        '      "correctness_confidence": 0.0,\n'
+        '      "load_bearing_label": "yes|no",\n'
+        '      "load_bearing_confidence": 0.0,\n'
+        '      "flip_evidence_text": "string"\n'
+        "    }\n"
+        "  ]\n"
+        "}\n"
+    )
+    return _llama_chat_prompt(GENERAL_SELF_REPORT_SYSTEM, user), user
+
+
+def _token_span(char_start: int, char_end: int, offsets: list[tuple[int, int]]) -> tuple[int, int] | None:
+    token_indices = [
+        idx
+        for idx, (start, end) in enumerate(offsets)
+        if end > char_start and start < char_end
+    ]
+    if not token_indices:
+        return None
+    return min(token_indices), max(token_indices)
+
+
+def _select_expected_predictions(
+    predictions: list[Any],
+    expected_claim_ids: list[str],
+) -> tuple[list[Any], dict[str, object] | None]:
+    expected_set = set(expected_claim_ids)
+    by_claim_id: dict[str, Any] = {}
+    extra_claim_ids: list[str] = []
+    duplicate_claim_ids: list[str] = []
+    for prediction in predictions:
+        if prediction.claim_id not in expected_set:
+            extra_claim_ids.append(prediction.claim_id)
+            continue
+        if prediction.claim_id in by_claim_id:
+            duplicate_claim_ids.append(prediction.claim_id)
+            continue
+        by_claim_id[prediction.claim_id] = prediction
+    if len(by_claim_id) != len(expected_claim_ids):
+        return predictions, None
+    selected = [by_claim_id[claim_id] for claim_id in expected_claim_ids]
+    if not extra_claim_ids and not duplicate_claim_ids:
+        return selected, None
+    return selected, {
+        "extra_claim_ids": extra_claim_ids,
+        "duplicate_claim_ids": duplicate_claim_ids,
+    }
+
+
+def _as_answer_run(example: ExampleRow, extractor: Any) -> AnswerRunRow:
+    return extractor.retokenize_answer_run(
+        example_id=example.example_id,
+        source_corpus=example.source_corpus,
+        task_family=example.task_family,
+        prompt_text=_answer_prompt(example),
+        answer_text=example.llama_answer_text,
+    )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Materialize FELM self-report predictions and residual features remotely.")
+    parser.add_argument("--examples-jsonl", type=Path, required=True)
+    parser.add_argument("--segments-jsonl", type=Path, required=True)
+    parser.add_argument("--model-name", default="meta-llama/Llama-3.1-8B-Instruct")
+    parser.add_argument("--layer-index", type=int, default=19)
+    parser.add_argument("--device", default="cuda")
+    parser.add_argument("--backend", default="huggingface", choices=["auto", "huggingface"])
+    parser.add_argument("--start-index", type=int, default=0)
+    parser.add_argument("--end-index", type=int, default=0, help="Exclusive example index; 0 means no explicit end.")
+    parser.add_argument("--max-examples", type=int, default=0)
+    parser.add_argument("--max-new-tokens", type=int, default=1536)
+    args = parser.parse_args()
+
+    load_repo_env()
+    build_info = build_extractor_with_info(
+        args.model_name,
+        layer_index=args.layer_index,
+        device=args.device,
+        backend=args.backend,
+    )
+    extractor = build_info.extractor
+    examples = [ExampleRow.from_dict(row) for row in read_jsonl(args.examples_jsonl)]
+    if args.start_index or args.end_index:
+        end_index = args.end_index if args.end_index else None
+        examples = examples[args.start_index : end_index]
+    if args.max_examples:
+        examples = examples[: args.max_examples]
+    example_by_id = {example.example_id: example for example in examples}
+    segments_by_example: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in read_jsonl(args.segments_jsonl):
+        if row["example_id"] in example_by_id:
+            segments_by_example[row["example_id"]].append(row)
+
+    answer_runs: list[dict[str, object]] = []
+    tokenized_claims: list[dict[str, object]] = []
+    feature_claim_ids: list[str] = []
+    feature_example_ids: list[str] = []
+    feature_matrix: list[list[float]] = []
+    raw_self_report_rows: list[dict[str, object]] = []
+    parsed_predictions: list[dict[str, object]] = []
+    failures: list[dict[str, object]] = []
+    normalization_notes: list[dict[str, object]] = []
+
+    for example in examples:
+        segments = sorted(segments_by_example[example.example_id], key=lambda row: row["segment_index"])
+        try:
+            answer_run = _as_answer_run(example, extractor)
+            encoded = extractor.encode_answer_run_with_activations(answer_run)
+        except Exception as exc:
+            failures.append({"example_id": example.example_id, "stage": "activation_encoding", "error": f"{type(exc).__name__}: {exc}"})
+            continue
+        feature_tensor = encoded.residual_stream
+        if hasattr(feature_tensor, "detach"):
+            feature_tensor = feature_tensor.detach().float().cpu().numpy()
+        answer_runs.append(answer_run.as_dict())
+
+        tokenized_for_example: list[ClaimRow] = []
+        for segment in segments:
+            token_span = _token_span(int(segment["char_start"]), int(segment["char_end"]), answer_run.token_offsets)
+            if token_span is None:
+                failures.append(
+                    {
+                        "example_id": example.example_id,
+                        "claim_id": segment["claim_id"],
+                        "stage": "segment_token_alignment",
+                        "error": "no overlapping answer tokens",
+                    }
+                )
+                continue
+            claim = ClaimRow(
+                claim_id=segment["claim_id"],
+                example_id=example.example_id,
+                claim_text=segment["claim_text"],
+                token_start=token_span[0],
+                token_end=token_span[1],
+                annotation_version="felm_human_v1_tokenized",
+            ).validate()
+            tokenized_for_example.append(claim)
+            tokenized_claims.append({**claim.as_dict(), "char_start": segment["char_start"], "char_end": segment["char_end"]})
+            vector = mean_pool_claim_features(feature_tensor, claim)
+            feature_claim_ids.append(claim.claim_id)
+            feature_example_ids.append(claim.example_id)
+            feature_matrix.append(vector)
+
+        try:
+            prompt_text, user_prompt = _self_report_prompt(example, segments)
+            raw_text = extractor.generate_text(prompt_text, max_new_tokens=args.max_new_tokens)
+            raw_self_report_rows.append(
+                {
+                    "example_id": example.example_id,
+                    "model_name": args.model_name,
+                    "prompt_version": "felm_general_self_report_v1",
+                    "user_prompt": user_prompt,
+                    "raw_text": raw_text,
+                }
+            )
+            payload = extract_json_object(raw_text)
+            predictions = parse_baseline_claims(
+                payload,
+                prompt_version="felm_general_self_report_v1",
+                model_name="llama-3.1-8b-instruct-self-report-felm",
+            )
+            expected_claim_ids = [segment["claim_id"] for segment in segments]
+            predictions = normalize_prediction_claim_ids(predictions, expected_claim_ids)
+            predictions, normalization_note = _select_expected_predictions(predictions, expected_claim_ids)
+            if normalization_note:
+                normalization_notes.append({"example_id": example.example_id, **normalization_note})
+            validate_prediction_claim_ids(predictions, expected_claim_ids)
+            parsed_predictions.extend(prediction.as_dict() for prediction in predictions)
+        except Exception as exc:
+            failures.append({"example_id": example.example_id, "stage": "self_report", "error": f"{type(exc).__name__}: {exc}"})
+        print(
+            f"REMOTE_FELM_OK {example.example_id} "
+            f"segments={len(segments)} tokenized={len(tokenized_for_example)}"
+        )
+
+    matrix = np.asarray(feature_matrix, dtype=np.float32)
+    buffer = io.BytesIO()
+    np.savez_compressed(
+        buffer,
+        claim_ids=np.asarray(feature_claim_ids),
+        example_ids=np.asarray(feature_example_ids),
+        matrix=matrix,
+    )
+    n_expected_segments = sum(len(segments_by_example[example.example_id]) for example in examples)
+    summary = {
+        "n_examples": len(examples),
+        "n_expected_segments": n_expected_segments,
+        "n_answer_runs": len(answer_runs),
+        "n_tokenized_segments": len(tokenized_claims),
+        "n_feature_rows": int(matrix.shape[0]),
+        "n_self_report_predictions": len(parsed_predictions),
+        "n_failures": len(failures),
+        "n_normalization_notes": len(normalization_notes),
+        "normalization_notes": normalization_notes,
+        "segment_failure_rate": (n_expected_segments - len(tokenized_claims)) / n_expected_segments if n_expected_segments else None,
+        "self_report_failure_rate": (n_expected_segments - len(parsed_predictions)) / n_expected_segments if n_expected_segments else None,
+        "failures": failures,
+        "extractor_name": build_info.extractor.__class__.__name__,
+        "transformer_lens_primary_attempted": build_info.primary_attempted,
+        "transformer_lens_primary_succeeded": build_info.primary_succeeded,
+        "transformer_lens_primary_error": build_info.primary_error,
+        "model_name": args.model_name,
+    }
+    _emit_json_section("SUMMARY_JSON", summary)
+    _emit_jsonl_section("ANSWER_RUNS_JSONL", answer_runs)
+    _emit_jsonl_section("TOKENIZED_CLAIMS_JSONL", tokenized_claims)
+    _emit_text_section("FEATURES_NPZ_B64", base64.b64encode(buffer.getvalue()).decode("ascii"))
+    _emit_jsonl_section("RAW_SELF_REPORT_JSONL", raw_self_report_rows)
+    _emit_jsonl_section("PARSED_SELF_REPORT_JSONL", parsed_predictions)
+
+
+if __name__ == "__main__":
+    main()

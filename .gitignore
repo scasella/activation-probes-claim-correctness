@@ -1,5 +1,7 @@
 .DS_Store
 .env
+.env.*
+!.env.example
 .venv/
 __pycache__/
 .pytest_cache/
@@ -13,8 +15,34 @@ build/
 dist/
 .coverage
 htmlcov/
+
+# Generated research runs are ignored by default. The release branch allows a
+# small curated set of aggregate artifacts and compact probe summaries.
 artifacts/runs/**
 !artifacts/runs/.gitkeep
+!artifacts/runs/maud_agreement_set_eval.json
+!artifacts/runs/maud_bootstrap_ci.json
+!artifacts/runs/maud_bootstrap_ci_v2.json
+!artifacts/runs/maud_full_judge_annotation_summary_v2.json
+!artifacts/runs/maud_full_probe_proxy_smoke_v2.json
+!artifacts/runs/maud_full_proxy_baseline_eval_v2.json
+!artifacts/runs/maud_human_audit_analysis.json
+!artifacts/runs/maud_judge_agreement_analysis.json
+!artifacts/runs/maud_proxy_findings.html
+!artifacts/runs/prime_inference_models_2026-04-24.json
+!artifacts/runs/probe_feature_alignment.json
+!artifacts/runs/probe_sparsity_diagnostics.json
+!artifacts/runs/residual_correctness_probe_direction.npz
+!artifacts/runs/residual_correctness_probe_direction_summary.json
+!artifacts/runs/factscore_bootstrap_ci.json
+!artifacts/runs/factscore_chatgpt_adapter_summary.json
+!artifacts/runs/factscore_chatgpt_token_alignment_summary.json
+!artifacts/runs/factscore_chatgpt_validation_eval.json
+!artifacts/runs/felm_wk_bootstrap_ci.json
+!artifacts/runs/felm_wk_matched_pilot_judge_summary_v2.json
+!artifacts/runs/felm_wk_matched_pilot_reference_extraction_v2_summary.json
+!artifacts/runs/felm_wk_validation_eval.json
+
 data/source_pool/**
 !data/source_pool/.gitkeep
 data/annotations/**
@@ -29,4 +57,20 @@ data/cached_baselines/llama_self_report/raw/**
 !data/cached_baselines/llama_self_report/raw/.gitkeep
 data/cached_baselines/llama_self_report/parsed/**
 !data/cached_baselines/llama_self_report/parsed/.gitkeep
+data/factscore/**
+data/felm/**
+
+# Local planning/editing drafts kept off the public release surface.
+docs/diversity_v2.html
+docs/factscore_completion_todo.md
+docs/factscore_validation_pilot.md
+docs/maud_paper_draft.md
+docs/next_steps.md
+docs/paper_abstract_v1.md
+docs/paper_abstract_v2.md
+docs/paper_blog_v2.html
+docs/paper_draft_v1.md
+docs/paper_draft_v2.md
+docs/paper_revision_log.md
+
 uv.lock

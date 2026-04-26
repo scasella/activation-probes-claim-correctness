@@ -1,0 +1,511 @@
+{
+  "agreement_set_size": 110,
+  "auroc": {
+    "agreement_set": {
+      "gpt54_cached": {
+        "ci_high": 1.0,
+        "ci_low": 0.930548076923077,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.9814814814814815
+      },
+      "llama_self_report": {
+        "ci_high": 0.5979405282898479,
+        "ci_low": 0.39196419585346215,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.4861111111111111
+      },
+      "residual_probe": {
+        "ci_high": 0.8704606355676328,
+        "ci_low": 0.7090201919894075,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.792989417989418
+      },
+      "sae_probe": {
+        "ci_high": 0.8116593149239519,
+        "ci_low": 0.6156996021220159,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.7119708994708994
+      }
+    },
+    "judge1": {
+      "gpt54_cached": {
+        "ci_high": 0.9840448054608285,
+        "ci_low": 0.9055235807936682,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.9435483870967742
+      },
+      "llama_self_report": {
+        "ci_high": 0.5969863026836254,
+        "ci_low": 0.4107650633432897,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.5113636363636364
+      },
+      "residual_probe": {
+        "ci_high": 0.8381194131498754,
+        "ci_low": 0.6872642424242424,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.7708944281524927
+      },
+      "sae_probe": {
+        "ci_high": 0.763246568015689,
+        "ci_low": 0.5818066639243109,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.6765029325513197
+      }
+    },
+    "judge2": {
+      "gpt54_cached": {
+        "ci_high": 0.9255915921715778,
+        "ci_low": 0.8070564490873611,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.8724426258672834
+      },
+      "llama_self_report": {
+        "ci_high": 0.6036661624967543,
+        "ci_low": 0.41315499015924134,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.4662871375200142
+      },
+      "residual_probe": {
+        "ci_high": 0.7921497155049786,
+        "ci_low": 0.6266437016723612,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.7071695427859811
+      },
+      "sae_probe": {
+        "ci_high": 0.7348911535412261,
+        "ci_low": 0.5632012085137085,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.6521971179505426
+      }
+    }
+  },
+  "auroc_undefined_resamples_dropped": {
+    "note": "Counts across AUROC cell CIs only; paired-delta and kappa dropped counts are reported per entry.",
+    "total": 0
+  },
+  "bootstrap_method": "paired claim-level bootstrap with percentile 95% intervals",
+  "brier": {
+    "agreement_set": {
+      "gpt54_cached": {
+        "ci_high": 0.14411263636363636,
+        "ci_low": 0.06402622727272726,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.10133090909090907
+      },
+      "llama_self_report": {
+        "ci_high": 0.6,
+        "ci_low": 0.4,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.509090909090909
+      },
+      "residual_probe": {
+        "ci_high": 0.29921742478111485,
+        "ci_low": 0.1656032665063501,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.2305211572134516
+      },
+      "sae_probe": {
+        "ci_high": 0.34968182355286065,
+        "ci_low": 0.1932530181701548,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.2676051615141327
+      }
+    },
+    "judge1": {
+      "gpt54_cached": {
+        "ci_high": 0.2058276666666667,
+        "ci_low": 0.11848766666666667,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.16099
+      },
+      "llama_self_report": {
+        "ci_high": 0.6533333333333333,
+        "ci_low": 0.5,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.58
+      },
+      "residual_probe": {
+        "ci_high": 0.3078055119220912,
+        "ci_low": 0.18931242869893966,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.24356268627432376
+      },
+      "sae_probe": {
+        "ci_high": 0.371667526295694,
+        "ci_low": 0.22881840590677344,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.3000766795350876
+      }
+    },
+    "judge2": {
+      "gpt54_cached": {
+        "ci_high": 0.21708589999999997,
+        "ci_low": 0.12386485000000001,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.16939
+      },
+      "llama_self_report": {
+        "ci_high": 0.56,
+        "ci_low": 0.4066666666666667,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.48
+      },
+      "residual_probe": {
+        "ci_high": 0.350183871639241,
+        "ci_low": 0.22734301177415417,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.28952804490962636
+      },
+      "sae_probe": {
+        "ci_high": 0.3946717259977678,
+        "ci_low": 0.25926960398920373,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.32612776844359087
+      }
+    }
+  },
+  "confidence_level": 0.95,
+  "deltas": {
+    "gpt54_judge1_minus_judge2": {
+      "ci_excludes_zero": true,
+      "ci_high": 0.14856320360195352,
+      "ci_low": 0.019160558323363493,
+      "metric": "auroc",
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.07953684627347912
+    },
+    "gpt54_minus_residual": {
+      "agreement_set": {
+        "ci_excludes_zero": true,
+        "ci_high": 0.26803581267217624,
+        "ci_low": 0.09283435491787374,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.1884920634920635
+      },
+      "judge1": {
+        "ci_excludes_zero": true,
+        "ci_high": 0.26429776328380045,
+        "ci_low": 0.10732020383139104,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.1726539589442816
+      },
+      "judge2": {
+        "ci_excludes_zero": true,
+        "ci_high": 0.2509238785307864,
+        "ci_low": 0.06973461695828585,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.16527308308130229
+      },
+      "metric": "auroc"
+    },
+    "residual_minus_sae": {
+      "agreement_set": {
+        "ci_excludes_zero": false,
+        "ci_high": 0.18548521103356588,
+        "ci_low": -0.02134035798716648,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.0810185185185186
+      },
+      "judge1": {
+        "ci_excludes_zero": true,
+        "ci_high": 0.17955661530873399,
+        "ci_low": 0.0028922449178438374,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.09439149560117299
+      },
+      "judge2": {
+        "ci_excludes_zero": false,
+        "ci_high": 0.14980769841879588,
+        "ci_low": -0.038965591630591566,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.054972424835438516
+      },
+      "metric": "auroc"
+    },
+    "residual_minus_self_report": {
+      "agreement_set": {
+        "ci_excludes_zero": true,
+        "ci_high": 0.4280098914082901,
+        "ci_low": 0.15331841438703142,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.3068783068783069
+      },
+      "judge1": {
+        "ci_excludes_zero": true,
+        "ci_high": 0.3869344323969749,
+        "ci_low": 0.13740352077467569,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.2595307917888563
+      },
+      "judge2": {
+        "ci_excludes_zero": true,
+        "ci_high": 0.3202030978346767,
+        "ci_low": 0.07460467146292042,
+        "n_resamples_dropped": 0,
+        "n_valid_resamples": 1000,
+        "point": 0.24088240526596688
+      },
+      "metric": "auroc"
+    }
+  },
+  "inputs": {
+    "gpt54_predictions": "data/cached_baselines/gpt54/parsed/maud_full",
+    "judge1_labels_jsonl": "data/annotations/maud_full_judge_annotations.jsonl",
+    "judge2_labels_jsonl": "data/annotations/maud_full_judge_annotations_v2.jsonl",
+    "llama_predictions": "data/cached_baselines/llama_self_report/parsed/maud_full/_all_predictions.jsonl",
+    "residual_features_jsonl": "artifacts/runs/maud_full_probe_features_residual.jsonl",
+    "sae_features_path": "artifacts/runs/maud_full_probe_features_sae.npz"
+  },
+  "kappa": {
+    "ci_high": 0.6823123829790307,
+    "ci_low": 0.45617275961860054,
+    "n_resamples_dropped": 0,
+    "n_valid_resamples": 1000,
+    "point": 0.5717344753747323
+  },
+  "method_labels": {
+    "gpt54_cached": "GPT-5.4 external scorer",
+    "llama_self_report": "Llama self-report",
+    "residual_probe": "Residual activation probe",
+    "sae_probe": "SAE feature probe"
+  },
+  "metric_compatibility_note": "MAUD headline values are preserved from the existing publication artifacts rather than silently rebaselined under the later tie-aware AUROC helper.",
+  "n_resamples": 1000,
+  "n_resamples_dropped": 0,
+  "point_estimate_validation": {
+    "checked": [
+      {
+        "abs_diff": 0.0,
+        "actual": 0.5113636363636364,
+        "context": "judge1",
+        "expected": 0.5113636363636364,
+        "method": "llama_self_report",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.58,
+        "context": "judge1",
+        "expected": 0.58,
+        "method": "llama_self_report",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.9435483870967742,
+        "context": "judge1",
+        "expected": 0.9435483870967742,
+        "method": "gpt54_cached",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.16099,
+        "context": "judge1",
+        "expected": 0.16099,
+        "method": "gpt54_cached",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.7708944281524927,
+        "context": "judge1",
+        "expected": 0.7708944281524927,
+        "method": "residual_probe",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.24356268627432376,
+        "context": "judge1",
+        "expected": 0.24356268627432376,
+        "method": "residual_probe",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.6765029325513197,
+        "context": "judge1",
+        "expected": 0.6765029325513197,
+        "method": "sae_probe",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.3000766795350876,
+        "context": "judge1",
+        "expected": 0.3000766795350876,
+        "method": "sae_probe",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.4662871375200142,
+        "context": "judge2",
+        "expected": 0.4662871375200142,
+        "method": "llama_self_report",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.48,
+        "context": "judge2",
+        "expected": 0.48,
+        "method": "llama_self_report",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.8724426258672834,
+        "context": "judge2",
+        "expected": 0.8724426258672834,
+        "method": "gpt54_cached",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.16939,
+        "context": "judge2",
+        "expected": 0.16939,
+        "method": "gpt54_cached",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.7071695427859811,
+        "context": "judge2",
+        "expected": 0.7071695427859811,
+        "method": "residual_probe",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.28952804490962636,
+        "context": "judge2",
+        "expected": 0.28952804490962636,
+        "method": "residual_probe",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.6521971179505426,
+        "context": "judge2",
+        "expected": 0.6521971179505426,
+        "method": "sae_probe",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.32612776844359087,
+        "context": "judge2",
+        "expected": 0.32612776844359087,
+        "method": "sae_probe",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.4861111111111111,
+        "context": "agreement_set",
+        "expected": 0.4861111111111111,
+        "method": "llama_self_report",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.509090909090909,
+        "context": "agreement_set",
+        "expected": 0.509090909090909,
+        "method": "llama_self_report",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.9814814814814815,
+        "context": "agreement_set",
+        "expected": 0.9814814814814815,
+        "method": "gpt54_cached",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.10133090909090907,
+        "context": "agreement_set",
+        "expected": 0.10133090909090907,
+        "method": "gpt54_cached",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.792989417989418,
+        "context": "agreement_set",
+        "expected": 0.792989417989418,
+        "method": "residual_probe",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.2305211572134516,
+        "context": "agreement_set",
+        "expected": 0.2305211572134516,
+        "method": "residual_probe",
+        "metric": "brier"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.7119708994708994,
+        "context": "agreement_set",
+        "expected": 0.7119708994708994,
+        "method": "sae_probe",
+        "metric": "auroc"
+      },
+      {
+        "abs_diff": 0.0,
+        "actual": 0.2676051615141327,
+        "context": "agreement_set",
+        "expected": 0.2676051615141327,
+        "method": "sae_probe",
+        "metric": "brier"
+      }
+    ],
+    "max_abs_diff": 0.0,
+    "status": "passed",
+    "tolerance": 1e-12
+  },
+  "seed": 20260424,
+  "source_artifact": "artifacts/runs/maud_bootstrap_ci.json",
+  "v2_note": "Source-compatible v2 copy for paper tables. It preserves the frozen MAUD point estimates requested for the paper. A tie-aware AUROC rerun on 2026-04-25 changes tied self-report AUROC slightly; see docs/paper_revision_log.md before regenerating MAUD tables."
+}

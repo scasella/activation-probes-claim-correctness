@@ -16,6 +16,15 @@ def _load_modal():
     return modal
 
 
+def _ignore_mutable_outputs(path: Path) -> bool:
+    if path.name == ".DS_Store":
+        return True
+    if path.name in {"remote.log", "summary.json", "targets.jsonl", "features.jsonl", "features.npz"}:
+        parts = set(path.parts)
+        return "artifacts" in parts and "runs" in parts
+    return False
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run a command inside a Modal GPU sandbox.")
     parser.add_argument("--gpu", default="A100-80GB")
@@ -80,7 +89,7 @@ def main() -> None:
                 groups=args.sync_group or None,
                 frozen=False,
             )
-    image = image.add_local_dir(str(root), remote_path="/app")
+    image = image.add_local_dir(str(root), remote_path="/app", ignore=_ignore_mutable_outputs)
     app = modal.App.lookup("interp-experiment", create_if_missing=True)
     sandbox = modal.Sandbox.create(
         *command,

@@ -36,6 +36,9 @@ def normalize_prediction_claim_ids(
     expected_claim_ids: list[str],
 ) -> list[BaselinePrediction]:
     expected_set = set(expected_claim_ids)
+    if len(predictions) == 1 and len(expected_claim_ids) == 1:
+        predictions[0].claim_id = expected_claim_ids[0]
+        return predictions
     normalized: list[BaselinePrediction] = []
     for prediction in predictions:
         claim_id = prediction.claim_id

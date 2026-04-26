@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "probemon"
+version = "0.1.0"
+description = "Probe-based claim-level uncertainty monitoring for Llama 3.1 8B."
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = [
+  "numpy>=1.26",
+  "scikit-learn>=1.5",
+]
+
+[project.optional-dependencies]
+inference = [
+  "torch>=2.5",
+  "transformers>=4.48",
+]
+dev = [
+  "pytest>=8.3",
+]
+
+[project.scripts]
+probemon = "probemon.cli:main"
+
+[tool.setuptools]
+packages = [
+  "probemon",
+  "probemon.core",
+  "probemon.datasets",
+  "probemon.monitoring",
+  "probemon.pretrained",
+  "probemon.training",
+  "probemon.training.adapters",
+]
+
+[tool.setuptools.package-data]
+"probemon.pretrained" = ["artifacts/*.npz"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

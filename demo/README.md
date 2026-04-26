@@ -54,6 +54,8 @@ This reads:
 - `data/annotations/maud_full_judge_annotations.jsonl`
 - `artifacts/runs/residual_correctness_probe_direction.npz`
 
+Those source inputs are local regeneration artifacts and are not all included in the curated public release. Restore or regenerate them before rebuilding the demo data.
+
 It writes:
 
 - `demo/web/examples.json`

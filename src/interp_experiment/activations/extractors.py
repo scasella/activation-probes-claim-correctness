@@ -66,6 +66,33 @@ class ActivationExtractor:
     ) -> GenerationWithActivations:  # pragma: no cover - interface
         raise NotImplementedError
 
+    def encode_answer_run_with_activations(
+        self,
+        answer_run: AnswerRunRow,
+    ) -> GenerationWithActivations:  # pragma: no cover - interface
+        raise NotImplementedError
+
+
+def _compose_full_sequence(
+    prompt_ids: Any,
+    full_ids: Any,
+    expected_answer_ids: list[int],
+    torch_module: Any,
+) -> tuple[Any, Any]:
+    prompt_sequence = prompt_ids[0] if getattr(prompt_ids, "ndim", 1) == 2 else prompt_ids
+    full_sequence = full_ids[0] if getattr(full_ids, "ndim", 1) == 2 else full_ids
+    prompt_len = int(prompt_sequence.shape[0])
+    observed_answer_ids = full_sequence[prompt_len:]
+    if observed_answer_ids.numel() == 0 or observed_answer_ids.tolist() != expected_answer_ids:
+        answer_sequence = torch_module.tensor(
+            expected_answer_ids,
+            device=prompt_sequence.device,
+            dtype=prompt_sequence.dtype,
+        )
+        full_sequence = torch_module.cat([prompt_sequence, answer_sequence], dim=0)
+        return full_sequence, answer_sequence
+    return full_sequence, observed_answer_ids
+
 
 class TransformerLensActivationExtractor(ActivationExtractor):
     def __init__(self, model_name: str, layer_index: int = 19, device: str = "cuda") -> None:
@@ -211,7 +238,40 @@ class TransformerLensActivationExtractor(ActivationExtractor):
         prompt_tokens = self._model.to_tokens(prompt_text, prepend_bos=True)
         full_tokens = self._model.to_tokens(prompt_text + answer_run.answer_text, prepend_bos=True)
         prompt_len = prompt_tokens.shape[-1]
-        full_sequence = full_tokens[0].detach().clone()
+        full_sequence, answer_sequence = _compose_full_sequence(
+            prompt_tokens.detach().clone(),
+            full_tokens.detach().clone(),
+            answer_run.token_ids,
+            self._torch,
+        )
+        with self._torch.no_grad():
+            _, cache = self._model.run_with_cache(
+                full_sequence.unsqueeze(0),
+                names_filter=lambda name: name == f"blocks.{self.layer_index}.hook_resid_post",
+            )
+        residual_full = cache[f"blocks.{self.layer_index}.hook_resid_post"][0].detach().cpu()
+        residual = residual_full[prompt_len:]
+        return GenerationWithActivations(
+            answer_text=answer_run.answer_text,
+            token_ids=answer_sequence.tolist(),
+            token_offsets=answer_run.token_offsets,
+            residual_stream=residual,
+            extractor_name="transformer_lens",
+            model_name=self.model_name,
+        )
+
+    def encode_answer_run_with_activations(
+        self,
+        answer_run: AnswerRunRow,
+    ) -> GenerationWithActivations:
+        prompt_tokens = self._model.to_tokens(answer_run.prompt_text, prepend_bos=True)
+        prompt_len = prompt_tokens.shape[-1]
+        answer_sequence = self._torch.tensor(
+            answer_run.token_ids,
+            device=prompt_tokens.device,
+            dtype=prompt_tokens.dtype,
+        )
+        full_sequence = self._torch.cat([prompt_tokens[0], answer_sequence], dim=0)
         with self._torch.no_grad():
             _, cache = self._model.run_with_cache(
                 full_sequence.unsqueeze(0),
@@ -402,9 +462,41 @@ class HuggingFaceActivationExtractor(ActivationExtractor):
         )
         prompt_batch = self._tokenizer(prompt_text, return_tensors="pt")
         full_batch = self._tokenizer(prompt_text + answer_run.answer_text, return_tensors="pt")
-        input_ids = full_batch["input_ids"].to(self.device)
-        prompt_len = int(prompt_batch["input_ids"].shape[1])
-        forward = self._model(input_ids, output_hidden_states=True)
+        prompt_ids = prompt_batch["input_ids"].to(self.device)
+        full_ids = full_batch["input_ids"].to(self.device)
+        prompt_len = int(prompt_ids.shape[1])
+        full_sequence, answer_ids = _compose_full_sequence(
+            prompt_ids,
+            full_ids,
+            answer_run.token_ids,
+            self._torch,
+        )
+        forward = self._model(full_sequence.unsqueeze(0), output_hidden_states=True)
+        hidden_states = forward.hidden_states[self.layer_index + 1][0].detach().cpu()
+        residual = hidden_states[prompt_len:]
+        return GenerationWithActivations(
+            answer_text=answer_run.answer_text,
+            token_ids=answer_ids.tolist(),
+            token_offsets=answer_run.token_offsets,
+            residual_stream=residual,
+            extractor_name="huggingface_transformers",
+            model_name=self.model_name,
+        )
+
+    def encode_answer_run_with_activations(
+        self,
+        answer_run: AnswerRunRow,
+    ) -> GenerationWithActivations:
+        prompt_batch = self._tokenizer(answer_run.prompt_text, return_tensors="pt")
+        prompt_ids = prompt_batch["input_ids"][0].to(self.device)
+        prompt_len = int(prompt_ids.shape[0])
+        answer_ids = self._torch.tensor(
+            answer_run.token_ids,
+            device=self.device,
+            dtype=prompt_ids.dtype,
+        )
+        full_sequence = self._torch.cat([prompt_ids, answer_ids], dim=0)
+        forward = self._model(full_sequence.unsqueeze(0), output_hidden_states=True)
         hidden_states = forward.hidden_states[self.layer_index + 1][0].detach().cpu()
         residual = hidden_states[prompt_len:]
         return GenerationWithActivations(
@@ -427,7 +519,21 @@ def _naive_offsets_from_tokens(tokens: list[str]) -> list[tuple[int, int]]:
     return offsets
 
 
-def build_extractor_with_info(model_name: str, layer_index: int = 19, device: str = "cuda") -> ExtractorBuildInfo:
+def build_extractor_with_info(
+    model_name: str,
+    layer_index: int = 19,
+    device: str = "cuda",
+    backend: str = "auto",
+) -> ExtractorBuildInfo:
+    if backend == "huggingface":
+        return ExtractorBuildInfo(
+            extractor=HuggingFaceActivationExtractor(model_name=model_name, layer_index=layer_index, device=device),
+            primary_attempted=False,
+            primary_succeeded=False,
+            primary_error=None,
+        )
+    if backend != "auto":
+        raise ValueError(f"Unsupported extractor backend: {backend}")
     try:
         extractor = TransformerLensActivationExtractor(model_name=model_name, layer_index=layer_index, device=device)
         return ExtractorBuildInfo(
@@ -436,7 +542,9 @@ def build_extractor_with_info(model_name: str, layer_index: int = 19, device: st
             primary_succeeded=True,
             primary_error=None,
         )
-    except Exception as exc:
+    except BaseException as exc:
+        if isinstance(exc, (SystemExit, GeneratorExit)):
+            raise
         fallback = HuggingFaceActivationExtractor(model_name=model_name, layer_index=layer_index, device=device)
         return ExtractorBuildInfo(
             extractor=fallback,
@@ -446,5 +554,15 @@ def build_extractor_with_info(model_name: str, layer_index: int = 19, device: st
         )
 
 
-def build_extractor(model_name: str, layer_index: int = 19, device: str = "cuda") -> ActivationExtractor:
-    return build_extractor_with_info(model_name=model_name, layer_index=layer_index, device=device).extractor
+def build_extractor(
+    model_name: str,
+    layer_index: int = 19,
+    device: str = "cuda",
+    backend: str = "auto",
+) -> ActivationExtractor:
+    return build_extractor_with_info(
+        model_name=model_name,
+        layer_index=layer_index,
+        device=device,
+        backend=backend,
+    ).extractor

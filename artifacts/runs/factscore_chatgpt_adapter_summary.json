@@ -1,0 +1,68 @@
+{
+  "atomic_fact_text_char_length": {
+    "max": 121,
+    "mean": 40.50777732296357,
+    "median": 38.0,
+    "min": 8,
+    "p25": 30.0,
+    "p75": 48.0
+  },
+  "claims_by_split": {
+    "test": 742,
+    "train": 3353,
+    "validation": 791
+  },
+  "exact_atomic_substring_match_rate": 0.001474382602285293,
+  "exact_atomic_substring_matches": 8,
+  "facts_per_example": {
+    "max": 55,
+    "mean": 31.121019108280255,
+    "median": 32.0,
+    "min": 5,
+    "p25": 25.0,
+    "p75": 36.0
+  },
+  "generation_mismatch_caveat": "These are ChatGPT-generated biographies. Llama activations are extracted over ChatGPT text, matching the intentional generation-mismatch design of the scoping check.",
+  "google_drive_file_id": "155exEdKs7R21gZF4G-x54-XN3qswBcPo",
+  "label_counts_after_dropping_ir": {
+    "false": 1692,
+    "true": 3194
+  },
+  "n_claims": 4886,
+  "n_examples_with_claims": 157,
+  "n_examples_without_claims": 26,
+  "n_ir_facts_dropped": 540,
+  "n_sentence_span_failure_examples": 0,
+  "n_source_rows": 183,
+  "n_unknown_facts_dropped": 0,
+  "raw_factscore_label_counts": {
+    "IR": 540,
+    "NS": 1692,
+    "S": 3194
+  },
+  "release_date_from_readme": "2023-11-04",
+  "sentence_span_failures": {},
+  "source": "FActScore official Google Drive data.zip",
+  "source_file": "data/factscore/raw/data/labeled/ChatGPT.jsonl",
+  "source_model": "ChatGPT",
+  "source_sentence_char_length": {
+    "max": 320,
+    "mean": 124.73475235366352,
+    "median": 122.0,
+    "min": 28,
+    "p25": 96.0,
+    "p75": 150.0
+  },
+  "source_url": "https://github.com/shmsw25/FActScore",
+  "span_policy": "FActScore human atomic facts are canonicalized and almost never appear verbatim in the output. Activation spans therefore use the parent annotated sentence unless an exact atomic substring exists.",
+  "span_source_counts": {
+    "exact_atomic_substring": 8,
+    "parent_sentence": 4878
+  },
+  "split_counts": {
+    "test": 24,
+    "train": 109,
+    "validation": 24
+  },
+  "total_atomic_facts_seen": 5426
+}

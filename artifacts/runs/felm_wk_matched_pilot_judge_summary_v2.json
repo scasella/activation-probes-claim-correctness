@@ -1,0 +1,35 @@
+{
+  "allowed_labels": [
+    "true",
+    "partially_true",
+    "false",
+    "not_enough_evidence"
+  ],
+  "annotation_version": "felm_matched_reference_judge_v2",
+  "codex_app_server": {
+    "approval_policy": "never",
+    "cwd": "/Users/scasella/Downloads/interp",
+    "transport": "stdio://",
+    "turn_timeout_sec": 180.0
+  },
+  "failures": [],
+  "judge_model": "gpt-5.5",
+  "label_distribution": {
+    "false": 6,
+    "not_enough_evidence": 30,
+    "partially_true": 12,
+    "true": 4
+  },
+  "label_source": "judge_llm_reference_proxy_v2",
+  "n_failures": 0,
+  "n_labeled_segments": 52,
+  "n_retries_used_successfully": 0,
+  "n_segments_available_in_labels": 52,
+  "n_segments_processed_this_run": 0,
+  "n_segments_requested": 52,
+  "n_segments_reused_raw": 0,
+  "n_segments_skipped_existing": 52,
+  "note": "Labels use fuller v2 FELM reference text and preserve not_enough_evidence separately from false. For roll-up runs with --skip-existing, n_segments_processed_this_run can be 0 even when n_labeled_segments is complete.",
+  "prompt_reference_policy": "Use the v2 readability cache and pass claim-relevant excerpts from the extracted reference text.",
+  "reference_excerpt_max_chars": 8000
+}

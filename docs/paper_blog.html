@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hidden activations know when self-report does not</title>
+  <meta name="description" content="A claim-level uncertainty study: Llama 3.1 8B self-report is near random on MAUD and FActScore, while linear probes on residual activations recover correctness signal across legal QA and biography factuality." />
+  <meta property="og:title" content="Hidden activations know when self-report does not" />
+  <meta property="og:description" content="Linear probes on Llama residual activations recover claim-level correctness signal that structured self-report misses." />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:           #F9F9F6;
+      --accent:       #090909;
+      --fg:           #3B3B39;
+      --fg-soft:      #3B3B39;
+      --fg-mute:      #595856;
+      --fg-faint:     #969592;
+      --on-dark:      #DFDEDA;
+      --surface-muted:#EFEFEB;
+      --chart-primary:   #3B3B39;
+      --chart-secondary: #969592;
+      --chart-axis:      #C8C7C2;
+      --chart-grid:      #E4E3DE;
+      --chart-accent-1:  #5C8A95;
+      --chart-accent-2:  #8B6F8C;
+      --font-serif: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+      --font-sans:  'Inter', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      background: var(--bg);
+      overflow-y: scroll;
+      scrollbar-color: #bbb #f4f4f4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+      font-variant-ligatures: common-ligatures contextual;
+      font-variant-numeric: oldstyle-nums proportional-nums;
+      font-optical-sizing: auto;
+      font-synthesis: none;
+    }
+    html::-webkit-scrollbar { width: 16px; }
+    html::-webkit-scrollbar-track { background: #f4f4f4; }
+    html::-webkit-scrollbar-thumb { background: #bbb; border-radius: 5px; }
+
+    ::selection { background: rgba(0,0,0,0.08); color: inherit; }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-serif);
+      background: var(--bg);
+      color: var(--accent);
+      display: flex;
+      flex-direction: column;
+      text-wrap: pretty;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .subtitle { text-wrap: balance; }
+
+    .page-surface {
+      background: var(--bg);
+      display: flex;
+      flex: 1 0 auto;
+      flex-direction: column;
+      width: 100%;
+    }
+    .main { flex: 1; }
+
+    .perspectives-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 2.5rem;
+      width: 100%;
+    }
+    .logo-centered {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      color: var(--fg-soft);
+      text-decoration: none;
+    }
+    .logo-centered .accent { color: var(--accent); }
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.75rem;
+      margin-right: -0.75rem;
+      border-radius: 999px;
+      color: var(--fg);
+      transition: background 240ms cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+    .contact-link:hover, .contact-link:focus-visible { background: var(--surface-muted); }
+
+    .benchmarks-content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 2rem 6rem;
+    }
+    .benchmarks-content h1 {
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+      margin-top: 144px;
+    }
+    .benchmarks-content .subtitle {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--fg);
+      margin-top: 10px;
+      margin-bottom: 0.5em;
+    }
+    .benchmarks-content .date {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--fg-faint);
+      margin-top: 1em;
+      text-transform: uppercase;
+    }
+
+    .paper-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 26px 0;
+      flex-wrap: wrap;
+    }
+    .paper-links .btn-pill {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1;
+      color: var(--fg);
+      text-decoration: none;
+      background: #fff;
+      border-radius: 999px;
+      padding: 0.85rem 1.2rem 0.95rem;
+      transition: background 240ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .paper-links .btn-pill:hover { background: var(--surface-muted); }
+
+    .benchmarks-body { margin: 96px 0 48px; }
+    .benchmarks-body .body-main {
+      font-size: 17px;
+      line-height: 1.6;
+      margin-top: 1lh;
+    }
+    .benchmarks-body p {
+      font-weight: 400;
+      color: var(--fg-soft);
+      margin-bottom: 1lh;
+    }
+    .benchmarks-body em { font-style: italic; }
+    .benchmarks-body strong { font-weight: 500; color: var(--fg); }
+    .benchmarks-body a, .benchmarks-body a:visited {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--fg-faint);
+      padding-bottom: 1px;
+    }
+    .benchmarks-body a:hover { border-bottom-color: var(--accent); }
+    .benchmarks-body h2 {
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--fg);
+      margin: 1.75lh 0 24px;
+      letter-spacing: -0.005em;
+    }
+    .benchmarks-body h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--fg);
+      margin: 1.5lh 0 16px;
+      letter-spacing: -0.005em;
+    }
+    .benchmarks-body ul, .benchmarks-body ol {
+      padding-left: 1.25em;
+      margin-bottom: 1.5em;
+    }
+    .benchmarks-body ul { list-style: disc; }
+    .benchmarks-body ol { list-style: decimal; }
+    .benchmarks-body li {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--fg-soft);
+      margin-bottom: 0.6em;
+    }
+    .benchmarks-body li::marker { color: var(--fg-faint); }
+    .benchmarks-body code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82em;
+      background: rgba(0,0,0,0.05);
+      padding: 0.08em 0.3em;
+      border-radius: 4px;
+    }
+    .benchmarks-body pre {
+      background: rgba(0,0,0,0.05);
+      padding: 14px 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1lh 0;
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .benchmarks-body pre code {
+      background: none; padding: 0; border-radius: 0; font-size: inherit;
+    }
+
+    .tldr {
+      margin: 32px 0 48px;
+      padding: 0 0 0 24px;
+      border-left: 2px solid var(--fg-mute);
+    }
+    .tldr-label {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-faint);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .tldr p {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--fg);
+    }
+    .tldr p + p { margin-top: 0.8em; }
+
+    .callout {
+      margin: 1.5lh 0;
+      padding: 20px 24px;
+      background: var(--surface-muted);
+      border-radius: 10px;
+    }
+    .callout-label {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .callout p {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--fg);
+      margin-bottom: 0;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      margin: 1.5lh 0;
+      border-top: 1px solid var(--chart-grid);
+      border-bottom: 1px solid var(--chart-grid);
+    }
+    @media (min-width: 600px) {
+      .stat-row { grid-template-columns: repeat(4, 1fr); }
+    }
+    .stat {
+      padding: 18px 18px;
+      border-right: 1px solid var(--chart-grid);
+    }
+    .stat:first-child { padding-left: 0; }
+    .stat:last-child { border-right: 0; }
+    @media (max-width: 599px) {
+      .stat:nth-child(2n) { border-right: 0; }
+      .stat:nth-child(n+3) { border-top: 1px solid var(--chart-grid); }
+    }
+    .stat .k {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-faint);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .stat .v {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--fg);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+    .stat .s {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: var(--fg-faint);
+      margin-top: 6px;
+      line-height: 1.35;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 1.5lh 0;
+    }
+    @media (min-width: 600px) { .mode-grid { grid-template-columns: repeat(2, 1fr); } }
+    .mode-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 22px 22px;
+      border: 1px solid var(--chart-grid);
+    }
+    .mode-card .tag {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-faint);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .mode-card .t {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--fg);
+      display: block;
+      margin-bottom: 8px;
+      letter-spacing: -0.005em;
+    }
+    .mode-card .desc {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--fg-soft);
+    }
+
+    .table-wrap { margin: 1.5lh 0; }
+    .table-label {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-faint);
+      margin-bottom: 12px;
+    }
+    .table-label .id { color: var(--fg); margin-right: 12px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+      font-family: var(--font-serif);
+    }
+    th, td {
+      padding: 11px 14px 11px 0;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 400;
+      border-bottom: 1px solid var(--chart-grid);
+      color: var(--fg);
+    }
+    th {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      color: var(--fg-mute);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--fg-mute);
+    }
+    td.num { font-variant-numeric: tabular-nums; color: var(--fg); }
+    td.pos { color: var(--accent); }
+    td.neg { color: var(--fg-faint); }
+    tr:last-child td { border-bottom: none; }
+    tr.highlight td { background: var(--surface-muted); }
+    tr.totals td { border-top: 1px solid var(--fg-mute); font-weight: 400; }
+
+    figure.chart { margin: 1.5lh 0; }
+    figure.chart svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: var(--bg);
+    }
+    figcaption {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--fg-mute);
+      line-height: 1.5;
+      margin-top: 16px;
+    }
+    figcaption strong { color: var(--fg); font-weight: 500; }
+    @media (min-width: 960px) {
+      .body-main > figure.chart {
+        width: min(1200px, calc(100vw - 3rem));
+        max-width: none;
+        margin-left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    @media (min-width: 1400px) {
+      .body-main > figure.chart { width: min(1320px, calc(100vw - 3rem)); }
+    }
+
+    .neg-list {
+      margin: 1.5lh 0;
+      padding: 0;
+      border-top: 1px solid var(--chart-grid);
+    }
+    .neg-list-label {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-faint);
+      margin: 16px 0 8px;
+      display: block;
+    }
+    .neg-list ul { list-style: none; padding: 0; margin: 0; }
+    .neg-list li {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--chart-grid);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--fg-soft);
+    }
+    .neg-list li:last-child { border-bottom: 0; }
+    .neg-list li strong { color: var(--fg); font-weight: 500; }
+
+    .break {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 3rem;
+      color: var(--fg-faint);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 0.6em;
+    }
+
+    .site-footer {
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+      padding: 0;
+    }
+    .site-footer .footer-inner {
+      max-width: 720px;
+      width: 100%;
+      margin: 2rem auto 0;
+      padding: 0 2rem 140px;
+    }
+    .footer-subscribe {
+      display: flex;
+      flex-direction: column;
+      gap: 1lh;
+      max-width: 480px;
+    }
+    .footer-subscribe-label {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--on-dark);
+      display: block;
+    }
+    .footer-subscribe-row {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      padding: 4px;
+      transition: border-color 150ms ease, background 150ms ease;
+    }
+    .footer-subscribe-row:focus-within {
+      border-color: rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.12);
+    }
+    .footer-subscribe-input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: 0;
+      outline: none;
+      padding: 0.6rem 1rem;
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 300;
+      color: #fff;
+    }
+    .footer-subscribe-input::placeholder { color: rgba(255,255,255,0.45); }
+    .footer-subscribe-button {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1;
+      color: var(--accent);
+      background: #fff;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 1.1rem;
+      cursor: pointer;
+      transition: background 150ms ease;
+    }
+    .footer-subscribe-button:hover { background: var(--surface-muted); }
+    .footer-meta {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: var(--fg-faint);
+      margin-top: 2rem;
+      line-height: 1.6;
+    }
+    .footer-meta a { color: var(--on-dark); text-decoration: none; border-bottom: 1px dotted rgba(255,255,255,0.25); }
+    .footer-meta a:hover { color: #fff; border-bottom-color: #fff; }
+
+    @media (max-width: 768px) {
+      .perspectives-header { padding: 1.5rem 1.5rem; }
+      .benchmarks-content { padding: 3rem 1.5rem 4rem; }
+      .benchmarks-content h1 { font-size: 44px; margin-top: 120px; }
+      .benchmarks-body { margin: 72px 0 32px; }
+      .site-footer .footer-inner { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .perspectives-header { padding: 1.25rem 1.25rem; }
+      .benchmarks-content { padding: 2rem 1.25rem 3rem; }
+      .benchmarks-content h1 { font-size: 38px; margin-top: 80px; }
+      .benchmarks-content .subtitle { font-size: 18px; }
+      .benchmarks-body h2 { font-size: 26px; }
+      .benchmarks-body h3 { font-size: 20px; }
+      .benchmarks-body .body-main { font-size: 18px; }
+      .benchmarks-body li { font-size: 18px; }
+      .tldr p { font-size: 18px; }
+      .stat .v { font-size: 24px; }
+      .site-footer .footer-inner { padding: 0 1.25rem 80px; }
+    }
+  </style>
+</head>
+<body class="benchmarks-page">
+  <div class="page-surface">
+
+    <header class="perspectives-header">
+      <a href="#" class="logo-centered">INTERP<span class="accent">&middot;</span>LAB</a>
+      <a href="mailto:contact@example.com" class="contact-link" aria-label="Contact">Contact</a>
+    </header>
+
+    <main class="main">
+      <article class="benchmarks-content">
+
+        <h1>Hidden activations know when self-report does not</h1>
+        <p class="subtitle">A claim-level uncertainty study across MAUD legal QA and FActScore biographies: Llama says it is confident, but a linear probe on its residual stream sees more.</p>
+        <p class="date">STEPHEN CASELLA &middot; APRIL 2026</p>
+
+        <div class="paper-links">
+          <a href="paper_draft.md" class="btn-pill">Paper draft</a>
+          <a href="paper_references.bib" class="btn-pill">References</a>
+          <a href="../artifacts/runs/factscore_bootstrap_ci.json" class="btn-pill">FActScore CIs</a>
+          <a href="../artifacts/runs/maud_bootstrap_ci_v2.json" class="btn-pill">MAUD CIs</a>
+        </div>
+
+        <div class="benchmarks-body">
+          <div class="body-main">
+
+            <div class="tldr">
+              <span class="tldr-label">TL;DR</span>
+              <p>
+                Llama 3.1 8B's structured confidence does not reliably reveal which claims are unreliable. On MAUD merger-agreement QA, self-report reaches <strong>0.511 AUROC</strong>; a linear probe on layer-19 residual activations reaches <strong>0.771</strong>, a paired delta of <strong>0.260 [0.137, 0.387]</strong>. On FActScore biographies, using human atomic-fact labels, self-report reaches <strong>0.541</strong>; the residual probe reaches <strong>0.802</strong>, delta <strong>0.262 [0.219, 0.302]</strong>.
+              </p>
+              <p>
+                The result is not "the model knows truth." It is more specific and more useful: hidden activations contain recoverable claim-level correctness signal that the model's own verbal confidence does not faithfully expose. The boundary is just as important: FELM is directionally positive but inconclusive, and its matched-generation repair shows how reference-bounded labels can measure evidence coverage rather than correctness.
+              </p>
+            </div>
+
+            <h2 id="question">The question</h2>
+
+            <p>
+              Long answers fail locally. One sentence may be right, the next partly right, and the next confidently wrong. If the model could reliably say which claims were shaky, a simple self-report baseline would be enough.
+            </p>
+            <p>
+              In this study, it is not enough. We show Llama 3.1 8B fixed claims and ask for structured confidence. Then we compare that confidence to a linear probe trained on the model's own hidden activations. The probe is deliberately simple: layer-19 residual vectors, pooled over the claim span, with logistic regression on top.
+            </p>
+
+            <div class="callout">
+              <span class="callout-label">The claim</span>
+              <p>Across two usable domains, residual activations recover claim-level correctness signal that structured self-report misses. The effect size is almost identical on MAUD and FActScore, even though the protocols and labels differ.</p>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat">
+                <span class="k">MAUD delta</span>
+                <div class="v">+0.260</div>
+                <div class="s">Residual probe minus self-report AUROC</div>
+              </div>
+              <div class="stat">
+                <span class="k">FActScore delta</span>
+                <div class="v">+0.262</div>
+                <div class="s">Human labels, 742 test facts</div>
+              </div>
+              <div class="stat">
+                <span class="k">Kimi correction</span>
+                <div class="v">0.944 &rarr; 0.872</div>
+                <div class="s">GPT-5.4 scorer under independent judge</div>
+              </div>
+              <div class="stat">
+                <span class="k">Agreement set</span>
+                <div class="v">110 claims</div>
+                <div class="s">Both LLM judges agree</div>
+              </div>
+            </div>
+
+            <h2 id="setup">Setup &mdash; three datasets, one probed model</h2>
+
+            <p>
+              The probed model is always Llama 3.1 8B Instruct. What changes is the dataset and label source. MAUD gives us fixed legal claims scored by two LLM judges. FActScore gives us human-labeled biography atomic facts. FELM gives us human segment labels, but its evidence structure turns out to be less clean for the claim-level target.
+            </p>
+
+            <div class="mode-grid">
+              <div class="mode-card">
+                <span class="tag">01 &middot; MAUD</span>
+                <span class="t">Legal QA, judge-proxy labels</span>
+                <span class="desc">150 frozen claim units from merger-agreement question answering. GPT-5.4 labels define the primary correctness target; Kimi K2.6 provides a second-judge sensitivity pass.</span>
+              </div>
+              <div class="mode-card">
+                <span class="tag">02 &middot; FActScore</span>
+                <span class="t">Biographies, human labels</span>
+                <span class="desc">4,886 non-IR human atomic facts from ChatGPT biographies. Atomic facts rarely appear verbatim, so activations are pooled over parent sentence spans.</span>
+              </div>
+              <div class="mode-card">
+                <span class="tag">03 &middot; FELM-wk</span>
+                <span class="t">Boundary case</span>
+                <span class="desc">World-knowledge segments show the same direction but not significance. A matched-generation repair produces too many not-enough-evidence labels to scale cleanly.</span>
+              </div>
+              <div class="mode-card">
+                <span class="tag">04 &middot; Baseline</span>
+                <span class="t">Structured self-report</span>
+                <span class="desc">Llama is shown the fixed claim unit and asked for confidence. This is an easy version of self-report: failures cannot be blamed on implicit claim boundaries.</span>
+              </div>
+            </div>
+
+            <h2 id="headline">The headline &mdash; probes beat self-report</h2>
+
+            <p>
+              The main comparison is simple: how well does each score rank correct claims above not-correct claims? AUROC is 0.5 at chance. Higher is better.
+            </p>
+
+            <figure class="chart">
+              <svg viewBox="0 0 960 460" role="img" aria-label="Self-report versus residual probe AUROC across MAUD, FActScore, and FELM">
+                <rect x="0" y="0" width="960" height="460" fill="#F9F9F6" />
+                <text x="480" y="30" text-anchor="middle" fill="#3B3B39"
+                      font-family="Libre Baskerville, Georgia, serif" font-size="18" font-weight="400">
+                  Claim correctness AUROC: self-report vs residual probe
+                </text>
+                <text x="480" y="54" text-anchor="middle" fill="#969592"
+                      font-family="Inter, Helvetica Neue, sans-serif" font-size="12">
+                  MAUD and FActScore show nearly identical probe-over-self-report deltas; FELM is directionally positive but inconclusive.
+                </text>
+
+                <line x1="90" y1="380" x2="890" y2="380" stroke="#C8C7C2" stroke-width="1" />
+                <line x1="90" y1="335" x2="890" y2="335" stroke="#E4E3DE" stroke-width="1" />
+                <line x1="90" y1="290" x2="890" y2="290" stroke="#E4E3DE" stroke-width="1" />
+                <line x1="90" y1="245" x2="890" y2="245" stroke="#E4E3DE" stroke-width="1" />
+                <line x1="90" y1="200" x2="890" y2="200" stroke="#E4E3DE" stroke-width="1" />
+                <line x1="90" y1="155" x2="890" y2="155" stroke="#E4E3DE" stroke-width="1" />
+                <line x1="90" y1="110" x2="890" y2="110" stroke="#E4E3DE" stroke-width="1" />
+
+                <text x="78" y="384" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.40</text>
+                <text x="78" y="339" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.50</text>
+                <text x="78" y="294" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.60</text>
+                <text x="78" y="249" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.70</text>
+                <text x="78" y="204" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.80</text>
+                <text x="78" y="159" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.90</text>
+                <text x="78" y="114" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">1.00</text>
+
+                <line x1="140" y1="335" x2="860" y2="335" stroke="#969592" stroke-width="1" stroke-dasharray="4 4" opacity="0.7" />
+
+                <rect x="185" y="330" width="44" height="50" fill="#969592" opacity="0.55" />
+                <rect x="239" y="213" width="44" height="167" fill="#3B3B39" />
+                <rect x="445" y="316" width="44" height="64" fill="#969592" opacity="0.55" />
+                <rect x="499" y="199" width="44" height="181" fill="#3B3B39" />
+                <rect x="705" y="330" width="44" height="50" fill="#969592" opacity="0.55" />
+                <rect x="759" y="267" width="44" height="113" fill="#3B3B39" />
+
+                <text x="207" y="322" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="11">.511</text>
+                <text x="261" y="205" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="11">.771</text>
+                <text x="467" y="308" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="11">.541</text>
+                <text x="521" y="191" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="11">.802</text>
+                <text x="727" y="322" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="11">.511</text>
+                <text x="781" y="259" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="11">.652</text>
+
+                <text x="234" y="408" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">MAUD</text>
+                <text x="494" y="408" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">FActScore</text>
+                <text x="754" y="408" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">FELM-wk</text>
+
+                <rect x="350" y="75" width="22" height="10" fill="#969592" opacity="0.55" />
+                <text x="382" y="84" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">self-report</text>
+                <rect x="488" y="75" width="22" height="10" fill="#3B3B39" />
+                <text x="520" y="84" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">residual probe</text>
+
+                <text x="90" y="448" fill="#969592" font-family="Inter, sans-serif" font-size="11">
+                  AUROC scale shown from 0.40 to 1.00. Chance is 0.50.
+                </text>
+              </svg>
+              <figcaption>
+                <strong>Figure 1.</strong> Residual activations carry substantially more claim-level correctness signal than Llama self-report on MAUD and FActScore. FELM points the same way but has a wide interval and is treated as a boundary case.
+              </figcaption>
+            </figure>
+
+            <div class="table-wrap">
+              <div class="table-label"><span class="id">Table 01</span>Cross-dataset probe vs self-report comparison</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Dataset</th>
+                    <th>Label source</th>
+                    <th>Self-report</th>
+                    <th>Residual probe</th>
+                    <th>Delta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="highlight">
+                    <td>MAUD</td>
+                    <td>GPT-5.4 judge proxy</td>
+                    <td class="num">0.511 [0.411, 0.597]</td>
+                    <td class="num pos">0.771 [0.687, 0.838]</td>
+                    <td class="num pos">+0.260 [0.137, 0.387]</td>
+                  </tr>
+                  <tr class="highlight">
+                    <td>FActScore</td>
+                    <td>Human atomic facts</td>
+                    <td class="num">0.541 [0.514, 0.570]</td>
+                    <td class="num pos">0.802 [0.769, 0.833]</td>
+                    <td class="num pos">+0.262 [0.219, 0.302]</td>
+                  </tr>
+                  <tr>
+                    <td>FELM-wk</td>
+                    <td>Human segments</td>
+                    <td class="num">0.511 [0.393, 0.673]</td>
+                    <td class="num">0.652 [0.493, 0.815]</td>
+                    <td class="num">+0.141 [-0.063, 0.320]</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h2 id="maud">MAUD &mdash; the legal QA core</h2>
+
+            <p>
+              MAUD is the first setting: merger-agreement question answering with 150 fixed claims. GPT-5.4 labels provide the first judge-proxy target, and Kimi K2.6 provides an independent family sensitivity check.
+            </p>
+            <p>
+              Under the GPT-5.4 judge, the residual probe reaches 0.771 AUROC and Llama self-report reaches 0.511. A GPT-5.4 external scorer is much stronger, at 0.944, but that number is inflated because GPT-5.4 also produced the labels. Under the Kimi judge, the same scorer drops to 0.872. That is still the best method, but 0.87 is the fairer estimate.
+            </p>
+
+            <figure class="chart">
+              <svg viewBox="0 0 960 430" role="img" aria-label="MAUD method AUROC under GPT-5.4 and Kimi judges">
+                <rect x="0" y="0" width="960" height="430" fill="#F9F9F6" />
+                <text x="480" y="30" text-anchor="middle" fill="#3B3B39"
+                      font-family="Libre Baskerville, Georgia, serif" font-size="18" font-weight="400">
+                  MAUD judge sensitivity
+                </text>
+                <text x="480" y="54" text-anchor="middle" fill="#969592"
+                      font-family="Inter, Helvetica Neue, sans-serif" font-size="12">
+                  Method ordering survives the judge-family change; GPT-5.4 external scoring loses ~0.07 AUROC.
+                </text>
+
+                <line x1="170" y1="350" x2="790" y2="350" stroke="#C8C7C2" stroke-width="1" />
+                <line x1="170" y1="305" x2="790" y2="305" stroke="#E4E3DE" stroke-width="1" />
+                <line x1="170" y1="260" x2="790" y2="260" stroke="#E4E3DE" stroke-width="1" />
+                <line x1="170" y1="215" x2="790" y2="215" stroke="#E4E3DE" stroke-width="1" />
+                <line x1="170" y1="170" x2="790" y2="170" stroke="#E4E3DE" stroke-width="1" />
+                <line x1="170" y1="125" x2="790" y2="125" stroke="#E4E3DE" stroke-width="1" />
+
+                <text x="150" y="354" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.40</text>
+                <text x="150" y="309" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.50</text>
+                <text x="150" y="264" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.60</text>
+                <text x="150" y="219" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.70</text>
+                <text x="150" y="174" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.80</text>
+                <text x="150" y="129" text-anchor="end" fill="#969592" font-family="Inter, sans-serif" font-size="11">0.90</text>
+
+                <text x="280" y="382" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">GPT-5.4 judge</text>
+                <text x="680" y="382" text-anchor="middle" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">Kimi K2.6 judge</text>
+
+                <polyline points="280,105 680,137" fill="none" stroke="#3B3B39" stroke-width="2.5" />
+                <polyline points="280,183 680,212" fill="none" stroke="#5C8A95" stroke-width="2.5" />
+                <polyline points="280,226 680,237" fill="none" stroke="#8B6F8C" stroke-width="2.5" />
+                <polyline points="280,301 680,321" fill="none" stroke="#969592" stroke-width="2" stroke-dasharray="5 4" />
+
+                <circle cx="280" cy="105" r="4" fill="#3B3B39" />
+                <circle cx="680" cy="137" r="4" fill="#3B3B39" />
+                <circle cx="280" cy="183" r="4" fill="#5C8A95" />
+                <circle cx="680" cy="212" r="4" fill="#5C8A95" />
+                <circle cx="280" cy="226" r="4" fill="#8B6F8C" />
+                <circle cx="680" cy="237" r="4" fill="#8B6F8C" />
+                <circle cx="280" cy="301" r="3.5" fill="#fff" stroke="#969592" stroke-width="1.5" />
+                <circle cx="680" cy="321" r="3.5" fill="#fff" stroke="#969592" stroke-width="1.5" />
+
+                <text x="704" y="140" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">GPT-5.4 scorer .872</text>
+                <text x="704" y="215" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">residual .707</text>
+                <text x="704" y="240" fill="#3B3B39" font-family="Inter, sans-serif" font-size="12">SAE .652</text>
+                <text x="704" y="324" fill="#969592" font-family="Inter, sans-serif" font-size="12">self-report .466</text>
+              </svg>
+              <figcaption>
+                <strong>Figure 2.</strong> GPT-5.4 external scoring drops from 0.944 to 0.872 under an independent judge, confirming same-family inflation. The qualitative ranking remains stable.
+              </figcaption>
+            </figure>
+
+            <div class="table-wrap">
+              <div class="table-label"><span class="id">Table 02</span>MAUD method comparison, AUROC and Brier with 1000-resample CIs</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>GPT-5.4 AUROC</th>
+                    <th>Kimi AUROC</th>
+                    <th>Agreement AUROC</th>
+                    <th>Agreement Brier</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Llama self-report</td>
+                    <td class="num">0.511 [0.411, 0.597]</td>
+                    <td class="num">0.466 [0.413, 0.604]</td>
+                    <td class="num">0.486 [0.392, 0.598]</td>
+                    <td class="num">0.509 [0.400, 0.600]</td>
+                  </tr>
+                  <tr class="highlight">
+                    <td>GPT-5.4 scorer</td>
+                    <td class="num pos">0.944 [0.906, 0.984]</td>
+                    <td class="num pos">0.872 [0.807, 0.926]</td>
+                    <td class="num pos">0.981 [0.931, 1.000]</td>
+                    <td class="num pos">0.101 [0.064, 0.144]</td>
+                  </tr>
+                  <tr>
+                    <td>Residual probe</td>
+                    <td class="num pos">0.771 [0.687, 0.838]</td>
+                    <td class="num pos">0.707 [0.627, 0.792]</td>
+                    <td class="num pos">0.793 [0.709, 0.870]</td>
+                    <td class="num">0.231 [0.166, 0.299]</td>
+                  </tr>
+                  <tr>
+                    <td>SAE probe</td>
+                    <td class="num">0.677 [0.582, 0.763]</td>
+                    <td class="num">0.652 [0.563, 0.735]</td>
+                    <td class="num">0.712 [0.616, 0.812]</td>
+                    <td class="num">0.268 [0.193, 0.350]</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>The agreement set matters</h3>
+            <p>
+              On the 110 claims where GPT-5.4 and Kimi agree, every strong method gets cleaner. GPT-5.4 scoring reaches 0.981 AUROC, the residual probe reaches 0.793, and the SAE probe reaches 0.712. That pattern is evidence against a pure judge-artifact story. If a probe were mainly fitting GPT-5.4's quirks, it should not improve when restricted to labels another judge family also accepts.
+            </p>
+
+            <h2 id="factscore">FActScore &mdash; the transfer check</h2>
+
+            <p>
+              FActScore changes almost everything: human labels instead of LLM judges, biographies instead of contracts, ChatGPT generations instead of Llama generations, and atomic facts rather than extracted legal claims. The protocol is also different because the dataset is much larger: FActScore supports a clean 70/15/15 split by biography, while MAUD's 150 claims use leave-one-out evaluation.
+            </p>
+
+            <div class="table-wrap">
+              <div class="table-label"><span class="id">Table 03</span>FActScore held-out test results</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Test claims</th>
+                    <th>AUROC</th>
+                    <th>Brier</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Llama self-report</td>
+                    <td class="num">742</td>
+                    <td class="num">0.541 [0.514, 0.570]</td>
+                    <td class="num">0.298 [0.262, 0.330]</td>
+                  </tr>
+                  <tr class="highlight">
+                    <td>Residual probe</td>
+                    <td class="num">742</td>
+                    <td class="num pos">0.802 [0.769, 0.833]</td>
+                    <td class="num pos">0.171 [0.156, 0.189]</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              The probe diagnostics are healthy: train AUROC 0.939, validation 0.728, test 0.802. Test AUROC above validation is not surprising given biography-level splits, where individual biographies vary substantially in difficulty and fact density. The pattern is consistent with the <code>C=0.01</code> model generalizing across that variation rather than overfitting to validation.
+            </p>
+
+            <div class="callout">
+              <span class="callout-label">Why this is a replication, not a copy</span>
+              <p>MAUD and FActScore do not share the same protocol. What repeats is the qualitative gap: self-report is near chance; residual activations recover correctness signal; the paired AUROC delta is about +0.26 in both settings.</p>
+            </div>
+
+            <h2 id="boundary">The boundary &mdash; why FELM is weaker</h2>
+
+            <p>
+              FELM-wk points in the same direction: residual probe 0.652, self-report 0.511. But the delta interval crosses zero, so it is not a clean positive result. More importantly, the matched-generation repair exposed an annotation-target problem.
+            </p>
+            <p>
+              When Llama generated new FELM-style answers and those segments were judged against fuller reference-bounded evidence, 30 of 52 segments became <code>not_enough_evidence</code>. That is 57.7 percent of the pilot. The result is not "FELM fails"; it is that reference-bounded labels can become coverage measurements when generated claims exceed the reference scope.
+            </p>
+            <p>
+              The wide FELM interval reflects both the smaller test set and noisier label structure. A more definitive FELM result would require either substantially more data or annotation methodology that directly addresses the reference-coverage problem.
+            </p>
+
+            <div class="neg-list">
+              <span class="neg-list-label">Honest scope</span>
+              <ul>
+                <li><strong>Does show:</strong> residual activations recover correctness signal on MAUD and FActScore, while structured self-report does not.</li>
+                <li><strong>Does not show:</strong> probes detect legal truth or factual truth in an absolute sense. MAUD remains judge-proxy evidence until the human audit lands.</li>
+                <li><strong>Does show:</strong> GPT-5.4 external scoring is strongest on MAUD, but its 0.944 same-family number is inflated; 0.872 under Kimi is the fairer estimate.</li>
+                <li><strong>Does not show:</strong> residual probes reliably beat SAE probes. Residual is directionally stronger, but the residual-vs-SAE delta is not statistically stable across judges and agreement-set scoring.</li>
+              </ul>
+            </div>
+
+            <h2 id="lesson">The methodological lesson</h2>
+
+            <p>
+              The strongest lesson is not "legal QA transfers to biography QA." It is that label provenance dominates. MAUD works because fixed claims are judged by a clear rubric. FActScore works because human atomic-fact labels directly capture factual support. FELM is weaker because segment labels and reference coverage are coarser than the claim-level correctness target we want. Claim construction and label provenance affect probe trainability as much as model architecture choices do.
+            </p>
+            <p>
+              For a probe-based uncertainty system, the hard questions come before training the classifier. What is the claim? What does the label mean? Does the activation span match the label unit? If those three line up, a simple residual probe can recover signal. If they do not, a better probe will mostly learn a muddier target.
+            </p>
+
+            <div class="break">&middot; &middot; &middot;</div>
+
+            <p>
+              The result is an interpretability win in the practical sense: a linear readout of hidden activations sees something the model's own confidence report misses. The win is bounded, not mystical. It does not give us a compact SAE feature story, a legal ground truth adjudicator, or a domain-general hallucination detector. Downstream tools building on this result should expose label-provenance and claim-construction assumptions rather than hiding them behind opaque confidence scores.
+            </p>
+
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <form class="footer-subscribe" novalidate>
+          <label class="footer-subscribe-label" for="footer-email">Get early access to research, products, and more.</label>
+          <div class="footer-subscribe-row">
+            <input class="footer-subscribe-input" type="email" id="footer-email" name="email" placeholder="you@example.com" autocomplete="email" required />
+            <button class="footer-subscribe-button" type="submit">Subscribe</button>
+          </div>
+          <p class="footer-subscribe-status" role="status" aria-live="polite"></p>
+        </form>
+        <div class="footer-meta">
+          Stephen Casella &middot; interp lab &middot; Apr 25, 2026<br />
+          Model: Llama 3.1 8B Instruct &middot; layer: 19 residual stream &middot; labels: MAUD judge-proxy + FActScore human<br />
+          Artifacts: <a href="paper_draft.md">paper draft</a> &middot; <a href="../artifacts/runs/maud_bootstrap_ci_v2.json">MAUD CIs</a> &middot; <a href="../artifacts/runs/factscore_bootstrap_ci.json">FActScore CIs</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

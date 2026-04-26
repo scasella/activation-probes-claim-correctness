@@ -46,6 +46,7 @@ def main() -> None:
     parser.add_argument("--model-name", default="meta-llama/Llama-3.1-8B-Instruct")
     parser.add_argument("--layer-index", type=int, default=19)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--extractor-backend", choices=["auto", "huggingface"], default="auto")
     parser.add_argument("--n-samples", type=int, default=8)
     parser.add_argument("--n-paraphrases", type=int, default=3)
     parser.add_argument("--max-answer-tokens", type=int, default=96)
@@ -53,7 +54,12 @@ def main() -> None:
     args = parser.parse_args()
 
     load_repo_env()
-    extractor = build_extractor(args.model_name, layer_index=args.layer_index, device=args.device)
+    extractor = build_extractor(
+        args.model_name,
+        layer_index=args.layer_index,
+        device=args.device,
+        backend=args.extractor_backend,
+    )
     examples = {row.example_id: row for row in (ExampleRow.from_dict(item) for item in read_jsonl(args.examples_jsonl))}
     claims_by_example: dict[str, list[ClaimRow]] = defaultdict(list)
     for claim in (ClaimRow.from_dict(item) for item in read_jsonl(args.claims_jsonl)):

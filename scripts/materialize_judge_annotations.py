@@ -72,6 +72,7 @@ def main() -> None:
     parser.add_argument("--model", default="gpt-5.4")
     parser.add_argument("--annotator-id", default="judge_gpt54")
     parser.add_argument("--annotation-version", default="proxy_v1")
+    parser.add_argument("--turn-timeout-sec", type=float, default=120.0)
     parser.add_argument("--skip-existing", action="store_true")
     parser.add_argument("--max-examples", type=int, default=0)
     args = parser.parse_args()
@@ -87,19 +88,29 @@ def main() -> None:
     annotation_rows: list[dict[str, str]] = []
     failures: list[dict[str, str]] = []
     processed = 0
+    reused_existing = 0
     with CodexAppServerClient(cwd=Path.cwd(), model=args.model) as client:
         for example_id, example in examples.items():
             if args.max_examples and processed >= args.max_examples:
                 break
             claims = claims_by_example[example_id]
+            claim_text_by_id = {claim.claim_id: claim.claim_text for claim in claims}
+            claim_text_by_id.update(
+                {
+                    claim.claim_id.removeprefix("claim-"): claim.claim_text
+                    for claim in claims
+                }
+            )
             raw_path = args.raw_dir / f"{example_id}.json"
             if args.skip_existing and raw_path.exists():
                 payload = json.loads(raw_path.read_text(encoding="utf-8"))
+                reused_existing += 1
             else:
                 try:
                     raw_text = client.run_prompt(
                         _judge_prompt(example, claims),
                         output_schema=_judge_schema([claim.claim_id for claim in claims]),
+                        turn_timeout_sec=args.turn_timeout_sec,
                     )
                     payload = json.loads(raw_text)
                 except Exception as exc:
@@ -109,12 +120,31 @@ def main() -> None:
                     json.dumps(payload, indent=2, sort_keys=True) + "\n",
                     encoding="utf-8",
                 )
+                processed += 1
             try:
                 items = payload["claims"]
             except Exception as exc:
                 failures.append({"example_id": example_id, "error": f"{type(exc).__name__}: {exc}"})
                 continue
-            for item in items:
+            for idx, item in enumerate(items):
+                canonical_claim_id = item["claim_id"] if item["claim_id"].startswith("claim-") else f"claim-{item['claim_id']}"
+                claim_text = claim_text_by_id.get(item["claim_id"])
+                if claim_text is None:
+                    claim_text = claim_text_by_id.get(canonical_claim_id)
+                if claim_text is None and len(claims) == 1:
+                    canonical_claim_id = claims[0].claim_id
+                    claim_text = claims[0].claim_text
+                if claim_text is None and len(items) == len(claims):
+                    canonical_claim_id = claims[idx].claim_id
+                    claim_text = claims[idx].claim_text
+                if claim_text is None:
+                    failures.append(
+                        {
+                            "example_id": example_id,
+                            "error": f"unmapped_claim_id:{item['claim_id']}",
+                        }
+                    )
+                    continue
                 annotation_rows.append(
                     {
                         "annotator_id": args.annotator_id,
@@ -126,15 +156,14 @@ def main() -> None:
                         "question_text": example.question_text,
                         "excerpt_text": example.excerpt_text,
                         "llama_answer_text": example.llama_answer_text,
-                        "claim_id": item["claim_id"],
-                        "claim_text": next(claim.claim_text for claim in claims if claim.claim_id == item["claim_id"]),
+                        "claim_id": canonical_claim_id,
+                        "claim_text": claim_text,
                         "correctness_label": item["correctness_label"],
                         "load_bearing_label": item["load_bearing_label"],
                         "flip_evidence_text": item["flip_evidence_text"],
                         "notes": item["notes"],
                     }
                 )
-            processed += 1
             print(f"MATERIALIZED_JUDGE {example_id} claims={len(items)}")
         if client.stderr_text:
             (args.log_dir / "app_server.stderr.log").write_text(client.stderr_text, encoding="utf-8")
@@ -146,9 +175,11 @@ def main() -> None:
         "n_examples_failed": len(failures),
         "n_rows": len(annotation_rows),
         "n_examples_processed_this_run": processed,
+        "n_examples_reused_existing": reused_existing,
         "annotator_id": args.annotator_id,
         "annotation_version": args.annotation_version,
         "model": args.model,
+        "turn_timeout_sec": args.turn_timeout_sec,
         "proxy_only": True,
         "failures": failures,
     }

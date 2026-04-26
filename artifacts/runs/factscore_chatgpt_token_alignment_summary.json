@@ -1,0 +1,35 @@
+{
+  "alignment_failure_rate": 0.0,
+  "alignment_failures": [],
+  "answer_mismatch_examples": [
+    {
+      "decoded_chars": 977,
+      "decoded_preview": "Rob Furlong is a retired Canadian sniper who holds the record for the longest confirmed sniper kill in history. He was born on July 1, 1976, in Newfoundland, Canada, and grew up in a military family. Furlong joined the Canadian Armed Forces",
+      "example_id": "factscore-chatgpt-0081-rob-furlong",
+      "expected_chars": 978,
+      "expected_preview": "Rob Furlong is a retired Canadian sniper who holds the record for the longest confirmed sniper kill in history. He was born on July 1, 1976, in Newfoundland, Canada, and grew up in a military family. Furlong joined the Canadian Armed Forces"
+    }
+  ],
+  "model_name": "meta-llama/Llama-3.1-8B-Instruct",
+  "n_alignment_failures": 0,
+  "n_claims_aligned": 4886,
+  "n_claims_checked": 4886,
+  "n_decoded_answer_mismatches": 1,
+  "n_exact_decoded_answer_matches": 156,
+  "n_examples_checked": 157,
+  "n_token_spans_length_le_2": 0,
+  "note": "FActScore atomic fact text rarely appears verbatim in the generation. The adapter maps atomic labels to parent-sentence character spans; this script checks those spans against Llama tokenizer offsets.",
+  "span_source_counts": {
+    "exact_atomic_substring": 8,
+    "parent_sentence": 4878
+  },
+  "token_span_lengths": {
+    "max": 67,
+    "mean": 28.328694228407695,
+    "median": 27.0,
+    "min": 8,
+    "p25": 22.0,
+    "p75": 33.0
+  },
+  "token_spans_length_le_2_rate": 0.0
+}

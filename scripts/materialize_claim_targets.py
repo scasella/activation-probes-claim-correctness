@@ -29,6 +29,7 @@ def main() -> None:
     parser.add_argument("--timeout", type=int, default=120)
     parser.add_argument("--n-samples", type=int, default=8)
     parser.add_argument("--n-paraphrases", type=int, default=3)
+    parser.add_argument("--extractor-backend", choices=["auto", "huggingface"], default="auto")
     args = parser.parse_args()
 
     ensure_parent(args.log_path)
@@ -56,6 +57,8 @@ def main() -> None:
         str(args.n_samples),
         "--n-paraphrases",
         str(args.n_paraphrases),
+        "--extractor-backend",
+        args.extractor_backend,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True, check=False)
     args.log_path.write_text(

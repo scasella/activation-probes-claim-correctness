@@ -69,10 +69,7 @@ def main() -> None:
     sae_vectors: list[list[float]] = []
     for example_id, example_claims in claims_by_example.items():
         answer_run = answer_runs[example_id]
-        encoded = extractor.encode_answer_with_activations(
-            prompt_text=answer_run.prompt_text,
-            answer_text=answer_run.answer_text,
-        )
+        encoded = extractor.encode_answer_run_with_activations(answer_run)
         if encoded.token_ids != answer_run.token_ids:
             raise SystemExit(f"Token-id mismatch for example_id={example_id}")
         feature_tensor = encoded.residual_stream

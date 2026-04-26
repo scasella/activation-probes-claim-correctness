@@ -1,0 +1,57 @@
+{
+  "auroc": {
+    "llama_self_report": {
+      "ci_high": 0.6726418067226891,
+      "ci_low": 0.3930446381104276,
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.5114285714285715
+    },
+    "residual_probe": {
+      "ci_high": 0.8147187746256895,
+      "ci_low": 0.4931711133069829,
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.6523809523809524
+    }
+  },
+  "bootstrap_method": "paired claim-level bootstrap with percentile 95% intervals",
+  "brier": {
+    "llama_self_report": {
+      "ci_high": 0.47652112676056335,
+      "ci_low": 0.2663239436619718,
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.37408450704225354
+    },
+    "residual_probe": {
+      "ci_high": 0.372690322166441,
+      "ci_low": 0.21390307518743523,
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.29362148599861937
+    }
+  },
+  "confidence_level": 0.95,
+  "dataset": "FELM-wk",
+  "deltas": {
+    "residual_minus_self_report": {
+      "ci_excludes_zero": false,
+      "ci_high": 0.31974935038793734,
+      "ci_low": -0.06319983968430146,
+      "metric": "auroc",
+      "n_resamples_dropped": 0,
+      "n_valid_resamples": 1000,
+      "point": 0.14095238095238094
+    }
+  },
+  "inputs": {
+    "eval_json": "artifacts/runs/felm_wk_validation_eval.json"
+  },
+  "metric_compatibility_note": "Source-compatible FELM interval using the legacy AUROC tie policy preserved in artifacts/runs/felm_wk_validation_eval.json; see docs/paper_revision_log.md.",
+  "n_claims": 71,
+  "n_negative": 21,
+  "n_positive": 50,
+  "n_resamples": 1000,
+  "seed": 20260424
+}
