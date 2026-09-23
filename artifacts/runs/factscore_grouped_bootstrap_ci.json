@@ -1,0 +1,72 @@
+{
+ "point": {
+  "probe AUROC": 0.8022968540519576,
+  "self AUROC": 0.5407135087734092,
+  "delta AUROC": 0.26158334527854843,
+  "probe Brier": 0.17145574397579874,
+  "self Brier": 0.29765498652291106,
+  "base-rate Brier": 0.21541001591095676
+ },
+ "claim": {
+  "probe AUROC": [
+   0.7677,
+   0.835
+  ],
+  "self AUROC": [
+   0.5133,
+   0.5694
+  ],
+  "delta AUROC": [
+   0.2165,
+   0.3039
+  ],
+  "probe Brier": [
+   0.1542,
+   0.1893
+  ],
+  "self Brier": [
+   0.265,
+   0.3313
+  ],
+  "base-rate Brier": [
+   0.2017,
+   0.2268
+  ],
+  "probe minus base-rate Brier": [
+   -0.0628,
+   -0.024
+  ]
+ },
+ "bio": {
+  "probe AUROC": [
+   0.7476,
+   0.8477
+  ],
+  "self AUROC": [
+   0.4954,
+   0.5888
+  ],
+  "delta AUROC": [
+   0.18,
+   0.3318
+  ],
+  "probe Brier": [
+   0.143,
+   0.201
+  ],
+  "self Brier": [
+   0.2152,
+   0.395
+  ],
+  "base-rate Brier": [
+   0.1735,
+   0.2434
+  ],
+  "probe minus base-rate Brier": [
+   -0.0745,
+   -0.0085
+  ]
+ },
+ "n_resamples": 10000,
+ "seed": 20260424
+}
